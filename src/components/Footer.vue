@@ -1,7 +1,7 @@
 <template>
-  <footer class="footer">
+  <footer class="navbar bottom footer mt-3">
       <div class="container">
-          <div class="row" style="margin-top:29px;">
+          <div class="row no-gutters">
           <div class="col text-left">COPYRIGHT 2013 DISPLAY.ALL RIGHTS RESERVED</div>
           <div class="col">
               <div id="footer-menu" class="text-right">
@@ -24,8 +24,7 @@ export default {
 
 <style>
 .footer{
-    position: absolute;
-    bottom: 0;
+    
     width: 100%;
     height: 63px;
     line-height: 18px;

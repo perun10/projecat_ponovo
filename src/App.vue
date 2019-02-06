@@ -1,29 +1,29 @@
 <template>
   <div id="app">
-    <header class="container" style="margin-top:30px;">
-      <div class="row justify-content-between" >
-        <div id="logo" class="col text-left">
+    <header class="container constainer-fluid" style="margin-top:30px;">
+      <div class="row no-gutters justify-content-between" >
+        <div id="logo" class="col-2 col">
         <img src="@/assets/images/logo.svg" alt="Logo">
       </div>
         <Social id="mobile-none"/>
-        <div id="mobile-nav"  class="col text-right">
+        <div id="mobile-nav"  class="col-2 mt-3">
          
-<nav role="navigation">
-  <div id="menuToggle">
-    
-    <input type="checkbox" />  
-    <span></span>
-    <span></span>
-    <span></span>
-    
-    <ul id="menu">
-     <router-link to="/">Home</router-link> 
-      <router-link to="/about">About</router-link> 
-       <router-link to="/work">Work</router-link> 
-      <router-link to="/contact">Contact</router-link>
-    </ul>
-  </div>
-</nav>
+            <nav role="navigation">
+              <div id="menuToggle">
+                
+                <input type="checkbox" />  
+                <span></span>
+                <span></span>
+                <span></span>
+                
+                <ul id="menu">
+                <router-link to="/">Home</router-link> 
+                  <router-link to="/about">About</router-link> 
+                  <router-link to="/work">Work</router-link> 
+                  <router-link to="/contact">Contact</router-link>
+                </ul>
+              </div>
+            </nav>
         </div>
       </div>
       <div id="hr" class="row no-gutters">
@@ -39,12 +39,14 @@
     </div></header>
     
     <router-view />
-    <Footer/>
+   <Footer/>
   </div>
 </template>
 
 <style>
-
+.red{
+  background-color: red;
+}
 #hr{
   margin-top:1.875rem;
   border-bottom: 1px solid #8a8888;
@@ -66,6 +68,9 @@
  }
  #nav-desktop{
    display: none;
+ }
+ #hr{
+   display:none;
  }
 }
 /*FONTS*/
@@ -108,6 +113,8 @@
   -moz-osx-font-smoothing: grayscale;
    text-align: center;
    color: #8a8888;
+   font-size: 0.875rem;
+   line-height: 1.375rem;
 }
 .container{
   max-width: 970px;
@@ -150,9 +157,7 @@ a:hover
 {
   display: block;
   position: relative;
-  top: 50px;
-  left: 50px;
-  
+ 
   z-index: 1;
   
   -webkit-user-select: none;
@@ -245,18 +250,16 @@ a:hover
 {
   position: absolute;
   width: 300px;
-  margin: -100px 0 0 -180px;
+  margin: -100px 0 0 -200px;
   padding: 50px;
-  padding-top: 125px;
+  
   
   background: #ededed;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
-  /* to stop flickering of text in safari */
-  
+  /* to stop flickering of text in safari */  
   transform-origin: 0% 0%;
-  transform: translate(-200%, 0);
-  
+  transform: translate(-200%, 0);  
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }
 #menu a {
