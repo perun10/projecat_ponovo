@@ -1,10 +1,10 @@
 <template>
-  <footer class="navbar bottom footer mt-3">
+  <footer class="footer mt-3">
       <div class="container">
-          <div class="row no-gutters">
-          <div class="col text-left">COPYRIGHT 2013 DISPLAY.ALL RIGHTS RESERVED</div>
-          <div class="col">
-              <div id="footer-menu" class="text-right">
+          <div class="row no-gutters justify-content-between pt-3">
+          <div class="col-md-6 col-sm-1">COPYRIGHT 2013 DISPLAY.ALL RIGHTS RESERVED</div>
+          <div class="col-md-6 col-sm-1">
+              <div id="footer-menu" >
                     <router-link to="/">Home</router-link> /
                     <router-link to="/about">About</router-link> /
                     <router-link to="/work">Work</router-link> /
@@ -23,16 +23,21 @@ export default {
 </script>
 
 <style>
+html{
+    min-height: 100%;
+    position: relative;
+}
+body{
+   
+}
 .footer{
-    
+    bottom: 0;
     width: 100%;
-    height: 63px;
-    line-height: 18px;
-    background-color: #efefef;
-    font-size:12px;
-    color:#a5a5a5;
+    position: absolute;
+    height: 60px;
+    background-color: #f5f5f5;
 }
 #footer-menu a{
-    margin-right:20px;
+    margin-right:10px;
 }
 </style>

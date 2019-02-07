@@ -2,11 +2,12 @@
   <div id="app">
     <header class="container constainer-fluid" style="margin-top:30px;">
       <div class="row no-gutters justify-content-between" >
-        <div id="logo" class="col-2 col">
+        <div id="logo" class="col-md-6 col text-left">
         <img src="@/assets/images/logo.svg" alt="Logo">
       </div>
+      
         <Social id="mobile-none"/>
-        <div id="mobile-nav"  class="col-2 mt-3">
+        <div id="mobile-nav"  class="col-md-6 col mt-3">
          
             <nav role="navigation">
               <div id="menuToggle">
@@ -64,7 +65,7 @@
  #mobile-nav{
    display: block;
    margin-top:-30px;
-   margin-left: 40px;
+   margin-left: 150px;
  }
  #nav-desktop{
    display: none;
@@ -249,10 +250,10 @@ a:hover
 #menu
 {
   position: absolute;
-  width: 300px;
+  width: 100vh;
   margin: -100px 0 0 -200px;
   padding: 50px;
-  
+  height: 100vh;
   
   background: #ededed;
   list-style-type: none;
@@ -264,11 +265,13 @@ a:hover
 }
 #menu a {
   display: block;
+  margin-left: -300px;
 }
 #menu li
 {
   padding: 10px 0;
   font-size: 22px;
+  text-align: left;
 }
 
 /*

@@ -9,14 +9,27 @@
   <section class="mt-3">
     <div class="container container-fluid">
       <p class="p-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eratiuy lacus, vel congue mauris. Fusce velitaria justo, faucibus eu.</p>
-      <button type="button" class="btn btn-success">BROWSE PORTFOLIO</button>
+      <button type="button" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;">BROWSE PORTFOLIO</button>
     </div>
   </section>
-  <section class="mt-3" style="background-color:#efefef;">
+  <section class="mt-3 p-3" style="background-color:#efefef;">
     <div class="container">
       <div class="row no-gutters">
         <div class="col-md-5">
-          <img  id="devices" src="@/assets/images/icons/play.svg" alt="Video overlay"/>
+          <img  id="devices" src="@/assets/images/icons/play.svg" alt="Video overlay" @click="show" style="cursor:pointer;"/>
+          
+          <modal name="video-popup" width="100%" height="60%" >
+               <iframe
+                id="video-popup"
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/WEkSYw3o5is?autoplay=1"
+                frameborder="0"
+                allowfullscreen="1"
+                data-video-id="202177974">
+              </iframe>
+     </modal>
+
         </div>
 
         <div class="col-md-7" style="text-align:left;">
@@ -36,14 +49,19 @@
   </section>
  
     <Carousel/>
-  
+  <Bottom/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Vue from "vue";
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal)
 import Carousel from "../components/Carousel.vue";
+import Bottom from "../components/Bottom.vue";
+
 import jquery from "jquery";
 var $ = require('jquery');
 /**JQUERY IMPORT VERY IMPORTANT !!!!!!! */
@@ -51,22 +69,23 @@ window.JQuery= $
 require('jquery.backstretch');
 /** JQUERY IMPORT VERY IMPORTANT !!!!!!!*/
 
-$('#modal1').on('hide.bs.modal1', function(e) {    
-    var $if = $(e.delegateTarget).find('iframe');
-    var src = $if.attr("src");
-    $if.attr("src", '/empty.html');
-    $if.attr("src", src);
-});
+
 
 
 export default {
   name: "home",
   jquery,
   components: {
-   Carousel
+   Carousel,
+   Bottom
   },
   methods:{
-   
+   show() {
+       this.$modal.show("video-popup");
+     },
+     hide() {
+       this.$modal.hide("video-popup");
+     }
   }
 };
 
@@ -89,6 +108,6 @@ export default {
 .display-center {
     width:89.75rem;
     margin:0 auto;         
-     }
+}
 
 </style>

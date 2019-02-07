@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="margin-carousel">
        <Slick id="slide" class="Slick"
           ref="Slick"
           :options="slickOptions"
@@ -13,13 +13,13 @@
           @setPosition="handleSetPosition"
           @swipe="handleSwipe">
   
-  <img class="slides" src="@/assets/images/boysgirls.svg" alt="Boys and girls">
-  <img class="slides" src="@/assets/images/business.svg" alt="Business">
-  <img class="slides" src="@/assets/images/buttons.svg" alt="Buttons">
-  <img class="slides" src="@/assets/images/socialmedia.svg" alt="Social MEdia">
-  <img class="slides" src="@/assets/images/jezik.svg" alt="Jezik">
-  <img class="slides" src="@/assets/images/text.svg" alt="Text">
-  <img class="slides" src="@/assets/images/pistol.svg" alt="Pistol">
+  <div class="link"><img class="slides" src="@/assets/images/boysgirls.svg" alt="Boys and girls"></div>
+  <div class="link"><img class="slides" src="@/assets/images/business.svg" alt="Business"></div>
+  <div class="link"><img class="slides" src="@/assets/images/buttons.svg" alt="Buttons"></div>
+  <div class="link"><img class="slides" src="@/assets/images/socialmedia.svg" alt="Social MEdia"></div>
+  <div class="link"><img class="slides" src="@/assets/images/jezik.svg" alt="Jezik"></div>
+  <div class="link"><img class="slides" src="@/assets/images/text.svg" alt="Text"></div>
+  <div class="link"><img class="slides" src="@/assets/images/pistol.svg" alt="Pistol"></div>
   
 </Slick>
 
@@ -43,41 +43,49 @@
         <div>
             <h3>Dark UI Kit Freebie</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
+           
+            </div>
          <div>
             <h3>Business</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Nullam tellus turpis, fringilla sit amet congue ut, luctus a nulla.Nulla facilisi.</p>
         </div>
          <div>
             <h3>BUTTONS</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Pellentesque pellentesque arcu a elit congue lacinia.</p>
         </div>
          <div>
             <h3>SOCIAL</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p> Donec sit amet sapien neque, id ullamcorper diam. </p>
         </div>
         <div>
             <h3>JEZIK</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Fusce velit justo, faucibus eu sagittis ac, gravida quis tortor.</p>
         </div>
         <div>
             <h3>TEXt</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>This is the only other technique besides #5 which passes the CSS ON</p>
         </div>
         <div>
             <h3>PISTOL</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Images OFF test.</p>
+
         </div>
     
     
 </Slick>
 <div class="row justify-content-center">
-    <div class="col-md-1">
-    <button type="button" class="slick-prev" @click="prev">Prev</button>
+    <div id="mobile-none" class="col-md-1">
+        <a  class="slick-prev" @click="prev">
+            <img id="prev" src="@/assets/images/icons/arrow-left.svg" alt="Left Arrow">
+        </a>
+   
     </div>
-    <div class="col-md-1">
-    <button type="button" class="slick-next" @click="next">Next</button>
-    </div></div>
+    <div id="mobile-none" class="col-md-1">
+     <a  class="slick-next" @click="next">
+            <img id="next" src="@/assets/images/icons/arrow-right.svg" alt="Right Arrow">
+        </a>
+     </div>
+    </div>
 </div>
 </div>
     
@@ -97,11 +105,11 @@ export default {
           centerPadding: '0px',
           slidesToShow: 3,
           slidesToScroll: 1,         
-          focuseOnSelect:true,
+          focuseOnSelect:true,           
           asNavFor:".slick-for",
-          arrows: false  ,
+          arrows: false  ,         
           variableWidth:true,
-          swipe:true,
+          swipe:false,
           responsive: [
     {
       breakpoint: 768,
@@ -119,6 +127,8 @@ export default {
         arrows: false,
         centerMode: true,
         centerPadding: '40px',
+        autoplay:true,
+        autoplay:1000,
         slidesToShow: 1,
         swipe:true
       }
@@ -191,6 +201,7 @@ export default {
 </script>
 
 <style>
+
 .slides{
 
     width: 300px ;
@@ -206,7 +217,21 @@ export default {
     opacity: 0.5;
     margin-right: 20px;
 }
+
 .Slick .slick-current{
     opacity: 1;
+}
+.margin-carousel{
+    margin-bottom:60px;
+}
+.link{
+    background-image:url("../assets/images/icons/link-hover.svg");
+    z-index: 9999;
+ }
+ 
+ @media screen and (max-width: 480px) {
+.margin-carousel{
+    margin-bottom:0;
+}
 }
 </style>
