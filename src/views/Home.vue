@@ -1,7 +1,7 @@
 <template><div>
   <div class="jumbatron jumbatron-fluid" >
     <section  id="banner" >
-  <div class="container mt-3">
+  <div class="container mt-0">
     <img  id="devices" src="../assets/images/slider-overimage.svg" alt="devices"/>
   </div> 
      </section>

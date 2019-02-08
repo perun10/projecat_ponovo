@@ -1,43 +1,49 @@
 <template>
   <div id="app">
-    <header class="container constainer-fluid" style="margin-top:30px;">
+    <header class="container constainer-fluid" style="margin-top:30px;padding-bottom:13px;">
+      <div class="row no-gutters">
+      <section class="col-md-12 col no-border">
       <div class="row no-gutters justify-content-between" >
         <div id="logo" class="col-md-6 col text-left">
         <img src="@/assets/images/logo.svg" alt="Logo">
       </div>
       
-        <Social id="mobile-none"/>
-        <div id="mobile-nav"  class="col-md-6 col mt-3">
-         
-            <nav role="navigation">
-              <div id="menuToggle">
-                
-                <input type="checkbox" />  
-                <span></span>
-                <span></span>
-                <span></span>
-                
-                <ul id="menu">
-                <router-link to="/">Home</router-link> 
-                  <router-link to="/about">About</router-link> 
-                  <router-link to="/work">Work</router-link> 
-                  <router-link to="/contact">Contact</router-link>
-                </ul>
-              </div>
-            </nav>
-        </div>
-      </div>
-      <div id="hr" class="row no-gutters">
+        <Social classForMobile="none" id="mobile-none"/>
         
       </div>
-      
-      <div  class="row no-gutters">
-        <div id="nav-desktop" class="text-left">
-      <router-link to="/">Home</router-link> 
-      <router-link to="/about">About</router-link> 
-       <router-link to="/work">Work</router-link> 
-      <router-link to="/contact">Contact</router-link></div>
-    </div></header>
+      </section>
+      <section class="col-md-12 col">
+      <nav class="navbar navbar-expand-sm navbar-light pl-0 mt-4">
+  <button class="navbar-toggler collapsed ml-5" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <router-link class="nav-link pl-0 mr-3" to="/">Home<span class="sr-only">(current)</span></router-link>
+      </li>
+      <li class="nav-item">
+                  <router-link class="nav-link pl-0" to="/about">About</router-link> 
+               
+      </li>
+      <li class="nav-item">
+                  <router-link class="nav-link pl-0" to="/work">Work</router-link> 
+               
+      </li>
+      <li class="nav-item">
+                  <router-link class="nav-link pl-0" to="/contact">Contact</router-link> 
+               
+      </li>
+      <li class="nav-item">
+                  <router-link class="nav-link" to="/contact"><Social classForMobile="mobile"/></router-link> 
+               
+      </li>
+
+    </ul>
+  </div>
+</nav>
+    </section></div>
+    </header>
     
     <router-view />
    <Footer/>
@@ -45,15 +51,17 @@
 </template>
 
 <style>
+ @font-face {
+    font-family: 'NoveCentoSansWide';
+    src: url('../src/assets/fonts/NoveCentoSansWide.ttf'); /* IE9 Compat Modes */
+    }
 .red{
   background-color: red;
 }
-#hr{
-  margin-top:1.875rem;
-  border-bottom: 1px solid #8a8888;
-  margin-bottom: 1.875rem;
-}
 
+.no-border{
+  border-bottom:1px solid #dadada;
+}
 #mobile-nav{
   display: none;
 }
@@ -62,22 +70,14 @@
  #mobile-none{
    display: none;
  }
- #mobile-nav{
-   display: block;
-   margin-top:-30px;
-   margin-left: 150px;
- }
- #nav-desktop{
-   display: none;
- }
- #hr{
-   display:none;
+ .no-border{
+   border-bottom:0px;
  }
 }
 /*FONTS*/
 
 
-@font-face {
+/* @font-face {
     font-family: 'Helvetica';
     font-style: normal;
     font-weight: normal;
@@ -106,7 +106,7 @@
     font-style: normal;
     font-weight: normal;
     src: local('Helvetica Bold Oblique'), url('../src/assets/fonts/Helvetica-BoldOblique.woff') format('woff');
-    }
+    } */
     /*APP DEFAULT SETTINGS*/
 #app {
   font-family: 'Helvetica', Arial, sans-serif;
@@ -117,15 +117,13 @@
    font-size: 0.875rem;
    line-height: 1.375rem;
 }
+p{
+  font-family: 'Helvetica', Arial, sans-serif;
+}
 .container{
   max-width: 970px;
 }
-
-#nav-desktop {
-}
-
-#nav-desktop a {
-  display: inline !important;
+#navbarNavDropdown a {
   font-size: 1.125rem;
   line-height: 1.125rem;
   margin-right: 2.75rem;
@@ -135,7 +133,7 @@
   grid-template-columns: auto auto auto auto;
 }
 
-#nav-desktop a.router-link-exact-active {
+#navbarNavDropdown a.router-link-exact-active {
   color: #42b983;
 }
 
