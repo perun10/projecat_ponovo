@@ -5,8 +5,8 @@
       <section>
         <div class="container">
            <div class="row no-gutters justify-content-center mt-3 mb-3">
-             <div class="col-md-5 col-sm-1 pt-1">
-               <img src="@/assets/images/business.svg" alt="Biznis" style="width:340px">
+             <div class="col-md-5 col-sm-1 pl-0 pt-1">
+               <img src="@/assets/images/business.svg" alt="Biznis" class="img-fluid">
              </div>
 
              <div class="col-md-7 col-sm-1 text-left">
@@ -44,36 +44,7 @@
           </div>
         </div>
       </section>
-      <section>
-        <div class="container justify-content-start text-left">
-         
-          <h3>SERVICES</h3>
-        
-        </div>
-      </section>
-      <section id="tabs">
-        <div class="container">
-          
-          <div class="row no-gutters justify-content-center">
-            <div class="col-md-3 col-sm-1 hovertab">
-              <img src="@/assets/images/icons/websites.svg" alt="Websites">
-               <h5>WEBSITES</h5>
-            </div>
-            <div class="col-md-3 col-sm-1 hovertab">
-              <img src="@/assets/images/icons/photography.svg" alt="Photography">
-               <h5>Photography</h5>
-            </div>
-            <div class="col-md-3 col-sm-1 hovertab">
-              <img src="@/assets/images/icons/seo.svg" alt="Seo">
-               <h5>Seo</h5>
-            </div>
-            <div class="col-md-3 col-sm-1 hovertab">
-              <img src="@/assets/images/icons/applications.svg" alt="Applications">
-               <h5>Applications</h5>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Tabs/>
     </main>
     <Bottom/>
   </div>
@@ -82,6 +53,7 @@
 import Top from "../components/Top.vue";
 
 import Bottom from "../components/Bottom.vue";
+import Tabs from "../components/Tabs.vue";
 
 export default {
   
@@ -92,7 +64,8 @@ export default {
   },
   components:{
     Top,
-    Bottom
+    Bottom,
+    Tabs
   }
 }
 </script>

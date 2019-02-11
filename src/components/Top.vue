@@ -1,6 +1,6 @@
 <template>
-    <section id="top" class="mt-3">
-        <div class="container pt-3 pb-3">           
+    <section id="top" class="mt-1">
+        <div class="container">           
                     <h2>{{title}}</h2>                
         </div>
     </section>
@@ -24,8 +24,11 @@ export default {
          color:white;
         text-align: left;
         font-size: 1.875rem;
+        font-weight: bold;
         line-height: 1.125rem;
         text-transform: uppercase;
+        padding-top:40px;
+        padding-bottom:40px;
  }
   @media screen and (max-width: 480px) {
  #top {

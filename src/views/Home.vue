@@ -23,7 +23,7 @@
                 id="video-popup"
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/embed/WEkSYw3o5is?autoplay=1"
+                src="https://www.youtube.com/embed/WEkSYw3o5is?autoplay=1"                        
                 frameborder="0"
                 allowfullscreen="1"
                 data-video-id="202177974">
@@ -57,7 +57,10 @@
 // @ is an alias to /src
 import Vue from "vue";
 import VModal from 'vue-js-modal'
-
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+ 
+Vue.use(VueAxios, axios)
 Vue.use(VModal)
 import Carousel from "../components/Carousel.vue";
 import Bottom from "../components/Bottom.vue";
@@ -70,11 +73,18 @@ require('jquery.backstretch');
 /** JQUERY IMPORT VERY IMPORTANT !!!!!!!*/
 
 
-
+$( document ).ready(function() {
+   alert( "ready!" );
+});
 
 export default {
   name: "home",
   jquery,
+  data(){
+    return{
+      videoLink : null
+    }
+  },
   components: {
    Carousel,
    Bottom
@@ -86,7 +96,14 @@ export default {
      hide() {
        this.$modal.hide("video-popup");
      }
-  }
+  },
+  mounted(){
+    
+    axios
+    .get('https://project-ponovo.firebaseio.com/video.json')
+    .then(response =>(this.videoLink=response.data))
+    }
+   
 };
 
 

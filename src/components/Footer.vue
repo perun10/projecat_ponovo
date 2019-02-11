@@ -38,6 +38,7 @@ body{
     background-color: #f5f5f5;
 }
 #footer-menu a{
+   color: #8a8888;
     margin-right:10px;
 }
 </style>
