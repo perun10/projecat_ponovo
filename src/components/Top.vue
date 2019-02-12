@@ -27,8 +27,8 @@ export default {
         font-weight: bold;
         line-height: 1.125rem;
         text-transform: uppercase;
-        padding-top:40px;
-        padding-bottom:40px;
+        padding-top:30px;
+        padding-bottom:30px;
  }
   @media screen and (max-width: 480px) {
  #top {

@@ -2,7 +2,7 @@
   <div id="app">
     <header class="container constainer-fluid" style="margin-top:30px;padding-bottom:13px;">
       <div class="row no-gutters">
-      <section class="col-md-12 col no-border">
+      <section class="col-md-12 col-2 no-border">
       <div class="row no-gutters justify-content-between" >
         <div id="logo" class="col-md-6 col text-left">
         <img :src="logo.img" :alt="logo.alt">
@@ -13,18 +13,18 @@
         
       </div>
       </section>
-      <section class="col-md-12 col" >
+      <section class="col-md-12 col-8 text-right"  >
       <nav class="navbar navbar-expand-sm navbar-light pl-0 mt4">
   <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active" v-for="m in menu" :key="m.index" style="padding-left:40px">
-        <router-link class="nav-link pl-0" :to="m.link">{{m.text}}<span class="sr-only">(current)</span></router-link>
+    <ul id="nivmobi" class="navbar-nav">
+      <li class="nav-item active" v-for="m in menu" :key="m.index" >
+        <router-link class="nav-link pl-0" :to="m.link" >{{m.text}}<span class="sr-only">(current)</span></router-link>
       </li>      
       <li class="nav-item">
-        <router-link class="nav-link" to="/contact"><Social classForMobile="mobile"/></router-link>               
+      <Social classForMobile="mobile"/>               
       </li>
 
     </ul>
@@ -110,20 +110,27 @@ p{
 
 </style>
 <script>
-import image1 from "@/assets/images/logo.svg";
 import Social from "@/components/Social.vue";
 import Footer from "@/components/Footer.vue";
 import Vue from "vue";
-import BootstrapVue from "bootstrap-vue";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
  
 Vue.use(VueAxios, axios)
-Vue.use(BootstrapVue);
+import jquery from "jquery";
+var $ = require('jquery');
+/**JQUERY IMPORT VERY IMPORTANT !!!!!!! */
+window.JQuery= $
+require('jquery.backstretch');
+/** JQUERY IMPORT VERY IMPORTANT !!!!!!!*/
+/**$('.navbar-nav>li>a').on('click', function(){
+    alert('HI');
+}); */
 
 export default {
+  jquery,
 data(){
   
   return{
@@ -145,7 +152,8 @@ data(){
     axios
     .get('https://project-ponovo.firebaseio.com/pages.json')
     .then(response =>(this.menu=response.data))
-  },
+  }
+  
   
 }
 </script>

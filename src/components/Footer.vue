@@ -2,8 +2,8 @@
   <footer class="footer mt-3">
       <div class="container">
           <div class="row no-gutters justify-content-between pt-3">
-          <div class="col-md-6 col-sm-1">COPYRIGHT 2013 DISPLAY.ALL RIGHTS RESERVED</div>
-          <div class="col-md-6 col-sm-1">
+          <div class="col-md-6 col-sm-1 text-left pl-0">COPYRIGHT 2013 DISPLAY.ALL RIGHTS RESERVED</div>
+          <div class="col-md-6 col-sm-1 text-right">
               <div id="footer-menu" >
                     <router-link to="/">Home</router-link> /
                     <router-link to="/about">About</router-link> /

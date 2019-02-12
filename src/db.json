@@ -27,19 +27,32 @@
       },
       "tabs":[
          {
-            "title":"Website",
+             "id" : "pills-home-tab",
+             "href" : "pills-home",
+             "selected":"true",
+             "title":"Website",
              "link":"https://svgshare.com/i/B8V.svg"
+
             
          },
          {
-            "title":"Photography",
+            "id" : "pills-profile-tab",
+             "href" : "pills-profile",
+             "selected":"false",
+             "title":"Photography",
              "link":"https://svgshare.com/i/B78.svg"
          },
          {
+            "id" : "pills-contact-tab",
+             "href" : "pills-contact",
+             "selected":"true",
             "title":"Seo",
              "link":"https://svgshare.com/i/B92.svg"
          },
          {
+            "id" : "pills-app-tab",
+             "href" : "pills-app",
+             "selected":"false",
             "title":"Applications",
             "link":"https://svgshare.com/i/B7X.svg"
          }
