@@ -100,8 +100,13 @@ export default {
     },
     data(){
         return {
-         slickOptions: {
-          centerMode: true,
+            // slides: [{
+            //     title: "Dark UI",
+            //     text: "Lorem",
+            //     imageUrl: "/images/"
+            // }]
+            slickOptions: {
+                centerMode: true,
           centerPadding: '0px',
           slidesToShow: 3,
           slidesToScroll: 1,         

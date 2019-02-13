@@ -137,6 +137,6 @@ export default {
 }
 
 .elementToAnimate{
-    animation: yourAnimation 2s forwards 0s ease-in;
+    animation: yourAnimation 0.8s forwards 0s ease-in;
 }
 </style>

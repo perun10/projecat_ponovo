@@ -3,7 +3,7 @@
         <div class="container">
            <div class="row no-gutters justify-content-between pt-5 pb-5">
                 <div class="col-md-7 col-sm-1 txta">
-                <h4>ARE YOU READY TO BE BLOWN AWAY?</h4>
+                <h4>{{title}}</h4>
                </div> 
                 <div class="col-md-5 col-sm-1">
                           <button type="button" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;">CLICK HERE TO FIND OUT</button>
@@ -15,7 +15,14 @@
 
 <script>
 export default {
- name: "Bottom"
+ name: "Bottom",
+ props:{
+    
+        title:{
+            type:String,
+            default:"ARE YOU READY TO BE BLOWN AWAY?"
+    }
+}
 }
 </script>
 

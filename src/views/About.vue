@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <top title="About my business"/>
+    <Top title="About my business"/>
     <main>
       <section>
         <div class="container">

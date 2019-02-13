@@ -36,6 +36,16 @@ export default new Router({
     }
     ,
     {
+      path: "/admin",
+      name: "admin",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/Admin.vue")
+    }
+    ,
+    {
       path: "/contact",
       name: "contact",
       // route level code-splitting
@@ -43,7 +53,19 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/Contact.vue")
-    },{ path: '/404', component: NotFound },  
+    },
+    
+    {
+      path: "/signup",
+      name: "signup",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/SignUp.vue")
+    }
+    ,
+    { path: '/404', component: NotFound },  
     { path: '*', redirect: '/404' },
   ]
 });
