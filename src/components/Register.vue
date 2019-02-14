@@ -2,6 +2,9 @@
     <div class="col-md-6 col">
         <h3>Sign up</h3>
 <form @submit.prevent="register">
+    <div class="form-group row">
+      
+    </div>
     <div class="form-group row mt-3">
   <div class="col-sm-10">
       <input v-model="form.name" type="text" class="form-control instyle" placeholder="Name" required>
@@ -30,8 +33,12 @@
 </template>
 
 <script>
+
 export default {
     name:"Register",
+    props:{
+       
+    },
     data(){
         return{
             form:{
@@ -43,8 +50,9 @@ export default {
         }
     },methods:{
         register(){
-           this.$store.dispatch('createUser',this.form)
-           .then(()=>alert("Congratulations !!"));
+            this.$store.dispatch("createUser",this.form)
+            .then(()=>this.$router.push('/admin'))
+           
         }
     },
     created(){

@@ -7,9 +7,7 @@
           
 
             <Register/>
-              <div class="col-md-6">
-                <h3>Sign in</h3>
-            </div>
+              <!-- <SignIn/> -->
         </div>
         
     </div>
@@ -19,13 +17,15 @@
 <script>
 import Top from "@/components/Top.vue";
 import Register from "@/components/Register.vue";
+import SignIn from "@/components/SignIn.vue";
 
 import Social from "@/components/Social.vue";
 export default {
 components:{
     Top,
     Social,
-    Register
+    Register,
+    SignIn
 }
 }
 </script>

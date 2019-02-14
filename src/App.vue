@@ -135,19 +135,19 @@ data(){
   
   return{
    logo : null,
-   menu : null,
+   menu : null   
   }
 },
   components:{
     Social,
     Footer
   },
-  created(){
+  mounted(){
     
     axios
     .get('https://project-ponovo.firebaseio.com/logo.json')
     .then(response =>(this.logo=response.data))
-  
+      
 
     axios
     .get('https://project-ponovo.firebaseio.com/pages.json')
