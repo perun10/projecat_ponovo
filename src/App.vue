@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Header/>
     <header class="container constainer-fluid" style="margin-top:30px;padding-bottom:13px;">
       <div class="row no-gutters">
       <section class="col-md-12 col-2 no-border">
@@ -97,11 +98,12 @@ p{
 #navbarNavDropdown a {
   font-size: 1.125rem;
   line-height: 1.125rem;
-  margin-right: 2.75rem;
+  margin-right: 1.25rem;
   font-weight: bold;
   color: #8a8888;
   display:grid;
   grid-template-columns: auto auto auto auto;
+  text-transform: uppercase;
 }
 
 #navbarNavDropdown a.router-link-exact-active {
@@ -110,6 +112,8 @@ p{
 
 </style>
 <script>
+import Header from "@/components/Header.vue";
+
 import Social from "@/components/Social.vue";
 import Footer from "@/components/Footer.vue";
 import Vue from "vue";
@@ -140,7 +144,8 @@ data(){
 },
   components:{
     Social,
-    Footer
+    Footer,
+    Header
   },
   mounted(){
     

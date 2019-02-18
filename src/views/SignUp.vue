@@ -7,7 +7,7 @@
           
 
             <Register/>
-              <!-- <SignIn/> -->
+              <SignIn/>
         </div>
         
     </div>

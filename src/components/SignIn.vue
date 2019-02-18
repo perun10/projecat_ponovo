@@ -15,6 +15,7 @@
     </div>
     <div class="form-group row">
         <button type="submit" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;margin:0 auto;">Sign in</button>
+    
     </div>
     </form>
     </div>
@@ -37,8 +38,8 @@ export default {
     },
     methods:{
         signin(){
-              this.$store.dispatch("signInUser",this.form)
-            .then((user)=> this.user = firebase.auth().currentUser , alert('USER : '+this.user+" created")) 
+              this.$store.dispatch("signInUser",this.form)            
+              .then(()=> this.$router.push('/admin'))
              
         }
     },

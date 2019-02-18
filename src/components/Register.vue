@@ -5,7 +5,7 @@
     <div class="form-group row">
       
     </div>
-    <div class="form-group row mt-3">
+    <!-- <div class="form-group row mt-3">
   <div class="col-sm-10">
       <input v-model="form.name" type="text" class="form-control instyle" placeholder="Name" required>
   </div>
@@ -14,7 +14,7 @@
   <div class="col-sm-10">
       <input v-model="form.username" type="text" class="form-control instyle" placeholder="Username" required>
   </div>
-  </div>
+  </div> -->
   <div class="form-group row">
   <div class="col-sm-10">
     <input v-model="form.email" type="email" class="form-control instyle"  id="exampleFormControlInput1" placeholder="Email Address" required>
@@ -51,7 +51,7 @@ export default {
     },methods:{
         register(){
             this.$store.dispatch("createUser",this.form)
-            .then(()=>this.$router.push('/admin'))
+           
            
         }
     },

@@ -4,11 +4,16 @@ import router from "./router";
 import store from "./store";
 Vue.config.productionTip = false;
 import * as firebase from "firebase";
+
+
+
 new Vue({
   router,
   store,
+  firebase,
   render: h => h(App)
 }).$mount("#app");
+
 
 var config = {
   apiKey: "AIzaSyANfSprz6Nb9OsFg6mC1pUko1fGs2426cI",
@@ -18,4 +23,5 @@ var config = {
   storageBucket: "project-ponovo.appspot.com",
   messagingSenderId: "38055836551"
 };
+
 firebase.initializeApp(config);

@@ -27,9 +27,7 @@ html{
     min-height: 100%;
     position: relative;
 }
-body{
-   
-}
+
 .footer{
     bottom: 0;
     width: 100%;
