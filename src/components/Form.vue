@@ -1,32 +1,38 @@
 <template>
-    <div class="container">
-       <form class="col-md-6 mt-5 pl-0 text-left mb-3" @submit.prevent="sendMail">
+    
+       <form class="col-md-7 mt-5 pl-0 text-left mb-3" @submit.prevent="sendMail">
            <h3>Contact form</h3>
            <p class="text-left">Nullam tellus turpis, fringilla sit amet congue ut, luctus a nulla. Donec sit amet sapien neque, id ullamcorper diam. </p>
-  <div class="form-group">
-      <input type="text" v-model="form.name" class="form-control instyle" placeholder="Name" required>
-  </div>
-  <div class="form-group">  
-    <input type="email" v-model="form.email" class="form-control instyle"  id="exampleFormControlInput1" placeholder="Email Address" required>
-  </div>
-   <div class="form-group">
-      <input type="text" v-model="form.subject" class="form-control instyle"  placeholder="Subject" required>
-  </div>
-  <div class="form-group">    
-    <textarea class="form-control form-control-lg  texta" v-model="form.message" id="exampleFormControlTextarea1" rows="3" cols="8"></textarea>
-  </div>
- <button type="submit" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;">Send message</button>
+  
+      <input type="text" v-model="form.name"  placeholder="Name" required>
+ 
+  
+    <input type="email" v-model="form.email" id="exampleFormControlInput1" placeholder="Email Address" required>
+  
+   
+      <input type="text" v-model="form.subject"  placeholder="Subject" required>
+  
+     
+    <textarea maxlength="100" v-model="form.message" id="exampleFormControlTextarea1" rows="3" cols="8"></textarea>
+  
+ <button  type="submit" class="btn btn-success wid" style="background-color:#2ecc71;border-color:#2ecc71;">Send message</button>
+  <vue-recaptcha :sitekey="siteKey"></vue-recaptcha>
    <!--<div class="form-group">
     <label for="exampleFormControlFile1">Example file input</label>
     <input type="file" class="form-control-file" id="exampleFormControlFile1">
   </div>-->
 </form>
-    </div>
+    
 </template>
 
 <script>
+ import  VueReCaptcha from "vue-recaptcha"
+
 export default {
  name:"Form",
+ components:{
+   "vue-recaptcha":VueReCaptcha
+ },
  data(){
    return{
      form:{
@@ -35,6 +41,7 @@ export default {
        subject:null,
        message:null
      },
+     siteKey:process.env.VUE_APP_RECAPT_SITE_KEY
    }
  },
  methods:{
@@ -50,7 +57,6 @@ export default {
      this.$store.dispatch("send",{name:this.form.name, email:this.form.email ,subject:this.form.subject, message:this.form.message})
     //console.log(this.fromAddresses.name, this.fromAddresses.address , this.mail.subject , this.mail.message)
   }
-  
  }
 }
 </script>
@@ -64,5 +70,41 @@ export default {
  .texta {
    border:1px solid #8a8888;
    border-radius:0;
+ }
+ form{
+   display: grid;
+   grid-template-rows: auto auto auto auto auto auto auto auto;
+   gap:15px;
+ }
+ textarea{
+   width: 560px;
+   height: 221px;
+   border: 2px solid #8a8888;
+   resize: none;
+ }
+ input{
+   height: 45px;
+   width: 350px;
+   border: 2px solid #8a8888;
+ }
+ ::placeholder{
+  font-family: 'Helvetica', Arial, sans-serif;
+  color:#989898;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+ }
+ .wid{
+   width: 140px;
+ }
+ @media screen and (max-width: 600px) {
+ textarea{
+    height:auto;
+   width: 100%;
+ }
+ input{
+     height:auto;
+   width: 100%;
+ }
  }
 </style>

@@ -2,7 +2,13 @@
 <div id="contact">
     <Top title="GOT A QUESTION OR INQUIRY?"/>
     <Map/>
-    <Form />
+    <div class="container">
+   <div class="row no-gutters">
+      <Form />
+      <div class="col-md-1"></div>
+      <Info />
+   </div>
+</div>
     <Bottom/>    
 </div>
     
@@ -13,6 +19,7 @@ import Top from "../components/Top.vue";
 import Bottom from "../components/Bottom.vue";
 import Map from "../components/Map.vue";
 import Form from "../components/Form.vue";
+import Info from "../components/Info.vue";
 
 export default {
   name : "Contact",
@@ -25,7 +32,8 @@ export default {
     Top,
     Bottom,
     Map,
-    Form
+    Form,
+    Info
   }
 }
 </script>

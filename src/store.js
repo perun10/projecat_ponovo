@@ -81,7 +81,7 @@ export default new Vuex.Store({
                 user => {
                   commit('setLoading', false)
                   const newUser = {
-                    id: user.uid,                  
+                    id: user.user.uid,                  
                   }
                   commit('setUser', newUser)
                   Vue.swal("Logged in succesfully "+payload.email)
@@ -104,7 +104,7 @@ export default new Vuex.Store({
       logout({commit}){
         firebase.auth().signOut().then(() => {
           router.push('/signup');
-           commit('setUser',{id:null})
+           commit('setUser',null)
         })
         
       },

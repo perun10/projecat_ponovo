@@ -6,8 +6,8 @@
       <section class="col-md-12 col-2 no-border">
       <div class="row no-gutters justify-content-between" >
         <div id="logo" class="col-md-6 col text-left">
-        <img :src="logo.img" :alt="logo.alt">
-        
+        <img :src="logo" alt="alt">
+       
       </div>
         <Social classForMobile="none" id="mobile-none"/>
         
@@ -22,7 +22,9 @@
     <ul id="nivmobi" class="navbar-nav">
       <li class="nav-item active" v-for="m in menu" :key="m.index" >
         <router-link class="nav-link pl-0" :to="m.link" >{{m.text}}<span class="sr-only">(current)</span></router-link>
+        
       </li>      
+      <router-link class="nav-link pl-0" to="/admin" v-if="user" >Admin<span class="sr-only">(current)</span></router-link>
       <li class="nav-item">
       <Social classForMobile="mobile"/>               
       </li>
@@ -117,10 +119,9 @@ import Social from "@/components/Social.vue";
 import Footer from "@/components/Footer.vue";
 import Vue from "vue";
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
+import firebase from "firebase"
 Vue.use(VueAxios, axios)
 import jquery from "jquery";
 var $ = require('jquery');
@@ -138,7 +139,8 @@ data(){
   
   return{
    logo : null,
-   menu : null   
+   menu : null,
+   alt : null   
   }
 },
   components:{
@@ -146,17 +148,48 @@ data(){
     Footer,
     Header
   },
-  mounted(){
+  created(){
     
-    axios
-    .get('https://project-ponovo.firebaseio.com/logo.json')
-    .then(response =>(this.logo=response.data))
+    this.onLoad();
+    
+            
+
+    // axios
+    // .get('https://project-ponovo.firebaseio.com/logo.json')
+    // .then(response =>(this.logo=response.data.img , this.alt = response.data.alt) )
       
 
     axios
     .get('https://project-ponovo.firebaseio.com/pages.json')
     .then(response =>(this.menu=response.data))
-  }
+  },computed: {
+     user() {
+       return this.$store.getters.user
+     }
+   },
+   watch: {
+     user(value) {
+       if(value !== null && value !== undefined){
+         this.$router.push("/admin");
+       }
+     }
+   },
+   methods:{
+     onLoad(){ 
+            
+             firebase.database().ref('/logo/-LZFL7s0ALMOUh8jiE9k').once("value")
+            .then((snapshot) =>{
+            var child_changed = snapshot.val();
+           //console.log(child_changed.img)
+           console.log(this.logo)
+            this.logo = child_changed.img
+           console.log(this.logo)
+           
+           
+        })
+        
+        }
+   }
   
   
 }

@@ -7,6 +7,7 @@ Vue.config.productionTip = false;
 import axios from "axios"
 require('dotenv/config')
 
+
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 var config = {
   apiKey: process.env.VUE_APP_FIRE_KEY,

@@ -45,8 +45,8 @@ export default new Router({
        beforeEnter(to,from,next){      
 
         if(store.getters.user){           
-          console.log(store.state.user);
-          console.log(store.getters.user);
+         // console.log(store.state.user);
+         // console.log(store.getters.user);
          
           next();
         }else{

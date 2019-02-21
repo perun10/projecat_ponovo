@@ -3,7 +3,7 @@
     <Top title="Registration"/>
     <div class="container mt-5">
         <div class="row no-gutters">
-
+ 
           
 
             <Register/>
@@ -26,7 +26,20 @@ components:{
     Social,
     Register,
     SignIn
-}
+},
+computed: {
+     user() {
+       return this.$store.getters.user
+     }
+   },
+   watch: {
+     user(value) {
+       if(value !== null && value !== undefined){
+         this.$router.push("/admin");
+       }
+     }
+   },
+
 }
 </script>
 
