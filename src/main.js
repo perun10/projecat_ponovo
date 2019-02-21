@@ -2,26 +2,40 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-Vue.config.productionTip = false;
 import * as firebase from "firebase";
+Vue.config.productionTip = false;
+import axios from "axios"
+require('dotenv/config')
 
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+var config = {
+  apiKey: process.env.VUE_APP_FIRE_KEY,
+  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+  databaseURL: process.env.VUE_APP_DATABASE_URL,
+  projectId: process.env.VUE_APP_PROJECTID,
+  storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDERID
+};
 
-
+firebase.initializeApp(config);
 new Vue({
   router,
   store,
   firebase,
-  render: h => h(App)
+  render: h => h(App),
+  created(){
+  firebase.auth().onAuthStateChanged((user) => {
+    if(user) {
+      this.$store.dispatch('autoSignIn', user);
+    }
+  })
+}
 }).$mount("#app");
 
 
-var config = {
-  apiKey: "AIzaSyANfSprz6Nb9OsFg6mC1pUko1fGs2426cI",
-  authDomain: "project-ponovo.firebaseapp.com",
-  databaseURL: "https://project-ponovo.firebaseio.com",
-  projectId: "project-ponovo",
-  storageBucket: "project-ponovo.appspot.com",
-  messagingSenderId: "38055836551"
-};
 
-firebase.initializeApp(config);
+
+
+
+
+

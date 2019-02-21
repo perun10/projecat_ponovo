@@ -1,0 +1,20 @@
+{
+    "mail" : {
+    "toAddresses": [
+      {
+        "name": "Test1",
+        "address": "djuradj.perunovic@gmail.com"
+      }
+    ],
+    "fromAddresses":[
+      {
+        "name": "",
+        "address": ""
+      }
+    ],
+    "subject": "",
+    "message":""
+  
+     }
+
+    }

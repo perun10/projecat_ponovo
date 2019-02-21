@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Admin from "./views/Admin.vue";
 import NotFound from "@/components/NotFound.vue";
+import store from "./store"
 Vue.use(Router);
 
 export default new Router({
@@ -40,7 +41,18 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-       component:Admin
+       component:Admin,
+       beforeEnter(to,from,next){      
+
+        if(store.getters.user){           
+          console.log(store.state.user);
+          console.log(store.getters.user);
+         
+          next();
+        }else{
+          next('/signup');
+        }
+}
       
     }
     ,

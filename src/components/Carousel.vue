@@ -25,7 +25,7 @@
 
 <div class="container" >
     
-
+<div>
 <Slick id="slide2" class="slick-for"
           ref="Slick2"
           :options="slickOptions2"
@@ -73,6 +73,7 @@
     
     
 </Slick>
+</div>
 <div class="row justify-content-center">
     <div id="mobile-none" class="col-md-1">
         <a  class="slick-prev" @click="prev">
@@ -106,7 +107,7 @@ export default {
             //     imageUrl: "/images/"
             // }]
             slickOptions: {
-                centerMode: true,
+          centerMode: true,
           centerPadding: '0px',
           slidesToShow: 3,
           slidesToScroll: 1,         

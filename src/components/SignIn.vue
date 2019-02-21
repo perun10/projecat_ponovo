@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-6 col">
+    <div class="col-md-6 col-12 mb-5">
         <h3>Sign in</h3>
 <form @submit.prevent="signin">
        
@@ -14,8 +14,9 @@
     </div>
     </div>
     <div class="form-group row">
+        <div class="col-sm-10">
         <button type="submit" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;margin:0 auto;">Sign in</button>
-    
+        </div>
     </div>
     </form>
     </div>
@@ -38,9 +39,14 @@ export default {
     },
     methods:{
         signin(){
-              this.$store.dispatch("signInUser",this.form)            
-              .then(()=> this.$router.push('/admin'))
+              this.$store.dispatch("signInUser",{email:this.form.email,password:this.form.password})
+            
              
+        }
+    },
+    computed:{
+        user(){
+            return this.$store.getters.user;
         }
     },
     created(){

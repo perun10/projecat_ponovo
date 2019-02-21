@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-6 col">
+    <div class="col-md-6 col-12">
         <h3>Sign up</h3>
 <form @submit.prevent="register">
     <div class="form-group row">

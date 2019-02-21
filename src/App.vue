@@ -9,7 +9,6 @@
         <img :src="logo.img" :alt="logo.alt">
         
       </div>
-    
         <Social classForMobile="none" id="mobile-none"/>
         
       </div>
@@ -33,7 +32,7 @@
 </nav>
     </section></div>
     </header>
-    
+   
     <router-view />
    <Footer/>
   </div>

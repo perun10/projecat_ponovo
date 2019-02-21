@@ -3,7 +3,8 @@ import Vuex from "vuex";
 import * as firebase from "firebase";
 Vue.use(Vuex);
 import VueSweetalert2 from 'vue-sweetalert2';
- 
+import router from './router.js'
+import axios from "axios"
 Vue.use(VueSweetalert2);
 const options = {
   confirmButtonColor: '#41b882',
@@ -13,10 +14,12 @@ const options = {
 Vue.use(VueSweetalert2, options)
 
 export default new Vuex.Store({
-  state: { 
+
+  state: {  
     loading: false,
     error: null,
-    tokenId: null
+    tokenId: null,
+    user: null,
   },
   mutations: {
     setAuthId(state,id){
@@ -39,9 +42,11 @@ export default new Vuex.Store({
       state.error = null
     },
     setTokenId(state,payload){
-      console.log(payload);
+     // console.log(payload);
       state.tokenId = payload;
-    }
+    },
+
+    
   },
   actions: {
     clearError ({commit}) {
@@ -49,90 +54,74 @@ export default new Vuex.Store({
     },
     setError ({commit}, payload) {
       commit('setError', payload)
-    },
-    
-    // createUser({state,commit}, {id,email,name,username}){
-    //   return new Promise((resolve) =>{
-    //     const registeredAt = Math.floor(Date.now()/1000)
-    //     const usernameLower = username.toLowerCase()
-    //     email = email.toLowerCase()
-    //     const user = {email,name,username,usernameLower,registeredAt}
-    //     firebase.database().ref('users').child(id).set(user)
-    //     .then(() => {
-    //       commit('setItem',{resource:'users',id:id, item:user})//'setItem', 
-    //       resolve(state.users[id])
-    //     })
-    //   })
-    // },
+    },  
     createUser ({commit}, payload) {
       commit("setLoading", true)
       commit("clearError")
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-        .then(() => {
+      .catch((error)=>{
+        Vue.swal(error.message)
+        router.push('/signup')
+      })
+        .then((user) => {
           Vue.swal(" Account created for "+ payload.email);
-          
+          const newUser = {
+            id : user.id
+          }
+          commit('setUser',newUser)
         },err=>{
           Vue.swal(err.message);
         })
-          // user => {
-          //   commit("setLoading", false)
-          //   const newUser = {
-          //     id: user.id,
-          //     name: user.name,
-          //     email: user.email,
-          //     username: user.username,
-          //     registeredAt : Math.floor(Date.now()/1000),
-          //     usernameLower : this.username.toLowerCase()
-          //   }
-           
-            // firebase.database().ref('users').child(id).set(newUser)
-            // .then(()=>{
-            //   commit({resource:"users",id:id,item:newUser});
-            
-            // })
-           
-        //   }
-        // )
-        // .catch(
-        //   error => {
-        //     commit('setLoading', false)
-        //     commit('setError', error)
-        //     console.log(error)
-        //   }
-        // )
-    }
-    ,
-    registerUserWithEmailAndPassword(dispatch, {email,password}){
-      
-        firebase.auth().createUserWithEmailAndPassword(email ,password)
-      
-        // .then(() =>{
-        //   return dispatch('createUser',{email,name,username,})
-        // })
-     
+          },   
+          signInUser ({commit}, payload) {
+            commit('setLoading', true)
+            commit('clearError')
+            firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+              .then(
+                user => {
+                  commit('setLoading', false)
+                  const newUser = {
+                    id: user.uid,                  
+                  }
+                  commit('setUser', newUser)
+                  Vue.swal("Logged in succesfully "+payload.email)
+                  router.push('/admin')
+                  
+                }
+              )
+              .catch(
+                error => {
+                  commit('setLoading', false)
+                  commit('setError', error)
+                  Vue.swal(error.message)
+                  router.push('/signup')
+                }
+              )
+          },
+      autoSignIn({commit},payload){
+        commit('setUser',{id:payload.uid})
       },
-      signInUser({commit},{email,password}){
-      
-        firebase.auth().signInWithEmailAndPassword(email,password)
-        .then(
-            firebase.auth().currentUser.getIdToken()
-            .then((data) => { 
-              this.tokenId = data
-              console.log(this.tokenId)
-            
-              commit("setTokenId",this.tokenId)
-              // return this.tokenId
-            })
-           
-            
-          )
-          
-       
-      },
-      logout(){
+      logout({commit}){
         firebase.auth().signOut().then(() => {
-          this.$router.push('/work');
+          router.push('/signup');
+           commit('setUser',{id:null})
         })
+        
+      },
+      send(payload){
+        //https://localhost:44377/swagger/ui/index.html#/EmailService/Send
+        axios.post('api/EmailService/Send',
+        payload.name,payload.mail,payload.subject,payload.message,{headers:{
+          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, PUT, OPTIONS, DELETE',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type',
+            'Content-Type': 'application/json-patch+json',
+            'Accept': 'application/json'
+        }})
+        .then(function (response){
+          console.log(response)
+        })   
+
       }
     },
     getters: {
@@ -144,6 +133,9 @@ export default new Vuex.Store({
       },
       token(state){
         return state.tokenId
+      },
+      user (state) {
+        return state.user
       }
     }
 });
