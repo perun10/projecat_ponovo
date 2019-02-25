@@ -20,11 +20,11 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul id="nivmobi" class="navbar-nav">
-      <li class="nav-item active" v-for="m in menu" :key="m.index" >
-        <router-link class="nav-link pl-0" :to="m.link" >{{m.text}}<span class="sr-only">(current)</span></router-link>
+      <li class="nav-item active"  v-for="m in menu" :key="m.index" >
+        <router-link class="nav-link pl-0" :to="m.link">{{m.text}}<span class="sr-only">(current)</span></router-link>
         
       </li>      
-      <router-link class="nav-link pl-0" to="/admin" v-if="user" >Admin<span class="sr-only">(current)</span></router-link>
+      <router-link class="nav-link pl-0" to="/admin" v-if="user">Admin<span class="sr-only">(current)</span></router-link>
       <li class="nav-item">
       <Social classForMobile="mobile"/>               
       </li>
@@ -45,9 +45,7 @@
     font-family: 'NoveCentoSansWide';
     src: url('../src/assets/fonts/NoveCentoSansWide.ttf'); /* IE9 Compat Modes */
     }
-.red{
-  background-color: red;
-}
+
 
 .no-border{
   border-bottom:1px solid #dadada;
@@ -75,7 +73,7 @@
   
   margin-top: -2.5rem;
  }
- 
+
 }
     /*APP DEFAULT SETTINGS*/
 #app {
@@ -111,6 +109,7 @@ p{
   color: #42b983;
 }
 
+
 </style>
 <script>
 import Header from "@/components/Header.vue";
@@ -140,7 +139,9 @@ data(){
   return{
    logo : null,
    menu : null,
-   alt : null   
+   alt : null,
+   bgcolor:null,   
+   tcolor:null,
   }
 },
   components:{
@@ -148,20 +149,13 @@ data(){
     Footer,
     Header
   },
-  created(){
-    
+  created(){    
     this.onLoad();
-    
-            
-
-    // axios
-    // .get('https://project-ponovo.firebaseio.com/logo.json')
-    // .then(response =>(this.logo=response.data.img , this.alt = response.data.alt) )
-      
-
+         
     axios
     .get('https://project-ponovo.firebaseio.com/pages.json')
-    .then(response =>(this.menu=response.data))
+    .then(response =>(this.menu=response.data))      
+
   },computed: {
      user() {
        return this.$store.getters.user
@@ -181,9 +175,9 @@ data(){
             .then((snapshot) =>{
             var child_changed = snapshot.val();
            //console.log(child_changed.img)
-           console.log(this.logo)
+         //  console.log(this.logo)
             this.logo = child_changed.img
-           console.log(this.logo)
+          // console.log(this.logo)
            
            
         })

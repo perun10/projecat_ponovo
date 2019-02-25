@@ -23,7 +23,8 @@
                 id="video-popup"
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/embed/WEkSYw3o5is?autoplay=1"                        
+                autoplay="1"
+                :src="videoLink"                        
                 frameborder="0"
                 allowfullscreen="1"
                 data-video-id="202177974">
@@ -55,6 +56,7 @@
 
 <script>
 // @ is an alias to /src
+import firebase from "firebase"
 import Vue from "vue";
 import VModal from 'vue-js-modal'
 import axios from 'axios'
@@ -72,7 +74,7 @@ export default {
  
   data(){
     return{
-      videoLink : null
+      videoLink : ""
     }
   },
   components: {
@@ -88,13 +90,19 @@ export default {
      }
   },
   mounted(){
-    
-  axios
-  .get('https://project-ponovo.firebaseio.com/video.json')
-  .then(response =>(this.videoLink=response.data))
-   }
-   
+     firebase.database().ref('/video/').once("value")
+            .then((snapshot) =>{
+            var child_changed = snapshot.val();
+           //console.log(child_changed.img)
+           //console.log(this.logo)
+            this.videoLink = child_changed.link
+           console.log(child_changed.link)
+            })
+  }
+
 };
+   
+
 
 
 </script>

@@ -1,0 +1,20 @@
+{
+    
+    {
+       "text":"Home",
+       "link":"/"
+    },
+    {
+       "text":"About",
+       "link":"/about"
+    },
+    {
+       "text":"Work",
+       "link":"/work"
+    },
+    {
+       "text":"Contact",
+       "link":"/contact"
+    }
+
+}

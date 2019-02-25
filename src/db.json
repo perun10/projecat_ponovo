@@ -3,24 +3,7 @@
         "img":"https://svgshare.com/i/B8u.svg",
         "alt":"Logo"
            },
-     "pages":[
-         {
-            "text":"Home",
-            "link":"/"
-         },
-         {
-            "text":"About",
-            "link":"/about"
-         },
-         {
-            "text":"Work",
-            "link":"/work"
-         },
-         {
-            "text":"Contact",
-            "link":"/contact"
-         }
-    ],
+     
     "video":{
          "link":"https://www.youtube.com/embed/WEkSYw3o5is?autoplay=1",
          "title":"Cat Video"

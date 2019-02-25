@@ -13,13 +13,13 @@
           @setPosition="handleSetPosition"
           @swipe="handleSwipe">
   
-  <div class="link"><img class="slides" src="@/assets/images/boysgirls.svg" alt="Boys and girls"></div>
-  <div class="link"><img class="slides" src="@/assets/images/business.svg" alt="Business"></div>
-  <div class="link"><img class="slides" src="@/assets/images/buttons.svg" alt="Buttons"></div>
-  <div class="link"><img class="slides" src="@/assets/images/socialmedia.svg" alt="Social MEdia"></div>
-  <div class="link"><img class="slides" src="@/assets/images/jezik.svg" alt="Jezik"></div>
-  <div class="link"><img class="slides" src="@/assets/images/text.svg" alt="Text"></div>
-  <div class="link"><img class="slides" src="@/assets/images/pistol.svg" alt="Pistol"></div>
+  <div><img class="slides" src="@/assets/images/boysgirls.svg" alt="Boys and girls"></div>
+  <div><img class="slides" src="@/assets/images/business.svg" alt="Business"></div>
+  <div><img class="slides" src="@/assets/images/buttons.svg" alt="Buttons"></div>
+  <div><img class="slides" src="@/assets/images/socialmedia.svg" alt="Social MEdia"></div>
+  <div><img class="slides" src="@/assets/images/jezik.svg" alt="Jezik"></div>
+  <div><img class="slides" src="@/assets/images/text.svg" alt="Text"></div>
+  <div><img class="slides" src="@/assets/images/pistol.svg" alt="Pistol"></div>
   
 </Slick>
 
