@@ -15,7 +15,9 @@
      
     <textarea maxlength="100" v-model="form.message" id="exampleFormControlTextarea1" rows="3" cols="8"></textarea>
   
- <button  type="submit" class="btn btn-success wid" style="background-color:#2ecc71;border-color:#2ecc71;">Send message</button>
+ <!-- <button  type="submit" class="btn btn-success wid" style="background-color:#2ecc71;border-color:#2ecc71;">Send message</button> -->
+    <Button class="wid" text="Send message"/>
+ 
   <vue-recaptcha :sitekey="siteKey"></vue-recaptcha>
    <!--<div class="form-group">
     <label for="exampleFormControlFile1">Example file input</label>
@@ -27,11 +29,13 @@
 
 <script>
  import  VueReCaptcha from "vue-recaptcha"
+ import Button from "../components/Button.vue";
 
 export default {
  name:"Form",
  components:{
-   "vue-recaptcha":VueReCaptcha
+   "vue-recaptcha":VueReCaptcha,
+   Button
  },
  data(){
    return{

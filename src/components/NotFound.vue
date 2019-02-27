@@ -1,10 +1,17 @@
 <template>
+<div>
     <H1>PAGE NOT FOUND</H1>
+<Adminpanel/>
+</div>
 </template>
 
 <script>
-export default {
+import Adminpanel from "../components/AdminPanel.vue"
 
+export default {
+ components:{
+     Adminpanel
+ }
 }
 </script>
 

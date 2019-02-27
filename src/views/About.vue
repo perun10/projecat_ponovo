@@ -5,11 +5,11 @@
       <section>
         <div class="container">
            <div class="row no-gutters justify-content-center mt-5 mb-3">
-             <div class="col-md-5 col-sm-1 pl-0 pt-0">
+             <div class="col-md-5 col-sm-12 pl-0 pt-0">
                <img src="@/assets/images/business.svg" alt="Biznis" class="img-fluid">
              </div>
 
-             <div class="col-md-7 col-sm-1 pl-3 text-left">
+             <div class="col-md-7 col-sm-12 pl-3 text-left">
                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                  Pellentesque eu erat lacus, vel congue mauris. Fusce velit justo, faucibus eu sagittis ac, gravida quis tortor. 
                  Suspendisse non urna mi, quis tincidunt eros. Nullam tellus turpis, fringilla sit amet congue ut, luctus a nulla. 
@@ -27,14 +27,14 @@
       <section>
         <div class="container">
           <div class="row no-gutters justify-content-center">
-            <div class="col-md-6 col-sm-1 pr-2 text-left">
+            <div class="col-md-6 col-sm-12 pr-2 text-left">
               <h3>MISSION STATEMENT</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu erat lacus, vel congue mauris. 
                 Fusce velit justo, faucibus eu sagittis ac, gravida quis tortor. Suspendisse non urna mi, quis tincidunt eros. 
                 Nullam tellus turpis, fringilla sit amet congue ut, luctus a nulla. Donec sit amet sapien neque, id ullamcorper diam. Nulla facilisi. 
                 Pellentesque pellentesque arcu a elit congue lacinia.</p>
             </div>
-            <div class="col-md-6 col-sm-1 pl-2 text-left">
+            <div class="col-md-6 col-sm-12 pl-2 text-left">
               <h3>FUN FACTS</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu erat lacus, vel congue mauris. 
                 Fusce velit justo, faucibus eu sagittis ac, gravida quis tortor. Suspendisse non urna mi, quis tincidunt eros. 

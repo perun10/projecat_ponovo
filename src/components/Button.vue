@@ -1,5 +1,5 @@
 <template>
-       <button  type="submit" class="btn" :style="{background:bgcolor}" @click="onClick">{{text}}</button>    
+       <button  type="submit" class="btn" :style="{background:this.$store.getters.color}" @click="onClick">{{text}}</button>    
 
 </template>
 

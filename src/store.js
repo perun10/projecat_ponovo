@@ -20,6 +20,8 @@ export default new Vuex.Store({
     error: null,
     tokenId: null,
     user: null,
+    logo:null,
+    color:null
   },
   mutations: {
     setAuthId(state,id){
@@ -45,6 +47,12 @@ export default new Vuex.Store({
      // console.log(payload);
       state.tokenId = payload;
     },
+    setLogo(state,payload){
+      state.logo = payload
+    },
+    setColor(state,payload){
+      state.color = payload
+    }
 
     
   },
@@ -122,9 +130,28 @@ export default new Vuex.Store({
           console.log(response)
         })   
 
-      }
+      },
+      getLogo({commit},payload){
+        firebase.database().ref('/logo/-LZFL7s0ALMOUh8jiE9k').once("value")
+            .then((snapshot) =>{
+            var child_changed = snapshot.val();
+           //console.log(child_changed.img)
+         //  console.log(this.logo)
+         payload = child_changed.img
+       //  console.log(payload + "LOOOOOGO")
+           commit('setLogo',payload)
+      })
     },
-    getters: {
+    getColor({commit},payload){
+      firebase.database().ref('/themes/').once("value")
+            .then((snapshot) =>{
+            var child_changed = snapshot.val();           
+            payload = child_changed.backgroundColor          
+            commit('setColor',payload);
+            })
+    }
+  },
+  getters: {
       loading (state) {
         return state.loading
       },
@@ -136,6 +163,13 @@ export default new Vuex.Store({
       },
       user (state) {
         return state.user
+      },
+      logo(state){
+        return state.logo
+      },
+      color(state){
+        return state.color
       }
     }
+  
 });

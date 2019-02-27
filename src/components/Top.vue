@@ -1,5 +1,5 @@
 <template>
-    <section id="top" class="mt-1 defaultStyle" :style="{background:bgcolor}">
+    <section id="top" class="mt-1 defaultStyle" :style="{background:this.$store.getters.color}">
         <div class="container">           
                     <h2>{{title}}</h2>                
         </div>
@@ -23,16 +23,18 @@ export default {
         }
     },
     created(){
-            firebase.database().ref('/themes/').once("value")
-            .then((snapshot) =>{
-            var child_changed = snapshot.val();
-           //console.log(child_changed.img)
-           //console.log(this.logo)
-            this.bgcolor = child_changed.backgroundColor
-            this.tcolor = child_changed.color
-           //console.log(this.bgcolor)
+    this.$store.dispatch('getColor',this.color)
+
+        //     firebase.database().ref('/themes/').once("value")
+        //     .then((snapshot) =>{
+        //     var child_changed = snapshot.val();
+        //    //console.log(child_changed.img)
+        //    //console.log(this.logo)
+        //     this.bgcolor = child_changed.backgroundColor
+        //     this.tcolor = child_changed.color
+        //    //console.log(this.bgcolor)
            //console.log(this.tcolor)
-            })
+            // })
     }
 }
 </script>
