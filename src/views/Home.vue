@@ -9,7 +9,7 @@
   <section class="mt-5">
     <div class="container container-fluid">
       <p class="p-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eratiuy lacus, vel congue mauris. Fusce velitaria justo, faucibus eu.</p>
-      <Button text="BROWSE PORTFOLIO"/>
+      <Button text="BROWSE PORTFOLIO" />
       <!-- <button type="button" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;">BROWSE PORTFOLIO</button> -->
     </div>
   </section>
@@ -92,6 +92,7 @@ export default {
      hide() {
        this.$modal.hide("video-popup");
      }
+    
   },
   mounted(){
     this.$store.dispatch('getColor',this.color)

@@ -3,7 +3,7 @@
           <div>
           <h3>Contact form</h3>
            <p class="text-left">Lorem ipsum dolor sit amet, consectetur <br/> adipiscing elit velit justo.</p>
-           <p class="text-left"><label>email: </label><a style="color:#2ecc71;" href="mailto:info@display.com?subject=Mail from Our Site">info@display.com</a><br/>
+           <p class="text-left"><label>email: </label><a :style="{color:this.$store.getters.color}" href="mailto:info@display.com?subject=Mail from Our Site">info@display.com</a><br/>
            <label>phone: </label><a style="color:#8a8888;" href="tel:1.306.222.4545">1.306.222.4545</a></p>
           
            <p class="text-left">222 2nd Ave South</p>

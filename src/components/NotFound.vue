@@ -1,7 +1,7 @@
 <template>
 <div>
     <H1>PAGE NOT FOUND</H1>
-<Adminpanel/>
+
 </div>
 </template>
 

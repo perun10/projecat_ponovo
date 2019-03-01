@@ -20,12 +20,13 @@ import Bottom from "../components/Bottom.vue";
 import Map from "../components/Map.vue";
 import Form from "../components/Form.vue";
 import Info from "../components/Info.vue";
+import firebase from "firebase";
 
 export default {
   name : "Contact",
   data(){
     return{
-
+     
     }
   },
   components:{
@@ -34,7 +35,8 @@ export default {
     Map,
     Form,
     Info
-  }
+  }, 
+  
 }
 </script>
 

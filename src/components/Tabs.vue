@@ -63,7 +63,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
  .nav-pills .nav-item{
    padding: 0;
    margin: 0;

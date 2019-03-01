@@ -16,9 +16,9 @@
     <textarea maxlength="100" v-model="form.message" id="exampleFormControlTextarea1" rows="3" cols="8"></textarea>
   
  <!-- <button  type="submit" class="btn btn-success wid" style="background-color:#2ecc71;border-color:#2ecc71;">Send message</button> -->
-    <Button class="wid" text="Send message"/>
+    <Button id="sendMailbtn" class="wid" text="Send message" :onClick="sendMail"/>
  
-  <vue-recaptcha :sitekey="siteKey"></vue-recaptcha>
+  <vue-recaptcha :sitekey="siteKey" @verify="onVerify"></vue-recaptcha>
    <!--<div class="form-group">
     <label for="exampleFormControlFile1">Example file input</label>
     <input type="file" class="form-control-file" id="exampleFormControlFile1">
@@ -30,7 +30,6 @@
 <script>
  import  VueReCaptcha from "vue-recaptcha"
  import Button from "../components/Button.vue";
-
 export default {
  name:"Form",
  components:{
@@ -43,24 +42,26 @@ export default {
        name:null,
       email:null,
        subject:null,
-       message:null
+       message:null       
      },
-     siteKey:process.env.VUE_APP_RECAPT_SITE_KEY
+     siteKey:process.env.VUE_APP_RECAPT_SITE_KEY,
+     mailBtn:null
    }
+ 
+ }, 
+ mounted(){
+   this.mailBtn = document.getElementById('sendMailbtn')
+   this.mailBtn.disabled = true
  },
  methods:{
   sendMail(){
-    // this.fromAddresses.push({
-    //   name: this.form.email,
-    //   address:this.form.email
-    // }),
-    // this.mail.subject = this.form.subject
-    // this.mail.message = this.form.message;
-
-    // console.log(this.form.name+","+this.form.email+","+this.form.subject+","+this.form.message)
+    
      this.$store.dispatch("send",{name:this.form.name, email:this.form.email ,subject:this.form.subject, message:this.form.message})
     //console.log(this.fromAddresses.name, this.fromAddresses.address , this.mail.subject , this.mail.message)
-  }
+  },
+  onVerify() {
+       this.mailBtn.disabled = false;
+     }
  }
 }
 </script>

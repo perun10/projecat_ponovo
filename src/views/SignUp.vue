@@ -4,10 +4,13 @@
     <div class="container mt-5">
         <div class="row no-gutters">
  
-          
+          <div class="col-md-12">
 
             <Register/>
-              <SignIn/>
+
+          </div>
+
+            
         </div>
         
     </div>
@@ -17,15 +20,10 @@
 <script>
 import Top from "@/components/Top.vue";
 import Register from "@/components/Register.vue";
-import SignIn from "@/components/SignIn.vue";
-
-import Social from "@/components/Social.vue";
 export default {
 components:{
     Top,
-    Social,
-    Register,
-    SignIn
+    Register,    
 },
 computed: {
      user() {

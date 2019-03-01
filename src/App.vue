@@ -26,8 +26,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
               <ul id="nivmobi" class="navbar-nav">
-                <li class="nav-item active" v-for="m in menu" :key="m.index">
+                <li class="nav-item active" v-for="m in menu" :key="m.index" >
                   <router-link class="nav-link pl-0" :to="m.link">
+                    <!-- :style="'.router-link-active' ? {'color':'red'}: {'color':'blue'}" -->
                     {{m.text}}
                     <span class="sr-only">(current)</span>
                   </router-link>
@@ -44,12 +45,10 @@
         </section>
       </div>
     </header>
-
     <router-view/>
     <Footer/>
   </div>
 </template>
-
 <style>
 @font-face {
   font-family: "NoveCentoSansWide";
@@ -115,10 +114,10 @@ p {
   grid-template-columns: auto auto auto auto;
   text-transform: uppercase;
 }
+ .router-link-active {
+  /* color:gold !important; */
+} 
 
-#navbarNavDropdown a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
 <script>
 import Header from "@/components/Header.vue";
@@ -157,36 +156,43 @@ export default {
     Header
   },
   created() {
-    // this.onLoad("value");
-    // this.onLoad("child_changed");
+    
     this.onLoad();
     axios
       .get("https://project-ponovo.firebaseio.com/pages.json")
       .then(response => (this.menu = response.data));
   },
+  mounted(){
+    // var dt = document.querySelector(
+    //     "a.router-link-exact-active"
+    //   )
+    //   dt.style.color = this.routColor
+    //   console.log(dt.style.color)
+    //   console.log(this.routColor)
+     // this.routColor.style.color = this.$store.getters.color
+    // this.$store.getters.color;
+   
+  },
   computed: {
     user() {
       return this.$store.getters.user;
+    },
+    fontStyleActive(){
+      
+        return this.$store.getters.color  
+      
     }
   },
   watch: {
     user(value) {
       if (value !== null && value !== undefined) {
         this.$router.push("/admin");
-      }
-    }
+      }      
+    }    
   },
   methods: {
     onLoad() {
-      this.$store.dispatch("getLogo", this.logo);
-      //console.log(this.logo + "LOGOOOOOO1")
-      //      firebase.database().ref('/logo/-LZFL7s0ALMOUh8jiE9k').once(value)
-      //     .then((snapshot) =>{
-      //     var child_changed = snapshot.val();
-      //    //console.log(child_changed.img)
-      //  //  console.log(this.logo)
-      //     this.logo = child_changed.img
-      //   // console.log(this.logo)
+      this.$store.dispatch("getLogo", this.logo);      
     }
   }
 };

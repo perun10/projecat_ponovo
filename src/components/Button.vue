@@ -6,12 +6,11 @@
 <script>
 import firebase from "firebase"
 export default {
-    name:"Buton",
+    name:"Button",
     props:{
         text:String,  
         onClick:{
-            type:Function,
-            required:false
+            type:Function,           
         }        
     },
     

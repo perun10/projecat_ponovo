@@ -21,9 +21,17 @@ export default new Vuex.Store({
     tokenId: null,
     user: null,
     logo:null,
-    color:null
+    color:null,
+    lat:null,
+    lon:null,
   },
   mutations: {
+    setLatitude(state,payload){
+      state.lat = payload
+    },
+    setLongitude(state,payload){
+      state.lon = payload
+    },
     setAuthId(state,id){
       state.authId = id
     },
@@ -66,11 +74,7 @@ export default new Vuex.Store({
     createUser ({commit}, payload) {
       commit("setLoading", true)
       commit("clearError")
-      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-      .catch((error)=>{
-        Vue.swal(error.message)
-        router.push('/signup')
-      })
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)      
         .then((user) => {
           Vue.swal(" Account created for "+ payload.email);
           const newUser = {
@@ -78,7 +82,8 @@ export default new Vuex.Store({
           }
           commit('setUser',newUser)
         },err=>{
-          Vue.swal(err.message);
+          commit('setUser',null)
+            Vue.swal(err.message)
         })
           },   
           signInUser ({commit}, payload) {
@@ -149,6 +154,19 @@ export default new Vuex.Store({
             payload = child_changed.backgroundColor          
             commit('setColor',payload);
             })
+    },
+    mapPost({commit},payload){
+     
+          console.log("Dokument postoji")
+          commit('setLatitude',payload.lat)
+         commit('setLongitude',payload.lon)
+        //  var doc = firebase.firestore().collection('map').doc('sP2d4xnFzZRuyfps2pSO')
+        //  doc.get()
+  
+      
+     
+
+      console.log("IZ STORA - "+payload.lat+ " "+payload.lon)
     }
   },
   getters: {
@@ -169,6 +187,12 @@ export default new Vuex.Store({
       },
       color(state){
         return state.color
+      },
+       latitude(state){
+        return state.lat 
+      },
+      longitude(state){
+        return state.lon 
       }
     }
   

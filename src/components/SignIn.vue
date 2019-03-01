@@ -1,21 +1,22 @@
 <template>
-    <div class="col-md-6 col-12 mb-5">
+    <div class="col-md-12 col-12">
         <h3>Sign in</h3>
 <form @submit.prevent="signin">
        
   <div class="form-group row">
-  <div class="col-sm-10 mt-5">
+  <div class="col-sm-12 ">
     <input v-model="form.email" type="email" class="form-control instyle"  id="exampleFormControlInput2" placeholder="Email Address" required>
   </div>
   </div>
    <div class="form-group row">
-    <div class="col-sm-10">
+    <div class="col-sm-12">
     <input v-model="form.password" type="password" class="form-control" id="inputPassword2" placeholder="Password">
     </div>
     </div>
     <div class="form-group row">
-        <div class="col-sm-10">
-        <button type="submit" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;margin:0 auto;">Sign in</button>
+        <div class="col-sm-12">
+        <!-- <button type="submit" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;margin:0 auto;">Sign in</button> -->
+        <Button text="Sign in" :onClick="signin" />
         </div>
     </div>
     </form>
@@ -23,8 +24,13 @@
 </template>
 
 <script>
+import Button from "../components/Button.vue";
+
 export default {
     name:"Signin",
+    components:{
+        Button
+    },
     data(){
         return{
             form:{

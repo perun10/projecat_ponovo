@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import firebase from "firebase"
 export default {
     name:"Top",
     props:{
@@ -23,18 +22,7 @@ export default {
         }
     },
     created(){
-    this.$store.dispatch('getColor',this.color)
-
-        //     firebase.database().ref('/themes/').once("value")
-        //     .then((snapshot) =>{
-        //     var child_changed = snapshot.val();
-        //    //console.log(child_changed.img)
-        //    //console.log(this.logo)
-        //     this.bgcolor = child_changed.backgroundColor
-        //     this.tcolor = child_changed.color
-        //    //console.log(this.bgcolor)
-           //console.log(this.tcolor)
-            // })
+    this.$store.dispatch('getColor',this.color)       
     }
 }
 </script>

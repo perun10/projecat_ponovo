@@ -3,9 +3,10 @@
     <div>
       <Top title="CUSTOMIZE EVERYTHING"/>
     </div>
-    <div class="row no-gutters" style="height:100%;">
+    <div class="row no-gutters">
       <div class="col-md-2">
         <div id="panel">
+        <h3 style="color:white;">Admin panel</h3>
           <div
             class="nav flex-column nav-pills"
             id="v-pills-tab"
@@ -150,7 +151,7 @@
                 <g></g>
                 <g></g>
                 <g></g>
-              </svg> Pages
+              </svg> Menu
             </a>
             <a
               class="nav-link"
@@ -197,12 +198,69 @@
                 </g>
               </svg> Themes
             </a>
+            <a
+              class="nav-link"
+              id="v-pills-maps-tab"
+              data-toggle="pill"
+              href="#v-pills-maps"
+              role="tab"
+              aria-controls="v-pills-maps"
+              aria-selected="false"
+            >
+              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 237.569 237.569" style="enable-background:new 0 0 237.569 237.569;" xml:space="preserve">
+<g>
+	<path d="M234.362,24.818c-2.009-1.403-4.576-1.736-6.879-0.89l-71.607,26.306L84.272,23.927c-1.671-0.614-3.504-0.614-5.173,0
+		L4.914,51.183C1.962,52.268,0,55.079,0,58.223v148.379c0,2.451,1.198,4.748,3.207,6.15c1.276,0.891,2.778,1.35,4.293,1.35
+		c0.871,0,1.747-0.152,2.586-0.46l71.599-26.306l71.604,26.306c1.669,0.613,3.502,0.613,5.173,0l74.193-27.256
+		c2.952-1.084,4.914-3.895,4.914-7.04V30.968C237.569,28.516,236.372,26.22,234.362,24.818z M222.569,174.112l-66.693,24.5
+		l-71.604-26.306c-0.835-0.307-1.711-0.46-2.586-0.46c-0.876,0-1.752,0.153-2.587,0.46L15,195.857V63.458l66.686-24.5l71.604,26.306
+		c1.669,0.613,3.502,0.613,5.173,0l64.107-23.551V174.112z"/>
+	<path d="M157.018,114.759c0-25.51-20.752-46.264-46.26-46.264c-25.51,0-46.264,20.754-46.264,46.264
+		c0,25.509,20.754,46.262,46.264,46.262c10.053,0,19.359-3.233,26.955-8.701l22.563,22.559c1.464,1.464,3.383,2.196,5.303,2.196
+		c1.919,0,3.839-0.732,5.304-2.197c2.929-2.929,2.928-7.678-0.001-10.606l-22.562-22.559
+		C153.785,134.116,157.018,124.811,157.018,114.759z M79.494,114.759c0-17.239,14.025-31.264,31.264-31.264
+		c17.237,0,31.26,14.025,31.26,31.264c0,17.238-14.023,31.262-31.26,31.262C93.519,146.02,79.494,131.996,79.494,114.759z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+ Maps
+            </a>
             <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Themes</a> -->
           </div>
         </div>
       </div>
 
-      <div class="col-md-10">
+      <div class="col-md-10 p-5">
         <div class="tab-content" id="v-pills-tabContent">
           <div
             class="tab-pane fade show active"
@@ -212,7 +270,7 @@
           >
             <h3>LOGO switch</h3>
 
-            <div class="form-group">
+            <div class="form-group p-3">
               <input
                 type="text"
                 class="form-control"
@@ -220,6 +278,8 @@
                 placeholder="Your logo Link"
                 required
               >
+
+              <input type="file" @change="onFileSelected"/>              
               <label v-if="trackUrl" style="color:#2ecc71;">Submit your logo</label>
               <label v-else style="color:red;">Unsupported logo file type</label>
             </div>
@@ -305,6 +365,22 @@
             </div>
             <h5>Fonts : TBA</h5>
           </div>
+          <div
+            class="tab-pane fade"
+            id="v-pills-maps"
+            role="tabpanel"
+            aria-labelledby="v-pills-maps-tab"
+          >
+            <h3>Maps coordinates</h3>
+           <div class="row no-gutters">
+             <div class="col-md-12"><div>
+               <input v-model="latitude" placeholder="Latitude"></div>
+           <div class="pt-3 pb-3"> 
+            <input v-model="longitud" placeholder="Longitude"></div>
+           <Button text="Apply new map" :onClick="placeNewMap"/>
+             </div>
+           </div>
+          </div>
         </div>
       </div>
     </div>
@@ -319,6 +395,7 @@ import store from "../store";
 import axios from "axios";
 import Vue from "vue";
 import firebase from "firebase";
+import {db} from "firebase"
 export default {
   name: "Admin",
   data() {
@@ -332,8 +409,18 @@ export default {
       colorCode: null,
       exists: null,
       containsURL: false,
-      button: null
+      button: null,
+      longitud:null,
+      latitude:null,
+      map:null,
+      selectedLogo:null,
+      isActive:null
     };
+  },
+  firestore(){
+    return{
+      map: firebase.firestore().collection('map').doc('sP2d4xnFzZRuyfps2pSO')
+    }
   },
   components: {
     Top,
@@ -361,7 +448,7 @@ export default {
   mounted() {
     this.button = document.getElementById("logoSubmit");
     this.button.disabled = true;
-    console.log(this.button);
+    //console.log(this.button);
   },
   methods: {
     updateItem(id, link) {
@@ -414,10 +501,10 @@ export default {
     },
     getPageName(myPageName) {
       this.single = myPageName;
-      console.log(this.single);
+      //console.log(this.single);
     },
     updatePages() {
-      console.log(this.pages);
+      //console.log(this.pages);
       for (let i = 0; i < this.pages.length; i++) {
         const page = this.pages[i];
         // console.log(page.text)
@@ -446,14 +533,15 @@ export default {
       }
     },
     applyTheme(color) {
-      var nav = document.querySelector(
-        "#navbarNavDropdown a.router-link-exact-active"
-      );
-      console.log(nav);
+      // var nav = document.querySelector(
+      //   "a.router-link-exact-active"
+      // );
+      
+     // console.log(nav);
 
       if (color.toUpperCase() == "BLUE") {
         this.colorCode = "#19a8ea";
-        nav.classList.toggle("blue");
+        
       } else if (color.toUpperCase() == "MINT") {
         this.colorCode = "#2ecc71";
       } else if (color.toUpperCase() == "RED") {
@@ -475,6 +563,7 @@ export default {
           backgroundColor: this.colorCode
         });
       this.$store.dispatch("getColor", this.colorCode);
+      // nav.style.color = this.colorCode
       console.log(this.colorCode);
     },
 
@@ -498,7 +587,29 @@ export default {
 
       // console.log(componentExists);
       //return this.exists = componentExists;
+    },
+    placeNewMap(){
+      if(this.latitude == 0 || this.longitud ==0){
+       this.latitude = 42.34881
+       this.longitud = 27.11112       
+    }else{
+      console.log(this.latitude +" "+this.longitud)
+      this.$firestore.map.update({
+        position: new firebase.firestore.GeoPoint(parseFloat(this.latitude),parseFloat(this.longitud))
+      }
+      )
+      this.$store.dispatch('mapPost',{lat:this.latitude,lon:this.longitud})
+
     }
+  },
+  onFileSelected(event){
+    this.selectedLogo = event.target.files["0"]
+    console.log(this.selectedLogo)
+    //this.button.disabled = false;
+  },
+  uploadImage(){
+
+  }
   },
   computed: {
     trackUrl() {
@@ -569,6 +680,7 @@ export default {
   background-color: gold;
   /* background-color: #707070;#707070 */
   font-size: 22px;
+  color: white;
 }
 .nav-link {
   color: white;
@@ -580,5 +692,6 @@ export default {
 .nav-link svg {
   height: 50px;
   width: 50px;
+  margin-right: 15px;
 }
 </style>

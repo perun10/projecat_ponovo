@@ -5,6 +5,12 @@ import store from "./store";
 import * as firebase from "firebase";
 Vue.config.productionTip = false;
 import axios from "axios"
+import * as VueGoogleMaps from 'vue2-google-maps'
+import VueFirestore from "vue-firestore"
+
+require('firebase/firestore')
+Vue.use(VueFirestore)
+
 require('dotenv/config')
 
 
@@ -18,11 +24,21 @@ var config = {
   messagingSenderId: process.env.VUE_APP_MESSAGING_SENDERID
 };
 
+Vue.use(VueGoogleMaps,{
+  load:{
+    key: process.env.VUE_APP_GOOGLE_API,
+    libraries: 'places'    
+  }
+})
+
 firebase.initializeApp(config);
+
+
 new Vue({
   router,
   store,
-  firebase,
+  firebase  
+  ,
   render: h => h(App),
   created(){
   firebase.auth().onAuthStateChanged((user) => {

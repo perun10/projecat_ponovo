@@ -2,7 +2,7 @@
     <div class="container colorize">
         <div class="row no-gutters">
             <div class="col-md-12 col-xs-12 text-right">
-                <a class="login-register" v-if="!user" href="/signup">Sign In</a>
+                <a class="login-register" v-if="!user" href="/login">Sign In</a>
                 <a class="login-register" v-if="!user" href="/signup">Register</a>
                 <a class="login-register" v-if="user" href="/signup" @click.prevent="$store.dispatch('logout')">Log out</a>
             </div>
