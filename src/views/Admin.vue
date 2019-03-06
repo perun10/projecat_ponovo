@@ -5,7 +5,7 @@
     </div>
     <div class="row no-gutters">
       <div class="col-md-2">
-        <div id="panel">
+        <div id="panel">           
         <h3 style="color:white;">Admin panel</h3>
           <div
             class="nav flex-column nav-pills"
@@ -279,7 +279,7 @@
                 required
               >
 
-              <input type="file" @change="onFileSelected"/>              
+              <!-- <input type="file" @change="onFileSelected"/>               -->
               <label v-if="trackUrl" style="color:#2ecc71;">Submit your logo</label>
               <label v-else style="color:red;">Unsupported logo file type</label>
             </div>
@@ -389,7 +389,6 @@
 
 <script>
 import Top from "../components/Top.vue";
-import AdminPanel from "../components/AdminPanel.vue";
 import Button from "../components/Button.vue";
 import store from "../store";
 import axios from "axios";
@@ -424,25 +423,18 @@ export default {
   },
   components: {
     Top,
-    Button,
-    AdminPanel
+    Button    
   },
 
-  created() {
-    //     axios
-    // .get('https://project-ponovo.firebaseio.com/logo.json')
-    // .then(response =>(this.logo=response.data.img) )
+  created() {    
     this.onLoad();
     firebase
       .database()
       .ref("/pages/")
       .once("value")
       .then(snapshot => {
-        var child_changed = snapshot.val();
-        //console.log(child_changed.img)
-        //console.log(this.logo)
-        this.pages = child_changed;
-        // console.log(this.pages)
+        var child_changed = snapshot.val();        
+        this.pages = child_changed;       
       });
   },
   mounted() {
@@ -464,7 +456,7 @@ export default {
         });
       // this.onLoad();
       this.$store.dispatch("getLogo", link);
-      this.$router.push("/admin");
+      // this.$router.push("/admin");
       // axios.post('https://project-ponovo.firebaseio.com/logo.json', {alt:this.logo , img: this.logo})
       // .then(response => console.log(response));
     },
@@ -532,13 +524,7 @@ export default {
         }
       }
     },
-    applyTheme(color) {
-      // var nav = document.querySelector(
-      //   "a.router-link-exact-active"
-      // );
-      
-     // console.log(nav);
-
+    applyTheme(color) {      
       if (color.toUpperCase() == "BLUE") {
         this.colorCode = "#19a8ea";
         
@@ -555,16 +541,10 @@ export default {
       } else {
         this.colorCode = "#2ecc71";
       }
-      firebase
-        .database()
-        .ref("/themes/")
-        .set({
-          color: this.colorCode,
-          backgroundColor: this.colorCode
-        });
+      
       this.$store.dispatch("getColor", this.colorCode);
       // nav.style.color = this.colorCode
-      console.log(this.colorCode);
+      // console.log(this.colorCode);
     },
 
     existing(page) {
@@ -604,11 +584,7 @@ export default {
   },
   onFileSelected(event){
     this.selectedLogo = event.target.files["0"]
-    console.log(this.selectedLogo)
-    //this.button.disabled = false;
-  },
-  uploadImage(){
-
+    // console.log(this.selectedLogo) -- ZA UPLOAD IMAGE
   }
   },
   computed: {

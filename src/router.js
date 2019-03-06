@@ -36,24 +36,34 @@ export default new Router({
     }
     ,
     {
-      path: "/admin",
-      name: "admin",     
+      path: "/work/edit",
+      name: "edit",
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-       component:Admin,
-       beforeEnter(to,from,next){      
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./components/Work/Edit.vue")
+    }
+    ,
+    {
+      path: "/admin",
+      name: "admin",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: Admin,
+      beforeEnter(to, from, next) {
 
-        if(store.getters.user){           
-         // console.log(store.state.user);
-         // console.log(store.getters.user);
-         
+        if (store.getters.user) {
+          // console.log(store.state.user);
+          // console.log(store.getters.user);
+
           next();
-        }else{
+        } else {
           next('/signup');
         }
-}
-      
+      }
+
     }
     ,
     {
@@ -65,7 +75,7 @@ export default new Router({
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/Contact.vue")
     },
-    
+
     {
       path: "/signup",
       name: "signup",
@@ -85,7 +95,7 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/Login.vue")
     }
     ,
-    { path: '/404', component: NotFound },  
+    { path: '/404', component: NotFound },
     { path: '*', redirect: '/404' },
   ]
 });

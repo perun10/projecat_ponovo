@@ -11,7 +11,7 @@
 
 <script>
 import Top from "@/components/Top.vue";
-import SignIn from "@/components/SignIn.vue";
+import SignIn from "@/components/Login/SignIn.vue";
 export default {
  name:"Login",
  components:{

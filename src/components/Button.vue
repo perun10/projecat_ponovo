@@ -1,6 +1,6 @@
 <template>
-       <button  type="submit" class="btn" :style="{background:this.$store.getters.color}" @click="onClick">{{text}}</button>    
-
+       <button  type="submit" class="btn" @click="onClick" :style="{background:colorTop}">{{text}}</button>    
+            <!-- :style={background:color}" -->
 </template>
 
 <script>
@@ -10,34 +10,41 @@ export default {
     props:{
         text:String,  
         onClick:{
-            type:Function,           
+            type:Function, 
+            required:false          
         }        
     },
     
     data(){
     return{
-        bgcolor:null,
-        tcolor:null
+       color:""
     }
 },
-created(){
-    firebase.database().ref('/themes/').once("value")
-            .then((snapshot) =>{
-            var child_changed = snapshot.val();
-           //console.log(child_changed.img)
-           //console.log(this.logo)
-            this.bgcolor = child_changed.backgroundColor
-            this.tcolor = child_changed.color
-           //console.log(this.bgcolor)
-           //console.log(this.tcolor)
-            })
-            this.$emit('created');
-            
-},methods:{
-    just(){
-        alert('WWW')
+firestore() {
+    return {
+      color: firebase
+        .firestore()
+        .collection("themes")
+        .doc("LIoaPVCBvEX1xOvMscWb")
+    };
+  },
+  created() {
+    this.$firestore.color.get().then(doc => {
+       // console.log(doc.data().color)
+       this.color = doc.data().color
+        this.$store.commit('setColor',doc.data().color)
+    });
+
+    // this.$store.dispatch('setColor',this.color)
+  },
+  computed: {
+    colorTop() {
+    //   console.log(this.$store.getters.color + "TOP PROMJENA");
+      return this.$store.getters.color;
     }
-}
+
+  }
+    
 }
 </script>
 

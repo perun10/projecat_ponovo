@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header/>
+    
     <header class="container constainer-fluid" style="margin-top:30px;padding-bottom:13px;">
       <div class="row no-gutters">
         <section class="col-md-12 col-2 no-border">
@@ -147,7 +148,8 @@ export default {
       menu: null,
       alt: null,
       bgcolor: null,
-      tcolor: null
+      tcolor: null,
+      thisUser : null
     };
   },
   components: {
@@ -161,32 +163,18 @@ export default {
     axios
       .get("https://project-ponovo.firebaseio.com/pages.json")
       .then(response => (this.menu = response.data));
-  },
-  mounted(){
-    // var dt = document.querySelector(
-    //     "a.router-link-exact-active"
-    //   )
-    //   dt.style.color = this.routColor
-    //   console.log(dt.style.color)
-    //   console.log(this.routColor)
-     // this.routColor.style.color = this.$store.getters.color
-    // this.$store.getters.color;
-   
-  },
+  },  
   computed: {
     user() {
       return this.$store.getters.user;
-    },
-    fontStyleActive(){
-      
-        return this.$store.getters.color  
-      
     }
   },
   watch: {
     user(value) {
-      if (value !== null && value !== undefined) {
-        this.$router.push("/admin");
+      // console.log(value.id)
+      if (value.id !== null && value.id !== undefined) {        
+        this.thisUser = true
+        return this.thisUser
       }      
     }    
   },

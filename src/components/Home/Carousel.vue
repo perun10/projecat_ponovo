@@ -231,7 +231,7 @@ export default {
     margin-bottom:60px;
 }
 .link{
-    background-image:url("../assets/images/icons/link-hover.svg");
+    background-image:url("../../assets/images/icons/link-hover.svg");
     z-index: 9999;
  }
  

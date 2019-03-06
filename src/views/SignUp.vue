@@ -19,7 +19,7 @@
 
 <script>
 import Top from "@/components/Top.vue";
-import Register from "@/components/Register.vue";
+import Register from "@/components/Register/Register.vue";
 export default {
 components:{
     Top,

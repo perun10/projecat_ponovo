@@ -7,7 +7,8 @@ Vue.config.productionTip = false;
 import axios from "axios"
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueFirestore from "vue-firestore"
-
+import Vuelidate from "vuelidate"
+Vue.use(Vuelidate)
 require('firebase/firestore')
 Vue.use(VueFirestore)
 

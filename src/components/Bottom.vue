@@ -6,8 +6,7 @@
                 <h4>{{title}}</h4>
                </div> 
                 <div class="col-md-5 col-sm-12">
-                          <!-- <button type="button" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;">CLICK HERE TO FIND OUT</button> -->
-                          <Button text="CLICK HERE TO FIND OUT"/>
+                          <Button text="CLICK HERE TO FIND OUT" :onClick="moveTo"/>
                 </div>
             </div> 
         </div>
@@ -15,9 +14,15 @@
 </template>
 
 <script>
+import firebase from "firebase"
 import Button from "../components/Button.vue"
 export default {
  name: "Bottom",
+ data(){
+     return{
+         
+     }
+ },
  props:{
     
         title:{
@@ -27,7 +32,18 @@ export default {
 },
 components:{
     Button
-}
+},
+computed: {
+    colorTop() {
+    //   console.log(this.$store.getters.color + "TOP PROMJENA");
+      return this.$store.getters.color;
+    }
+
+  },methods:{
+      moveTo(){
+          this.$router.push('/work')
+      }
+  }
 }
 </script>
 

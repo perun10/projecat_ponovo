@@ -4,7 +4,7 @@
     <h3>SERVICES</h3>
   </div>
  <section style="background-color:#efefef;"> 
-<div class="container">
+<div class="container no-side-padding">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item col-md-3" v-for="put in tabs" :key="put.index">
     <a  class="nav-link" :class="{'active' : put.selected === true}"  :id="put.id" data-toggle="pill" :href="'#'+put.href" role="tab" :aria-controls="put.href" :aria-selected="put.selected"><img :src="put.link">
@@ -16,7 +16,7 @@
 </div>
 </section>
 <section class="mt-2">
-  <div class="container text-left">
+  <div class="container text-left" >
 <div class="tab-content" id="pills-tabContent" style="min-height:200px;">
   <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu erat lacus, vel congue mauris. Fusce velit justo, faucibus eu sagittis ac, gravida quis tortor. Suspendisse non urna mi, quis tincidunt eros.</p></div>
   <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu erat lacus, vel congue mauris. 
@@ -124,5 +124,8 @@ export default {
   position: relative;
 	padding-bottom: 10px;
 }
-
+.no-side-padding{
+  padding-left:0;
+  padding-right:0;
+}
 </style>

@@ -17,9 +17,9 @@
 <script>
 import Top from "../components/Top.vue";
 import Bottom from "../components/Bottom.vue";
-import Map from "../components/Map.vue";
-import Form from "../components/Form.vue";
-import Info from "../components/Info.vue";
+import Map from "../components/Contact/Map.vue";
+import Form from "../components/Contact/ContactForm.vue";
+import Info from "../components/Contact/ContactInfo.vue";
 import firebase from "firebase";
 
 export default {

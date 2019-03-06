@@ -1,6 +1,6 @@
 <template><div>
   <div class="jumbatron jumbatron-fluid" >
-    <section  id="banner"  v-bind:style="{ backgroundColor: this.$store.getters.color}">
+    <section  id="banner"  :style="{backgroundColor:colorTop}">     
   <div class="container mt-0 pt-3" style="margin-bottom:-3rem;">
     <img class="elementToAnimate" id="devices" src="../assets/images/slider-overimage.svg" alt="devices"/>
   </div> 
@@ -9,7 +9,7 @@
   <section class="mt-5">
     <div class="container container-fluid">
       <p class="p-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eratiuy lacus, vel congue mauris. Fusce velitaria justo, faucibus eu.</p>
-      <Button text="BROWSE PORTFOLIO" />
+      <Button text="BROWSE PORTFOLIO" :onClick="moveTo" />
       <!-- <button type="button" class="btn btn-success" style="background-color:#2ecc71;border-color:#2ecc71;">BROWSE PORTFOLIO</button> -->
     </div>
   </section>
@@ -65,7 +65,7 @@ import VueAxios from 'vue-axios'
  
 Vue.use(VueAxios, axios)
 Vue.use(VModal)
-import Carousel from "../components/Carousel.vue";
+import Carousel from "../components/Home/Carousel.vue";
 import Bottom from "../components/Bottom.vue";
 import Button from "../components/Button.vue";
 
@@ -91,11 +91,17 @@ export default {
      },
      hide() {
        this.$modal.hide("video-popup");
-     }
+     },
+      moveTo(){
+       this.$router.push('/work')
+      }
     
   },
-  mounted(){
-    this.$store.dispatch('getColor',this.color)
+  created(){
+
+  },
+  mounted(){    
+   
      firebase.database().ref('/video/').once("value")
             .then((snapshot) =>{
             var child_changed = snapshot.val();
@@ -104,6 +110,11 @@ export default {
             this.videoLink = child_changed.link
            console.log(child_changed.link)
             })
+  },
+  computed:{
+    colorTop(){
+      return this.$store.getters.color
+    }
   }
 
 };

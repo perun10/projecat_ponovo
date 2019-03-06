@@ -6,11 +6,10 @@
 </template>
 
 <script>
-import Adminpanel from "../components/AdminPanel.vue"
 
 export default {
  components:{
-     Adminpanel
+     
  }
 }
 </script>
