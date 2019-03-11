@@ -12,15 +12,21 @@
   <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
   <p class="typo__p" v-if="submitStatus === 'PENDING'">Sending...</p>
 </form> -->
-  <form class="col-md-7 mt-5 pl-0 text-left mb-3" @submit.prevent="">
+  <form class="col-md-7 mt-5 pl-0 text-left mb-3" @submit.prevent="fromSubmited">
     <h3>Contact form</h3>
     <p
       class="text-left"
     >Nullam tellus turpis, fringilla sit amet congue ut, luctus a nulla. Donec sit amet sapien neque, id ullamcorper diam.</p>
-    
-    <input type="text" v-model.trim="$v.name.$model" placeholder="Name">
-    <div class="error" v-if="!$v.name.required">Name is required</div>
-    <div class="error" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>  
+    <div class="form-group" :class="{ 'form-group--error': $v.name.$error }">
+    <!-- <label class="form__label">Password</label>
+     -->
+     <div class="form__label" v-if="$v.name.$error">Name is required</div>    
+     <div class="form__label" v-if="$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>    
+    <input type="text" v-model.trim="$v.name.$model" placeholder="Name">  
+    </div>
+    <!-- <input type="text" v-model.trim="$v.name.$model" placeholder="Name">
+    <div class="error" v-if="$v.name.$anyDirty">Name is required</div>    
+    <div class="error" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>   -->
     
     <input
       type="email"
@@ -45,7 +51,8 @@
     <div class="error" v-if="!$v.message.minLength">Message must have at least {{$v.message.$params.minLength.min}} letters.</div>  
     <div class="error" v-if="!$v.message.maxLength">Message cant have more than {{$v.message.$params.maxLength.max}} letters.</div>  
 
-    <vue-recaptcha :sitekey="siteKey" @verify="validation" ></vue-recaptcha>
+    <vue-recaptcha :sitekey="siteKey"  @verify="validation"></vue-recaptcha>
+    <!--  -->
     <!-- <button  type="submit" class="btn btn-success wid" style="background-color:#2ecc71;border-color:#2ecc71;">Send message</button> -->
     <Button id="sendMailbtn" class="wid" text="Send message" :onClick="submit"/>
 <!-- @verify="onVerify" -->
@@ -81,9 +88,9 @@ export default {
         email: " ",
         subject: " ",
         message: " ",
-        to: ["djuradj.perunovic@gmail.com"],
-       cc: ["djuradj.perunovic@gmail.com"],
-      bcc: ["djuradj.perunovic@gmail.com"]
+        to: [{"email":"djuradj.perunovic@bild-studio.net"}],
+       cc: [{"email":"djuradj.perunovic@bild-studio.net"}],
+      bcc: [{"email":"djuradj.perunovic@bild-studio.net"}]
       },
      
     
@@ -126,8 +133,8 @@ export default {
       (this.$v.email.required && !this.$v.email.$error)&&
       (this.$v.subject.required && this.$v.subject.minLength)&&
       (this.$v.message.required&&this.$v.message.minLength&&this.$v.message.maxLength)){
-        //this.mailBtn.disabled = false;
        this.onVerify()
+      
         //var consol = console.log('dugme otkljucano')
         return true
     }else{
@@ -140,51 +147,26 @@ export default {
   
   },
   methods: {
-    submit() {
-      //   (!this.$v.email.required) && 
-      //  (!this.$v.subject.required || !this.$v.subject.minLength) && 
-      // (!this.$v.message.required || !this.$v.message.minLength
-      //console.log(this.$v.email.required +" "+ !this.$v.email.$error)
-      // if((this.$v.name.required && this.$v.name.minLength )&&
-      // (this.$v.email.required && !this.$v.email.$error)&&
-      // (this.$v.subject.required && this.$v.subject.minLength)&&
-      // (this.$v.message.required&&this.$v.message.minLength&&this.$v.message.maxLength)){
-     // console.log("Dobar unos  " + this.$v.name.$model + ", mail : "+this.$v.email.$model+", Subject: "+this.$v.subject.$model+", Message: "+this.$v.message.$model)
+    fromSubmited(){
+      console.log("Forma izvrsena")
+    },
+    submit() {     
        this.fromdata.name = this.$v.name.$model
        this.fromdata.email = this.$v.email.$model
        this.fromdata.subject = this.$v.subject.$model
-       this.fromdata.message = this.$v.message.$model
-       console.log(this.fromdata)
-       
-       axios.post('api/EmailService/Send',
-      JSON.stringify(this.fromdata),{
-          headers: {   
-            'Content-Type':'application/json'
-            }
-        })
+       this.fromdata.message = this.$v.message.$model      
+       axios.post(
+         'api/EmailService/Send',
+     this.fromdata,{headers:{
+       "Accept":"application/json",
+       "Content-Type":"application/json"
+     }})
         .then(function (response) {
           console.log(response)
         })
         .catch((err)=>{
           console.log(err)
-        })
-      // }else{
-      // console.log('GRESKA')
-
-      // }
-      // this.$v.$touch()
-      // if(this.$v.$invalid){
-      //   this.submitStatus = "ERROR"
-      // }else{
-      //   this.submitStatus = "PENDING"
-      //   setTimeout(()=>{
-      //     this.submitStatus = "OK"
-      //   },500)
-      // }
-     // console.log(this.name)
-    
-     
-      //console.log(this.form.name, this.form.email , this.form.subject , this.form.message)
+        })      
     },
     onVerify() {
       this.mailBtn.disabled = false;

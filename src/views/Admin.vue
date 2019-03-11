@@ -374,8 +374,10 @@
             <h3>Maps coordinates</h3>
            <div class="row no-gutters">
              <div class="col-md-12"><div>
+               <label v-if="!validateMapLatitude">Latitude mora biti izmedju 90 i -90</label>
                <input v-model="latitude" placeholder="Latitude"></div>
            <div class="pt-3 pb-3"> 
+                <label v-if="!validateMapLongitude">Longitude mora biti izmedju 180 i -180</label>
             <input v-model="longitud" placeholder="Longitude"></div>
            <Button text="Apply new map" :onClick="placeNewMap"/>
              </div>
@@ -393,6 +395,7 @@ import Button from "../components/Button.vue";
 import store from "../store";
 import axios from "axios";
 import Vue from "vue";
+import { required,between} from 'vuelidate/lib/validators'
 import firebase from "firebase";
 import {db} from "firebase"
 export default {
@@ -415,6 +418,16 @@ export default {
       selectedLogo:null,
       isActive:null
     };
+  },
+  validations:{
+    longitud:{
+      required,
+      between:between(-180,180)
+    },
+    latitude:{
+      required,
+      between:between(-90,90)
+    }
   },
   firestore(){
     return{
@@ -441,6 +454,8 @@ export default {
     this.button = document.getElementById("logoSubmit");
     this.button.disabled = true;
     //console.log(this.button);
+    // this.$v.latitude = this.latitude
+    // this.$v.longitud = this.longitud
   },
   methods: {
     updateItem(id, link) {
@@ -603,6 +618,22 @@ export default {
         this.button.disabled = true;
         return false;
       }
+    },
+    validateMapLongitude(){
+
+      if(this.$v.longitud.required&&this.$v.longitud.between){
+        //console.log("Ispravno Longitude")
+        return true;
+        }
+      
+      return false;
+    },
+    validateMapLatitude(){
+      if(this.$v.latitude.required&&this.$v.latitude.between){
+        //console.log("Ispravno Latitude")
+        return true
+      }
+      return false
     }
   }
 };
@@ -649,6 +680,8 @@ export default {
 }
 #panel {
   height: 100vh;
+  width:200px;
+  
   background-color: #322f2f;
 }
 .nav-pills .nav-link.active,
@@ -668,6 +701,6 @@ export default {
 .nav-link svg {
   height: 50px;
   width: 50px;
-  margin-right: 15px;
+  margin-right: 25px;
 }
 </style>

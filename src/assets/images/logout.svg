@@ -1,19 +1,5 @@
-<template>
-    <div class="container colorize">
-        <div class="row no-gutters">
-          <div class="col-md-1 col-xs-12 text-left">
-                <div class="profile" v-if="user">
-                  
-                </div>
-                <span v-if="user">Admin</span>
-               
-
-          </div>
-            <div class="col-md-11 col-xs-12 text-right">
-
-                <a class="login-register" v-if="!user" href="/login">Sign In</a>
-                <a class="login-register" v-if="!user" href="/signup">Register</a>
-                <a class="login-register" v-if="user" href="/signup" @click.prevent="$store.dispatch('logout')">               
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 320.002 320.002" style="enable-background:new 0 0 320.002 320.002;" xml:space="preserve">
 <g id="XMLID_6_">
@@ -66,68 +52,3 @@
 <g>
 </g>
 </svg>
-
-                </a>
-                <!-- <a href="">{{thisUser}}</a> -->
-            </div>
-        </div>
-    </div>
-</template>
-
-<script>
-export default {
-    name : "Header",
-    data(){
-        return{
-          thisUser:null
-        }
-    },  
-  computed: {
-    user() {
-      return this.$store.getters.user;
-    }
-  },
-  watch: {
-    user(value) {
-      // console.log(value.id)
-      if (value.id !== null && value.id !== undefined) {        
-        this.thisUser = true
-        return this.thisUser
-      }      
-    }    
-  }
-  //   },computed: {
-  //    user() {
-  //      return this.$store.getters.user
-  //    }
-  //  },
-  //  watch: {
-  //    user(value) {
-  //      if(value !== null && value !== undefined){         
-  //        this.$router.push("/admin");       
-  //      }           
-  //    }
-  //  }
-}
-</script>
-
-<style>
-.login-register{
-    color:#888A88;
-    text-decoration:none;
-    padding-right: 10px;
-}
-.colorize{
-}
-.profile{
-  height: 35px;
-  width: 35px;
-  background: url('https://yt3.ggpht.com/-lZ75lPdnwWs/AAAAAAAAAAI/AAAAAAAAAAA/dEJ6vAV5zdM/s88-c-k-no-mo-rj-c0xffffff/photo.jpg') center no-repeat;
-  background-size:cover; 
-  border-radius:50%;
-}
-#Layer_1{
-  height: 35px;
-  width: 35px;
-}
-</style>

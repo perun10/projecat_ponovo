@@ -1,10 +1,11 @@
 <template>
   <div>
     <Top title="check out what i can do"/>
+     
     <div class="container">
       <div class="row no-gutters justify-content-between">
-        <div class="col-md-6 mt-2">
-          <ul class="filters">
+        <div class="col-md-6 text-left">
+          <ul class="filters" style="padding-inline-start:0;">
             <li>
               <a class="filter-pointer" @click="filter('All')">ALL</a>
             </li>
@@ -12,7 +13,7 @@
               <a class="filter-pointer" @click="filter('PRINT')">PRINT</a>
             </li>
             <li>
-              <a class="filter-pointer"  @click="filter('PHOTOGRAPHY')">PHOTOGRAPHY</a>
+              <a class="filter-pointer" @click="filter('PHOTOGRAPHY')">PHOTOGRAPHY</a>
             </li>
             <li>
               <a class="filter-pointer" @click="filter('WEB')">WEB</a>
@@ -22,92 +23,166 @@
             </li>
           </ul>
         </div>
-        <div class="col-md-6">
-            <a href="">GRID</a>
-            <a href="">List</a>
+        <div class="col-md-6 text-right">
+          <a href="#" class="svgLinks" @click="isActive=true">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="15" height="15" viewBox="0 0 15 15">
+  <defs>
+    
+  </defs>
+  <path d="M8.967,15.000 L8.967,8.905 L15.000,8.905 L15.000,15.000 L8.967,15.000 ZM8.946,0.000 L15.000,0.000 L15.000,6.012 L8.946,6.012 L8.946,0.000 ZM0.000,0.000 L6.033,0.000 L6.033,5.929 L0.000,5.929 L0.000,0.000 ZM6.012,15.000 L0.000,15.000 L0.000,8.905 L6.012,8.905 L6.012,15.000 Z" class="cls-1"/>
+</svg>
+            
+          </a>
+          <a href="#" class="svgLinks" @click="isActive=false" >
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="15" height="15.031" viewBox="0 0 15 15.031">
+  <defs>    
+  </defs>
+  <g>
+    <rect y="12.031" width="15" height="3" class="cls-1"/>
+    <rect y="6" width="15" height="3.031" class="cls-1"/>
+    <rect width="15" height="3.031" class="cls-1"/>
+  </g>
+</svg>
+          </a>
         </div>
       </div>
       <div v-if="user" class="row no-gutters">
-          <Button text="Insert in portfolio" :onClick="fireInsert"/>
+        <Button text="Insert in portfolio" :onClick="fireInsert"/>
       </div>
       <div class="row no-gutters mt-1">
-          <div class="grid-view">
-              <div class="image-block pr-3 pt-3" v-for="port in portfolios" :key="port.index">
-                <div>
-                 <!-- <h5>Category : {{port.category}} </h5> -->
-                 <!-- <p>{{port.text}}</p> -->
-                  <img :src="port.url" alt="">
-                </div>
-              </div>
+        <div :class="[isActive ? activeClass : secondClass]">
+          <div class="image-block pr-3 pt-3" v-for="port in portfolios" :key="port.index">
+            <div>
+              <!-- <h5>Category : {{port.category}} </h5> -->
+              <!-- <p>{{port.text}}</p> -->
+             <a class="onHover" href="#"> <span></span><img :src="port.url" alt> </a> 
+            </div>
           </div>
+          
+        </div>
       </div>
+      <div class="row no-gutters no-gutters mb-3">
+            <Button style="margin:0 auto;" id="loadMore" text="Load more" v-if="!this.size==0" :onClick="loadMore"/>
+            <h3 style="margin:0 auto;" v-if="this.size==0">No more results left</h3>
+          </div>
     </div>
     <Bottom/>
   </div>
 </template>
 
 <script>
-import Button from "../components/Button.vue";
+import Button from "@/components/Button.vue";
 import Top from "@/components/Top.vue";
 import Bottom from "@/components/Bottom.vue";
-import firebase from "firebase"
+import firebase from "firebase";
+import Vue from 'vue'
+import VueProgressBar from 'vue-progressbar'
+const options = {
+  color: '#bffaf3',
+  failedColor: '#874b4b',
+  thickness: '5px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  location: 'left',
+  inverse: false
+}
+Vue.use(VueProgressBar, options)
 export default {
   name: "Work",
   components: {
     Top,
     Bottom,
-    Button
+    Button,
+    "vue-progress-bar" : VueProgressBar
   },
-  data(){
-      return{
-        portfolios : []
+  data() {
+    
+    return {
+      activeClass: 'grid-view',
+      secondClass:'list-view',
+      portfolios: [],
+      lastVisible: "",
+      size: 0,
+      isActive: false,
+     
+    };
+  },
+  created() {
+    this.$firestore.ports.onSnapshot(snapshot => {
+      this.size = snapshot.docs.length;
+    });
+    this.getArray();
+  },
+  mounted(){
+
+  },
+  firestore() {
+    return {
+      ports: firebase.firestore().collection("portfolio")
+    };
+  },
+  methods: {
+    
+    loadMore() {
+      //var m = this.getArray()
+      this.$firestore.ports
+        .startAfter(this.lastVisible)
+        .limit(3)
+        .onSnapshot(snapshot => {
+          if (snapshot.docs.length > 0) {
+            this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
+            snapshot.docs.forEach(doc => {
+              this.portfolios.push(doc.data());
+              this.size--;
+              console.log(this.size);
+              
+            });
+          }          
+        });
+    },
+
+    fireInsert() {
+      this.$router.push("/work/edit");
+    },
+    getArray() {
+      this.$firestore.ports.limit(3).onSnapshot(snapshot => {
+        this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
+        //console.log(this.lastVisible)
+        snapshot.docs.forEach(doc => {
+          // console.log(doc.data())
+          this.portfolios.push(doc.data());
+          this.size--;
+          console.log(this.size);
+        });
+      });
+    },
+    filter(str) {      
+      this.portfolios = [];
+      if (str.toUpperCase() == "ALL") {
+        this.getArray();    
       }
-  },
-  created(){
-     this.getArray()
-  },
-  firestore(){
-    return{
-      ports : firebase.firestore().collection('portfolio').limit(5)
+      firebase
+        .firestore()
+        .collection("portfolio")
+        .where("category", "==", str)
+        .onSnapshot(snapshot => {
+               
+          snapshot.docs.forEach(doc => {
+            this.portfolios.push(doc.data());
+         
+          });
+        });
+    },
+    switchView(str){
+      
+      
     }
   },
-  methods:{
-      fireInsert(){
-            this.$router.push('/work/edit')
-       },
-       getArray(){
-        firebase.firestore().collection("portfolio").onSnapshot((snapshot)=>{
-        snapshot.docs.forEach(doc =>{
-        this.portfolios.push(doc.data())     
-
-      })
-    })
-       },
-       filter(str){
-        //  console.log(str)
-        this.portfolios= []
-        if(str.toUpperCase() == "ALL"){
-          this.getArray();
-        }
-         firebase.firestore().collection("portfolio").where("category","==",str).onSnapshot((snapshot)=>{
-           snapshot.docs.forEach(doc =>{
-           
-             this.portfolios.push(doc.data())
-             //console.log(this.portfolios)
-           })
-       })
-  }
-  }
-  ,
-  computed: {
-    array(){
- firebase.firestore().collection("portfolio").onSnapshot((snapshot)=>{
-        snapshot.docs.forEach(doc =>{
-        this.portfolios.push(doc.data())     
-
-      })
-    })
-    },
+  computed: {    
     user() {
       return this.$store.getters.user;
     }
@@ -123,21 +198,43 @@ export default {
 </script>
 
 <style scoped>
+.cls-1 {
+  fill: #737373;
+}
+.cls-1:hover {
+  fill:#2ECC71;
+}
+.cls-1:focus {
+  fill:#2ECC71;
+}
+.svgLinks{
+  margin-left:10px;
+}
 .filters a {
-  color: #8a8888;  
+  color: #8a8888;
 }
-.filters li::after{
- content: "\00a0 / \00a0";
+.filters li::after {
+  content: "\00a0 / \00a0";
 }
-.filters li:last-child::after{
-    content: "";
+.filters li:last-child::after {
+  content: "";
 }
-.filter-pointer{
+.filter-pointer {
   cursor: pointer;
 }
-.grid-view{
-  display:grid;
-  grid-template-columns:auto auto auto;
-  padding-bottom:15px;
+.grid-view {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding-bottom: 15px;
 }
+.list-view {
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  padding-bottom: 15px;
+}
+.onHover:hover > img{
+  opacity: 0.4;
+}
+ 
 </style>
