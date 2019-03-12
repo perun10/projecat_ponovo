@@ -3,7 +3,9 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Admin from "./views/Admin.vue";
 import NotFound from "@/components/NotFound.vue";
-import store from "./store"
+// import store from "./store"
+import {store} from "./store/index";
+
 Vue.use(Router);
 
 export default new Router({

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <vue-progress-bar></vue-progress-bar>
     <Header/>
     
     <header class="container constainer-fluid" style="margin-top:30px;padding-bottom:13px;">
@@ -144,7 +145,7 @@ export default {
   jquery,
   data() {
     return {
-      logo: null,
+     
       menu: null,
       alt: null,
       bgcolor: null,
@@ -155,18 +156,44 @@ export default {
   components: {
     Social,
     Footer,
-    Header
+    Header,
+    
   },
   created() {
-    
+    this.$Progress.start()
+    //  hook the progress bar to start before we move router-view
+    this.$router.beforeEach((to, from, next) => {
+      //  does the page we want to go to have a meta.progress object
+      if (to.meta.progress !== undefined) {
+        let meta = to.meta.progress
+        // parse meta tags
+        this.$Progress.parseMeta(meta)
+      }
+      //  start the progress bar
+      this.$Progress.start()
+      //  continue to next page
+      next()
+    })
+    //  hook the progress bar to finish after we've finished moving router-view
+    this.$router.afterEach((to, from) => {
+      //  finish the progress bar
+      
+    })
     this.onLoad();
     axios
       .get("https://project-ponovo.firebaseio.com/pages.json")
       .then(response => (this.menu = response.data));
+      this.$Progress.finish()
   },  
+  mounted(){
+    this.$Progress.finish()
+  },
   computed: {
     user() {
       return this.$store.getters.user;
+    },
+    logo(){
+      return this.$store.getters.logo
     }
   },
   watch: {
@@ -181,7 +208,7 @@ export default {
   methods: {
     onLoad() {
       this.$store.dispatch("getLogo", this.logo);      
-    }
+    },
   }
 };
 </script>

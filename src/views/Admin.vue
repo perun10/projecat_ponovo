@@ -392,12 +392,11 @@
 <script>
 import Top from "../components/Top.vue";
 import Button from "../components/Button.vue";
-import store from "../store";
+import {store} from "@/store/index";
 import axios from "axios";
 import Vue from "vue";
 import { required,between} from 'vuelidate/lib/validators'
 import firebase from "firebase";
-import {db} from "firebase"
 export default {
   name: "Admin",
   data() {

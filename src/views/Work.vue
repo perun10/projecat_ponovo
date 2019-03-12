@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <Top title="check out what i can do"/>
-     
+  <div>    
+    <Top title="check out what i can do"/>     
     <div class="container">
       <div class="row no-gutters justify-content-between">
         <div class="col-md-6 text-left">
@@ -24,25 +23,26 @@
           </ul>
         </div>
         <div class="col-md-6 text-right">
-          <a href="#" class="svgLinks" @click="isActive=true">
+          <a href="#" class="svgLinks" @click="switchView('grid')">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="15" height="15" viewBox="0 0 15 15">
   <defs>
     
   </defs>
-  <path d="M8.967,15.000 L8.967,8.905 L15.000,8.905 L15.000,15.000 L8.967,15.000 ZM8.946,0.000 L15.000,0.000 L15.000,6.012 L8.946,6.012 L8.946,0.000 ZM0.000,0.000 L6.033,0.000 L6.033,5.929 L0.000,5.929 L0.000,0.000 ZM6.012,15.000 L0.000,15.000 L0.000,8.905 L6.012,8.905 L6.012,15.000 Z" class="cls-1"/>
+  <path d="M8.967,15.000 L8.967,8.905 L15.000,8.905 L15.000,15.000 L8.967,15.000 ZM8.946,0.000 L15.000,0.000 L15.000,6.012 L8.946,6.012 L8.946,0.000 ZM0.000,0.000 L6.033,0.000 L6.033,5.929 L0.000,5.929 L0.000,0.000 ZM6.012,15.000 L0.000,15.000 L0.000,8.905 L6.012,8.905 L6.012,15.000 Z" :class="[storeCookie ? 'cls-hovered' : 'cls-1']" />
+
 </svg>
             
           </a>
-          <a href="#" class="svgLinks" @click="isActive=false" >
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="15" height="15.031" viewBox="0 0 15 15.031">
+          <a href="#" class="svgLinks" @click="switchView('list')" >
+          <span class="list-layout">  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="15" height="15.031" viewBox="0 0 15 15.031">
   <defs>    
   </defs>
   <g>
-    <rect y="12.031" width="15" height="3" class="cls-1"/>
-    <rect y="6" width="15" height="3.031" class="cls-1"/>
-    <rect width="15" height="3.031" class="cls-1"/>
+    <rect y="12.031" width="15" height="3" :class="[!storeCookie ? 'cls-hovered' : 'cls-1']"/> 
+    <rect y="6" width="15" height="3.031" :class="[!storeCookie ? 'cls-hovered' : 'cls-1']" />
+    <rect width="15" height="3.031" :class="[!storeCookie ? 'cls-hovered' : 'cls-1']"/>
   </g>
-</svg>
+</svg></span>
           </a>
         </div>
       </div>
@@ -50,11 +50,9 @@
         <Button text="Insert in portfolio" :onClick="fireInsert"/>
       </div>
       <div class="row no-gutters mt-1">
-        <div :class="[isActive ? activeClass : secondClass]">
+          <div :class="[storeCookie? activeClass : secondClass]">
           <div class="image-block pr-3 pt-3" v-for="port in portfolios" :key="port.index">
-            <div>
-              <!-- <h5>Category : {{port.category}} </h5> -->
-              <!-- <p>{{port.text}}</p> -->
+            <div>            
              <a class="onHover" href="#"> <span></span><img :src="port.url" alt> </a> 
             </div>
           </div>
@@ -63,7 +61,6 @@
       </div>
       <div class="row no-gutters no-gutters mb-3">
             <Button style="margin:0 auto;" id="loadMore" text="Load more" v-if="!this.size==0" :onClick="loadMore"/>
-            <h3 style="margin:0 auto;" v-if="this.size==0">No more results left</h3>
           </div>
     </div>
     <Bottom/>
@@ -75,60 +72,37 @@ import Button from "@/components/Button.vue";
 import Top from "@/components/Top.vue";
 import Bottom from "@/components/Bottom.vue";
 import firebase from "firebase";
-import Vue from 'vue'
-import VueProgressBar from 'vue-progressbar'
-const options = {
-  color: '#bffaf3',
-  failedColor: '#874b4b',
-  thickness: '5px',
-  transition: {
-    speed: '0.2s',
-    opacity: '0.6s',
-    termination: 300
-  },
-  autoRevert: true,
-  location: 'left',
-  inverse: false
-}
-Vue.use(VueProgressBar, options)
+
 export default {
   name: "Work",
   components: {
     Top,
     Bottom,
-    Button,
-    "vue-progress-bar" : VueProgressBar
+    Button
   },
   data() {
-    
     return {
       activeClass: 'grid-view',
       secondClass:'list-view',
       portfolios: [],
       lastVisible: "",
       size: 0,
-      isActive: false,
-     
     };
   },
-  created() {
+  mounted() {   
     this.$firestore.ports.onSnapshot(snapshot => {
       this.size = snapshot.docs.length;
     });
-    this.getArray();
+    this.getArray();   
   },
-  mounted(){
-
-  },
-  firestore() {
+  firestore(){
     return {
       ports: firebase.firestore().collection("portfolio")
     };
   },
-  methods: {
-    
+  methods: {     
     loadMore() {
-      //var m = this.getArray()
+      this.$Progress.start()
       this.$firestore.ports
         .startAfter(this.lastVisible)
         .limit(3)
@@ -136,56 +110,62 @@ export default {
           if (snapshot.docs.length > 0) {
             this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
             snapshot.docs.forEach(doc => {
+              this.$Progress.finish() 
               this.portfolios.push(doc.data());
-              this.size--;
-              console.log(this.size);
-              
-            });
-          }          
+              this.size--;              
+            }); 
+          }         
         });
     },
-
     fireInsert() {
       this.$router.push("/work/edit");
     },
     getArray() {
       this.$firestore.ports.limit(3).onSnapshot(snapshot => {
-        this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-        //console.log(this.lastVisible)
-        snapshot.docs.forEach(doc => {
-          // console.log(doc.data())
+        this.lastVisible = snapshot.docs[snapshot.docs.length - 1];        
+        snapshot.docs.forEach(doc => {          
           this.portfolios.push(doc.data());
-          this.size--;
-          console.log(this.size);
+          this.size--;         
         });
       });
     },
-    filter(str) {      
+    filter(category) {      
       this.portfolios = [];
-      if (str.toUpperCase() == "ALL") {
+      if (category.toUpperCase() == "ALL") {
         this.getArray();    
       }
       firebase
         .firestore()
         .collection("portfolio")
-        .where("category", "==", str)
-        .onSnapshot(snapshot => {
-               
+        .where("category", "==", category)
+        .onSnapshot(snapshot => {               
           snapshot.docs.forEach(doc => {
-            this.portfolios.push(doc.data());
-         
+            this.portfolios.push(doc.data());         
           });
         });
     },
-    switchView(str){
-      
-      
+     switchView(viewType){
+      if(viewType=='grid'){    
+    this.$store.dispatch('switchView',true)
+     }else if(viewType=='list'){     
+    this.$store.dispatch('switchView',false)
+     }
     }
   },
   computed: {    
     user() {
       return this.$store.getters.user;
-    }
+    },
+    storeCookie(){      
+      if(this.$store.getters.viewSwitch.toString().toUpperCase() == "TRUE" ){
+        return true
+      }else{
+        return false
+      }      
+    },
+      color(){
+        return this.$store.getters.color
+      }
   },
   watch: {
     user(value) {
@@ -201,7 +181,11 @@ export default {
 .cls-1 {
   fill: #737373;
 }
-.cls-1:hover {
+
+.list-layout svg:hover .cls-1 , .cls-1:hover{
+  fill:#2ECC71;
+}
+.cls-hovered {
   fill:#2ECC71;
 }
 .cls-1:focus {
