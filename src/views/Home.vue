@@ -104,11 +104,8 @@ export default {
    
      firebase.database().ref('/video/').once("value")
             .then((snapshot) =>{
-            var child_changed = snapshot.val();
-           //console.log(child_changed.img)
-           //console.log(this.logo)
-            this.videoLink = child_changed.link
-           console.log(child_changed.link)
+            var child_changed = snapshot.val();           
+            this.videoLink = child_changed.link           
             })
   },
   computed:{

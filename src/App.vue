@@ -131,18 +131,16 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import firebase from "firebase";
 Vue.use(VueAxios, axios);
-import jquery from "jquery";
-var $ = require("jquery");
+//var $ = require("jquery");
 /**JQUERY IMPORT VERY IMPORTANT !!!!!!! */
-window.JQuery = $;
-require("jquery.backstretch");
+//window.JQuery = $;
+//require("jquery.backstretch");
 /** JQUERY IMPORT VERY IMPORTANT !!!!!!!*/
 /**$('.navbar-nav>li>a').on('click', function(){
     alert('HI');
 }); */
 
 export default {
-  jquery,
   data() {
     return {
      
@@ -177,13 +175,13 @@ export default {
     //  hook the progress bar to finish after we've finished moving router-view
     this.$router.afterEach((to, from) => {
       //  finish the progress bar
+      this.$Progress.finish()
       
     })
     this.onLoad();
     axios
       .get("https://project-ponovo.firebaseio.com/pages.json")
       .then(response => (this.menu = response.data));
-      this.$Progress.finish()
   },  
   mounted(){
     this.$Progress.finish()

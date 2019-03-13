@@ -10,6 +10,9 @@ import axios from "axios"
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueFirestore from "vue-firestore"
 import Vuelidate from "vuelidate"
+import jQuery from 'jquery';
+global.jQuery = jQuery;
+
 Vue.use(Vuelidate)
 require('firebase/firestore')
 Vue.use(VueFirestore)
@@ -17,7 +20,7 @@ import VueCookie from 'vue-cookie'
 Vue.use(VueCookie);
 
 Vue.use(VueProgressBar, {
-	  color: 'black',
+	  color: 'red',
 	  failedColor: '#874b4b',
 	  thickness: '5px',
 	transition: {
@@ -56,7 +59,7 @@ new Vue({
   router,
   store,
   firebase,
-  App  
+  App 
   ,
   render: h => h(App),
   created(){

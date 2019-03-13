@@ -52,8 +52,12 @@
       <div class="row no-gutters mt-1">
           <div :class="[storeCookie? activeClass : secondClass]">
           <div class="image-block pr-3 pt-3" v-for="port in portfolios" :key="port.index">
-            <div>            
-             <a class="onHover" href="#"> <span></span><img :src="port.url" alt> </a> 
+            <div> 
+             <a class="onHover" href="#"> <span></span><img :src="port.url" alt> </a> <div :class="[storeCookie ? none :secondClass]">
+               <h5>{{port.name}}</h5>
+               <p>{{port.text}}</p>
+               <p>{{port.category}}</p>
+             </div>
             </div>
           </div>
           
@@ -61,6 +65,8 @@
       </div>
       <div class="row no-gutters no-gutters mb-3">
             <Button style="margin:0 auto;" id="loadMore" text="Load more" v-if="!this.size==0" :onClick="loadMore"/>
+            <h2 style="margin:0 auto;" v-if="this.size==0"> No more results </h2>
+            <!-- <div v-cloak><h5 v-if="this.size==0">No more results</h5></div>  v-if="!this.size==0"-->
           </div>
     </div>
     <Bottom/>
@@ -72,7 +78,7 @@ import Button from "@/components/Button.vue";
 import Top from "@/components/Top.vue";
 import Bottom from "@/components/Bottom.vue";
 import firebase from "firebase";
-
+import { mapGetters } from 'vuex'
 export default {
   name: "Work",
   components: {
@@ -83,17 +89,23 @@ export default {
   data() {
     return {
       activeClass: 'grid-view',
-      secondClass:'list-view',
-      portfolios: [],
+      secondClass:'list-view',     
       lastVisible: "",
-      size: 0,
+      none:"none"
+     
     };
   },
-  mounted() {   
-    this.$firestore.ports.onSnapshot(snapshot => {
-      this.size = snapshot.docs.length;
-    });
-    this.getArray();   
+  mounted() {
+    this.$store.dispatch('fetchAllData')
+    if(this.portfolios.length===0){
+      this.$store.dispatch('fetchData')
+    }
+    // console.log(this.portfolios.length)
+    // this.$firestore.ports.onSnapshot(snapshot => {
+    //   this.size = snapshot.docs.length;
+    // });
+    // this.getArray();   
+    
   },
   firestore(){
     return {
@@ -101,21 +113,26 @@ export default {
     };
   },
   methods: {     
+    
     loadMore() {
       this.$Progress.start()
-      this.$firestore.ports
-        .startAfter(this.lastVisible)
-        .limit(3)
-        .onSnapshot(snapshot => {
-          if (snapshot.docs.length > 0) {
-            this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-            snapshot.docs.forEach(doc => {
-              this.$Progress.finish() 
-              this.portfolios.push(doc.data());
-              this.size--;              
-            }); 
-          }         
-        });
+      this.$store.dispatch('loadMore')
+      this.$Progress.finish();
+      // this.$firestore.ports
+      //   .startAfter(this.lastVisible)
+      //   .limit(3)
+      //   .onSnapshot(snapshot => {
+      //     if (snapshot.docs.length > 0) {
+      //       this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
+      //       snapshot.docs.forEach(doc => {
+      //         this.$Progress.finish() 
+      //         this.portfolios.push(doc.data());
+      //         this.size--;      
+      //                   console.log(this.size)
+        
+      //       }); 
+      //     }         
+      //   });
     },
     fireInsert() {
       this.$router.push("/work/edit");
@@ -126,12 +143,17 @@ export default {
         snapshot.docs.forEach(doc => {          
           this.portfolios.push(doc.data());
           this.size--;         
+          console.log(this.size)
         });
       });
     },
     filter(category) {      
       this.portfolios = [];
       if (category.toUpperCase() == "ALL") {
+        this.portfolios = [];
+         this.$firestore.ports.onSnapshot(snapshot => {
+      this.size = snapshot.docs.length;
+    });
         this.getArray();    
       }
       firebase
@@ -152,19 +174,19 @@ export default {
      }
     }
   },
-  computed: {    
+  computed: {  
+   ...mapGetters(['portfolios']),
     user() {
       return this.$store.getters.user;
     },
-    storeCookie(){      
-      if(this.$store.getters.viewSwitch.toString().toUpperCase() == "TRUE" ){
-        return true
-      }else{
-        return false
-      }      
+    storeCookie(){        
+        return this.$store.getters.viewSwitch           
     },
       color(){
         return this.$store.getters.color
+      },
+      size(){
+        return this.$store.getters.size
       }
   },
   watch: {
@@ -178,6 +200,9 @@ export default {
 </script>
 
 <style scoped>
+[v-cloak] {
+  display: none;
+}
 .cls-1 {
   fill: #737373;
 }
@@ -220,5 +245,7 @@ export default {
 .onHover:hover > img{
   opacity: 0.4;
 }
- 
+.none{
+  display: none;
+}
 </style>

@@ -7,9 +7,12 @@ const state = {
  const getters = {    
     viewSwitch(){
         if(state.viewSwitch === null){
-            Vue.cookie.set('isActive',true)
-        }else
-        return state.viewSwitch
+            Vue.cookie.set('isActive',false,999)
+        }else if(state.viewSwitch.toString().toUpperCase() === 'TRUE'){
+           return true
+        }else{
+           return false
+        }        
     }
  }
  const mutations = {
@@ -21,7 +24,7 @@ const state = {
      
     switchView({commit},payload){           
         commit('setViewSwitch', payload)
-       Vue.cookie.set("isActive" , payload)
+       Vue.cookie.set("isActive" , payload,999)
     }
  }
  export default {
