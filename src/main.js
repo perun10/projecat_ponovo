@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+
 // import store from "./store";
 import {store} from "./store/index";
 import VueProgressBar from "vue-progressbar"
@@ -10,9 +11,8 @@ import axios from "axios"
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueFirestore from "vue-firestore"
 import Vuelidate from "vuelidate"
-import jQuery from 'jquery';
-global.jQuery = jQuery;
 
+import 'bootstrap'
 Vue.use(Vuelidate)
 require('firebase/firestore')
 Vue.use(VueFirestore)

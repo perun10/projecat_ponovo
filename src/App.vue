@@ -35,6 +35,9 @@
                     <span class="sr-only">(current)</span>
                   </router-link>
                 </li>
+                <router-link class="nav-link pl-0" to="/blogs">Blog
+                  <span class="sr-only">(current)</span>
+                </router-link>
                 <router-link class="nav-link pl-0" to="/admin" v-if="user">Admin
                   <span class="sr-only">(current)</span>
                 </router-link>
@@ -116,17 +119,20 @@ p {
   grid-template-columns: auto auto auto auto;
   text-transform: uppercase;
 }
- .router-link-active {
-  /* color:gold !important; */
+#navbarNavDropdown .router-link-exact-active {
+  
 } 
-
+@import'~bootstrap/dist/css/bootstrap.css';
 </style>
 <script>
-import Header from "@/components/Header.vue";
-import Social from "@/components/Social.vue";
-import Footer from "@/components/Footer.vue";
+import Header from "@/components/Common/Header.vue";
+import Social from "@/components/Common/Social.vue";
+import Footer from "@/components/Common/Footer.vue";
 import Vue from "vue";
-import "bootstrap/dist/css/bootstrap.css";
+import 'slick-carousel/slick/slick.css';
+// import "bootstrap/dist/css/bootstrap.css";
+// import'~bootstrap/dist/css/bootstrap.css'
+
 import axios from "axios";
 import VueAxios from "vue-axios";
 import firebase from "firebase";
@@ -143,6 +149,9 @@ Vue.use(VueAxios, axios);
 export default {
   data() {
     return {
+     override:{
+       color:'red !important'
+     },
      
       menu: null,
       alt: null,

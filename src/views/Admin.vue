@@ -151,7 +151,11 @@
                 <g></g>
                 <g></g>
                 <g></g>
+<<<<<<< HEAD
+              </svg> Pages
+=======
               </svg> Menu
+>>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
             </a>
             <a
               class="nav-link"
@@ -390,8 +394,13 @@
 </template>
 
 <script>
+<<<<<<< HEAD
+import Top from "@/components/Common/Top.vue";
+import Button from "@/components/Common/Button.vue";
+=======
 import Top from "../components/Top.vue";
 import Button from "../components/Button.vue";
+>>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 import {store} from "@/store/index";
 import axios from "axios";
 import Vue from "vue";

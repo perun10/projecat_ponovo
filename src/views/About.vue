@@ -59,11 +59,19 @@
   </div>
 </template>
 <script>
+<<<<<<< HEAD
+import Top from "@/components/Common/Top.vue";
+import firebase from "firebase"
+import Bottom from "@/components/Common/Bottom.vue";
+import Tabs from "@/components/About/Tabs.vue";
+import Button from "@/components/Common/Button.vue";
+=======
 import Top from "../components/Top.vue";
 import firebase from "firebase"
 import Bottom from "../components/Bottom.vue";
 import Tabs from "../components/About/Tabs.vue";
 import Button from "../components/Button.vue";
+>>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 import Vue from "vue"
 import Editor from "@ckeditor/ckeditor5-vue"
 Vue.use(Editor)
@@ -92,7 +100,11 @@ export default {
    .get()
    .then((doc) =>{
      this.appliedText = doc.data().text          
+<<<<<<< HEAD
+    //console.log("IZ FIRESTORA : "+this.appliedText)
+=======
     console.log("IZ FIRESTORA : "+this.appliedText)
+>>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
     this.editorData = this.appliedText
    
    }
@@ -107,8 +119,13 @@ export default {
   },
   methods:{
     textReplacement(){
+<<<<<<< HEAD
+     // console.log("FUNCTION")
+      //console.log(this.editorData)
+=======
       console.log("FUNCTION")
       console.log(this.editorData)
+>>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
    
         this.$firestore.text.update({
         // position: new firebase.firestore.GeoPoint(parseFloat(this.latitude),parseFloat(this.longitud))

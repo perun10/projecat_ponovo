@@ -2,7 +2,9 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Admin from "./views/Admin.vue";
-import NotFound from "@/components/NotFound.vue";
+import NotFound from "@/components/Common/NotFound.vue";
+import Edit from './components/Work/Edit.vue'
+// import NotFound from "@/components/NotFound.vue";
 // import store from "./store"
 import {store} from "./store/index";
 
@@ -43,20 +45,50 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./components/Work/Edit.vue"),
-        beforeEnter(to, from, next) {
+      component: Edit,
+      // beforeEnter(to, from, next) {
 
-          if (store.getters.user) {
-            // console.log(store.state.user);
-            // console.log(store.getters.user);
-  
-            next();
-          } else {
-            next('/login');
-          }
-        }
+      //   if (store.getters.user) {
+      //     // console.log(store.state.user);
+      //     // console.log(store.getters.user);
+
+      //     next();
+      //   } else {
+      //     next('/login');
+      //   }
+      // }
+    },
+    {
+      path: "/blogs",
+      name: "blogs",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/Blogs.vue")
     }
+    ,
+    {
+      path: "/blogs/new",
+      name: "blogs",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./components/Blog/AddBlog.vue")
+    }
+    ,
+    {
+      path: "/blogs/:id",
+      name: "blogs-post",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./components/Blog/BlogPost.vue")
+      
+    }
+    
     ,
     {
       path: "/admin",
