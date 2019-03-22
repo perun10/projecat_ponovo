@@ -121,49 +121,13 @@ export default {
         text: this.$v.text.$model,
         category: this.category
       };
+      this.$store.dispatch('postImage',{image:this.image,portfolio:portfolio})
       this.isImgActive = false;
       this.isActive = false;
-      let key = "";
-      let ext = "";
-      firebase
-        .firestore()
-        .collection("portfolio")
-        .add(portfolio)
-        .then(data => {
-          key = data.id;
-          //console.log(key + ": KEY")
-          return key;
-        })
-        .then(key => {
-          //console.log(key + "2 PROMIS")
-          const fileName = this.image.name;
-          ext = fileName.slice(fileName.lastIndexOf("."));
-          // console.log(ext)
-          //console.log(this.image)
-
-          return firebase
-            .storage()
-            .ref("portfolio/" + key + ext)
-            .put(this.image);
-        })
-        .then(fileData => {
-          var urlImage = "";
-          //console.log(fileData.metadata + "FILE DATA")
-          firebase
-            .storage()
-            .ref("portfolio/" + key + ext)
-            .getDownloadURL()
-            .then(downLoadUrl => {
-              this.myImageURL = downLoadUrl;
-
-              return firebase
-                .firestore()
-                .collection("portfolio")
-                .doc(key)
-                .update({ url: this.myImageURL });
-            });
-        });
-      this.$router.push("/work");
+      //this.$store.dispatch('fetchAllData')
+      this.$router.push('/work')
+    
+     
     },
     setCategory(str) {
       console.log(str);

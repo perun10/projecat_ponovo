@@ -56,6 +56,35 @@ export default new Router({
       //     next('/login');
       //   }
       // }
+    },
+    {
+      path: "/blogs",
+      name: "blogs",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/Blogs.vue")
+    }
+    ,
+    {
+      path: "/blogs/new",
+      name: "blogs",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./components/Blog/AddBlog.vue")
+    }
+    ,
+    {
+      path: "/blogs/:id",
+      name: "blogs-post",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./components/Blog/BlogPost.vue")
     }
     ,
     {

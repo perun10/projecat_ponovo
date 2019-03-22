@@ -36,6 +36,9 @@
                     <span class="sr-only">(current)</span>
                   </router-link>
                 </li>
+                <router-link class="nav-link pl-0" to="/blogs">Blog
+                  <span class="sr-only">(current)</span>
+                </router-link>
                 <router-link class="nav-link pl-0" to="/admin" v-if="user">Admin
                   <span class="sr-only">(current)</span>
                 </router-link>

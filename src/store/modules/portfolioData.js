@@ -38,7 +38,7 @@ const actions = {
       temporaryDocSize = snapshot.docs.length
       
       commit('SET_SIZE', temporaryDocSize)
-      
+           
       
     })
   },
@@ -48,6 +48,7 @@ const actions = {
       lastVisible = snapshot.docs[snapshot.docs.length - 1];    
       snapshot.docs.forEach(doc => {
         portArr.push(doc.data())       
+        console.log(temporaryDocSize," - ",doc.data().name)
         commit('SET_SIZE', temporaryDocSize)
         temporaryDocSize--       
       });
@@ -63,13 +64,14 @@ const actions = {
         lastVisible = snapshot.docs[snapshot.docs.length - 1]
         snapshot.docs.forEach(doc => {
           portArr.push(doc.data())
+          console.log(temporaryDocSize," - ",doc.data().name )
           temporaryDocSize--
           commit('SET_SIZE', temporaryDocSize)
           commit('ADD_PORTFOLIO', portArr)        
         });
       });
   },
-  categoryFilter({ commit, dispatch }, payload) {   
+  categoryFilter({ commit, dispatch }, payload) {
 
     catFilterPay = payload
    
@@ -91,8 +93,8 @@ const actions = {
         .onSnapshot(snapshot => {
           lastVisible = snapshot.docs[snapshot.docs.length - 1]          
           snapshot.docs.forEach(doc => {
-            portArr.push(doc.data())
             temporaryDocSize--
+            portArr.push(doc.data())
             commit('SET_SIZE', temporaryDocSize)
             commit('SET_DISABLED',payload)
           });
