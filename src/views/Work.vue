@@ -1,17 +1,11 @@
 <template>
-<<<<<<< HEAD
   <div>
     <Top title="check out what i can do"/>
-=======
-  <div>    
-    <Top title="check out what i can do"/>     
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
     <div class="container">
       <div class="row no-gutters justify-content-between">
         <div class="col-md-6 text-left">
           <ul class="filters" style="padding-inline-start:0;">
             <li>
-<<<<<<< HEAD
               <a
                 class="filter-pointer"
                 :class="[isDisabled == 'All' ? 'active':'']"
@@ -45,27 +39,11 @@
                 :class="[isDisabled == 'APPLICATIONS' ? 'active':'']"
                  @click.prevent="filter('APPLICATIONS')"
               >APPLICATIONS</a>
-=======
-              <a class="filter-pointer" @click="filter('All')">ALL</a>
-            </li>
-            <li>
-              <a class="filter-pointer" @click="filter('PRINT')">PRINT</a>
-            </li>
-            <li>
-              <a class="filter-pointer" @click="filter('PHOTOGRAPHY')">PHOTOGRAPHY</a>
-            </li>
-            <li>
-              <a class="filter-pointer" @click="filter('WEB')">WEB</a>
-            </li>
-            <li>
-              <a class="filter-pointer" @click="filter('APPLICATIONS')">APPLICATIONS</a>
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
             </li>
           </ul>
         </div>
         <div class="col-md-6 text-right">
           <a href="#" class="svgLinks" @click="switchView('grid')">
-<<<<<<< HEAD
             <svg
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -113,27 +91,6 @@
                 </g>
               </svg>
             </span>
-=======
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="15" height="15" viewBox="0 0 15 15">
-  <defs>
-    
-  </defs>
-  <path d="M8.967,15.000 L8.967,8.905 L15.000,8.905 L15.000,15.000 L8.967,15.000 ZM8.946,0.000 L15.000,0.000 L15.000,6.012 L8.946,6.012 L8.946,0.000 ZM0.000,0.000 L6.033,0.000 L6.033,5.929 L0.000,5.929 L0.000,0.000 ZM6.012,15.000 L0.000,15.000 L0.000,8.905 L6.012,8.905 L6.012,15.000 Z" :class="[storeCookie ? 'cls-hovered' : 'cls-1']" />
-
-</svg>
-            
-          </a>
-          <a href="#" class="svgLinks" @click="switchView('list')" >
-          <span class="list-layout">  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="15" height="15.031" viewBox="0 0 15 15.031">
-  <defs>    
-  </defs>
-  <g>
-    <rect y="12.031" width="15" height="3" :class="[!storeCookie ? 'cls-hovered' : 'cls-1']"/> 
-    <rect y="6" width="15" height="3.031" :class="[!storeCookie ? 'cls-hovered' : 'cls-1']" />
-    <rect width="15" height="3.031" :class="[!storeCookie ? 'cls-hovered' : 'cls-1']"/>
-  </g>
-</svg></span>
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
           </a>
         </div>
       </div>
@@ -141,7 +98,6 @@
         <Button text="Insert in portfolio" :onClick="fireInsert"/>
       </div>
       <div class="row no-gutters mt-1">
-<<<<<<< HEAD
         <div :class="[storeCookie =='grid'? gridViewClass : listViewClass]">
           <div class="image-block pr-3 pt-3" v-for="port in portfolios" :key="port.index">
             <div class="divHover">
@@ -200,33 +156,12 @@
 
         <p v-if="this.size!=0">{{this.size}} <strong v-if="this.size===0">- No more results</strong> </p>
       </div>
-=======
-          <div :class="[storeCookie? activeClass : secondClass]">
-          <div class="image-block pr-3 pt-3" v-for="port in portfolios" :key="port.index">
-            <div> 
-             <a class="onHover" href="#"> <span></span><img :src="port.url" alt> </a> <div :class="[storeCookie ? none :secondClass]">
-               <h5>{{port.name}}</h5>
-               <p>{{port.text}}</p>
-               <p>{{port.category}}</p>
-             </div>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-      <div class="row no-gutters no-gutters mb-3">
-            <Button style="margin:0 auto;" id="loadMore" text="Load more" v-if="!this.size==0" :onClick="loadMore"/>
-            <h2 style="margin:0 auto;" v-if="this.size==0"> No more results </h2>
-            <!-- <div v-cloak><h5 v-if="this.size==0">No more results</h5></div>  v-if="!this.size==0"-->
-          </div>
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
     </div>
     <Bottom/>
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
 import Top from "@/components/Common/Top.vue";
 import Bottom from "@/components/Common/Bottom.vue";
 import Button from "@/components/Common/Button.vue";
@@ -240,13 +175,6 @@ const options = {
 
 Vue.use(VueSweetalert2, options);
 import { mapGetters } from "vuex";
-=======
-import Button from "@/components/Button.vue";
-import Top from "@/components/Top.vue";
-import Bottom from "@/components/Bottom.vue";
-import firebase from "firebase";
-import { mapGetters } from 'vuex'
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 export default {
   name: "Work",
   components: {
@@ -256,7 +184,6 @@ export default {
   },
   data() {
     return {
-<<<<<<< HEAD
       gridViewClass: "grid-view",
       listViewClass: "list-view",
       none: "none",
@@ -282,58 +209,10 @@ export default {
       this.$Progress.start();
       this.$store.dispatch("loadMoreCategory");
       this.$Progress.finish();
-=======
-      activeClass: 'grid-view',
-      secondClass:'list-view',     
-      lastVisible: "",
-      none:"none"
-     
-    };
-  },
-  mounted() {
-    this.$store.dispatch('fetchAllData')
-    if(this.portfolios.length===0){
-      this.$store.dispatch('fetchData')
-    }
-    // console.log(this.portfolios.length)
-    // this.$firestore.ports.onSnapshot(snapshot => {
-    //   this.size = snapshot.docs.length;
-    // });
-    // this.getArray();   
-    
-  },
-  firestore(){
-    return {
-      ports: firebase.firestore().collection("portfolio")
-    };
-  },
-  methods: {     
-    
-    loadMore() {
-      this.$Progress.start()
-      this.$store.dispatch('loadMore')
-      this.$Progress.finish();
-      // this.$firestore.ports
-      //   .startAfter(this.lastVisible)
-      //   .limit(3)
-      //   .onSnapshot(snapshot => {
-      //     if (snapshot.docs.length > 0) {
-      //       this.lastVisible = snapshot.docs[snapshot.docs.length - 1];
-      //       snapshot.docs.forEach(doc => {
-      //         this.$Progress.finish() 
-      //         this.portfolios.push(doc.data());
-      //         this.size--;      
-      //                   console.log(this.size)
-        
-      //       }); 
-      //     }         
-      //   });
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
     },
     fireInsert() {
       this.$router.push("/work/edit");
     },
-<<<<<<< HEAD
     filter(category) {
       this.$Progress.start();
       this.$store.dispatch("categoryFilter", category);
@@ -363,8 +242,7 @@ export default {
     },
     isDisabled() {
       return this.$store.getters.disabled;
-    }
-=======
+    },
     getArray() {
       this.$firestore.ports.limit(3).onSnapshot(snapshot => {
         this.lastVisible = snapshot.docs[snapshot.docs.length - 1];        
@@ -416,7 +294,6 @@ export default {
       size(){
         return this.$store.getters.size
       }
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
   },
   watch: {
     user(value) {
@@ -429,7 +306,6 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
 .cls-1 {
   fill: #737373;
 }
@@ -445,26 +321,6 @@ export default {
 }
 .svgLinks {
   margin-left: 10px;
-=======
-[v-cloak] {
-  display: none;
-}
-.cls-1 {
-  fill: #737373;
-}
-
-.list-layout svg:hover .cls-1 , .cls-1:hover{
-  fill:#2ECC71;
-}
-.cls-hovered {
-  fill:#2ECC71;
-}
-.cls-1:focus {
-  fill:#2ECC71;
-}
-.svgLinks{
-  margin-left:10px;
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 }
 .filters a {
   color: #8a8888;
@@ -478,23 +334,16 @@ export default {
 .filter-pointer {
   cursor: pointer;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 .grid-view {
   display: grid;
   grid-template-columns: auto auto auto;
   padding-bottom: 15px;
-<<<<<<< HEAD
   min-height: 35vh;
   max-height: 100vh;
 }
 .active {
   color: #2ecc71 !important;
   pointer-events: none;
-=======
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 }
 .list-view {
   margin: 0 auto;
@@ -502,7 +351,6 @@ export default {
   grid-template-rows: auto auto auto;
   padding-bottom: 15px;
 }
-<<<<<<< HEAD
 .onHover {
   position: relative;
 }
@@ -525,12 +373,10 @@ img .img-fluid:hover {
   width: 330px;
   height: 200px;
 }
-=======
 .onHover:hover > img{
   opacity: 0.4;
 }
 .none{
   display: none;
 }
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 </style>

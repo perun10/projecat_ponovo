@@ -25,7 +25,6 @@ const state = {
  }
  const actions = {
     createUser({ commit }, payload) {
-<<<<<<< HEAD
        
         firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
           .then((user) => {
@@ -33,13 +32,6 @@ const state = {
             firebase.auth().currentUser.sendEmailVerification().then(()=>{
               console.log('Email sent')
             })
-=======
-        commit("setLoading", true)
-        commit("clearError")
-        firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-          .then((user) => {
-            Vue.swal(" Account created for " + payload.email);
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
             const newUser = {
               id: user.id
             }
@@ -50,20 +42,11 @@ const state = {
           })
       },
       signInUser({ commit }, payload) {
-<<<<<<< HEAD
        
         firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
           .then(
             user => {
            
-=======
-        commit('setLoading', true)
-        commit('clearError')
-        firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-          .then(
-            user => {
-              commit('setLoading', false)
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
               const newUser = {
                 id: user.user.uid,
               }
@@ -74,13 +57,7 @@ const state = {
             }
           )
           .catch(
-<<<<<<< HEAD
             error => {              
-=======
-            error => {
-              commit('setLoading', false)
-              commit('setError', error)
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
               Vue.swal(error.message)
               router.push('/signup')
             }
@@ -92,11 +69,7 @@ const state = {
       logout({ commit }) {
         firebase.auth().signOut().then(() => {
           router.push('/signup');
-<<<<<<< HEAD
           commit('setUser', '')
-=======
-          commit('setUser', null)
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
         })
   
       }

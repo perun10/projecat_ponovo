@@ -15,19 +15,11 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import Top from "@/components/Common/Top.vue";
 import Bottom from "@/components/Common/Bottom.vue";
 import Map from "@/components/Contact/Map.vue";
 import Form from "@/components/Contact/ContactForm.vue";
 import Info from "@/components/Contact/ContactInfo.vue";
-=======
-import Top from "../components/Top.vue";
-import Bottom from "../components/Bottom.vue";
-import Map from "../components/Contact/Map.vue";
-import Form from "../components/Contact/ContactForm.vue";
-import Info from "../components/Contact/ContactInfo.vue";
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 import firebase from "firebase";
 
 export default {

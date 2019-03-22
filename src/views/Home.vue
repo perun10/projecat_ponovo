@@ -65,15 +65,9 @@ import VueAxios from 'vue-axios'
  
 Vue.use(VueAxios, axios)
 Vue.use(VModal)
-<<<<<<< HEAD
 import Carousel from "@/components/Home/Carousel.vue";
 import Bottom from "@/components/Common/Bottom.vue";
 import Button from "@/components/Common/Button.vue";
-=======
-import Carousel from "../components/Home/Carousel.vue";
-import Bottom from "../components/Bottom.vue";
-import Button from "../components/Button.vue";
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 
 
 

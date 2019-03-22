@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div>
     <Top title="ADD NEW PORTFOLIO"/>
     <div class="container form-group mt-3 pt-3">
@@ -164,59 +163,13 @@ export default {
 }
 .error {
   color: red;
-=======
-    <div>
-        <Top title="ADD NEW PORTFOLIO"/>
-        <div class="container form-group mt-3 pt-3">
-             <img :src="imageUrl" alt="Picture" height="100px">
-              <span><div class="error" v-if="isActive">Title is required</div></span>    
-        <input type="text" class="form-control mb-3" v-model.trim="$v.title.$model" placeholder="Enter title"> 
-                     <span><div class="error" v-if="isActive">Text is required</div></span>  
-        <input type="text"  class="form-control mb-3" v-model.trim="$v.text.$model" placeholder="Enter text">
-        <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle mb-5"
-                type="button"
-                id="dropdownMenu2"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >Choose category</button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <button
-                  class="dropdown-item"
-                  type="button"
-                  @click="setCategory('print')"
-                >PRINT</button>
-                <button
-                  class="dropdown-item"
-                  type="button"
-                  @click="setCategory('PHOTOGRAPHY')"
-                >PHOTOGRAPHY</button>
-                <button
-                  class="dropdown-item"
-                  type="button"
-                  @click="setCategory('WEB')"
-                >WEB</button>
-                <button
-                  class="dropdown-item"
-                  type="button"
-                  @click="setCategory('APPLICATIONS')"
-                >APPLICATIONS</button>
-              </div>
-            </div>
-        <Button text="Upload Image" :onClick="onPickFile"/> <Button text="Add new portfolio" :onClick="fireInsert"/>
-        <h5 class="error" v-if="isImgActive">IMAGE IS REQUIRED</h5>
-        <input type="file" style="display:none" ref="fileInput" accept="image/*" @change="onFilePicked">
-       
-</div>
-    </div>
-</template>
-
+}
+</style>
+    
 <script>
 import { required, minLength, email , maxLength} from 'vuelidate/lib/validators'
-import Top from "@/components/Top.vue";
-import Button from "@/components/Button.vue";
+import Top from "@/components/Common/Top.vue";
+import Button from "@/components/Common/Button.vue";
 import firebase from "firebase"
 export default {
     data(){
@@ -332,6 +285,5 @@ methods:{
 }
 .error{
   color:red;
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 }
 </style>

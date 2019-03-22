@@ -24,11 +24,7 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import Button from "@/components/Common/Button.vue";
-=======
-import Button from "@/components/Button.vue";
->>>>>>> 1951d06ab0b844194f8c70635eab643cafd5cf2e
 
 export default {
     name:"Signin",
