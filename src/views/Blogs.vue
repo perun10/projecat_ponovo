@@ -79,9 +79,10 @@
         </svg>
       </a>
     </div>
+   
     <div id="blog" class="container">
       <div v-for="blg in blogs" :key="blg.index">
-        <div class="box-blog mt-5">
+        <div class="box-blog mt-5" v-if="blg.isPublished">
           <div class="row no-gutters">
             <div class="col-md-4 col-xs-12">
               <img class="img-fluid" :src="blg.imgURL" alt>
@@ -89,7 +90,7 @@
 
             <div class="col-md-8 col-xs-12 p-3">
               <div class="text-left">
-                <h3>{{blg.title}}</h3>
+                <router-link :to="/blogs/+blg.url" style="color:#8A8888;text-decoration:none;"> <h3>{{blg.title}}</h3></router-link>
               </div>
 
               <div class="row no-gutters justify-content center">
@@ -99,7 +100,7 @@
               </div>
 
               <div class="row no-gutters justify-content-between mt-2">
-                <label class="text-left">Date : {{format(blg.time.toDate())}}</label>
+                <label class="text-left">{{format(blg.time.toDate())}}</label>
                 <label class="text-right">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +108,7 @@
                     height="24"
                     viewBox="0 0 24 24"
                   >
-                    <path id="like" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>
+                    <path id="like"  d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>
                   </svg>
                   {{blg.likes}}
                 </label>
@@ -153,12 +154,12 @@ export default {
     BlogPost
   },
   created() {  
-    this.$store.dispatch("importBlogs", this.sortBy);   
+    this.$store.dispatch("blogs/importBlogs", this.sortBy);   
   }
   ,
   computed: {
     blogs() {
-      return this.$store.getters.getBlogs;
+      return this.$store.getters['blogs/getBlogs'];
     },
     user() {
       return this.$store.getters.user;
@@ -170,16 +171,16 @@ export default {
         .utc()
         .startOf("day")
         .format();
-      return moment(date).format("DD/MM/YYYY");
+      return moment(date).format("DD MMMM YYYY");
     },
     sortByDate() {
       // console.log(event);
       if(this.sortBy.toLowerCase()==='asc'){
         this.sortBy = 'desc'
-        this.$store.dispatch("importBlogs", this.sortBy);
+        this.$store.dispatch("blogs/importBlogs", this.sortBy);
       }else{
         this.sortBy = 'asc'
-        this.$store.dispatch("importBlogs", this.sortBy);
+        this.$store.dispatch("blogs/importBlogs", this.sortBy);
       }
       // this.sorting = "asc";
       // console.log(this.sorting);
@@ -192,6 +193,9 @@ export default {
 <style>
 #like:hover {
   fill: red;
+}
+.ultimate{
+  fill:purple;
 }
 #blog {
   min-height: 50vh;
@@ -208,5 +212,8 @@ export default {
 }
 #description > * {
   display: none;
+}
+#inactive{
+  background-color:gray;
 }
 </style>

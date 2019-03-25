@@ -4,7 +4,9 @@ const state = {
    blogs:[],
    blog:"",
    likes:"",
-   url:""
+   url:"",
+   avatar:"",
+   author:''
  }
  const getters = {    
     getBlogs(state){
@@ -18,6 +20,12 @@ const state = {
     },
     getUrl(state){
         return state.url
+    },
+    getAvatar(state){
+        return state.avatar
+    },
+    getAuthor(state){
+        return state.author
     }
  }
  const mutations = {
@@ -32,6 +40,12 @@ const state = {
     },
     SET_URL(state,payload){
         state.url = payload
+    },
+    SET_AVATAR(state,payload){
+        state.avatar = payload
+    },
+    SET_AUTHOR(state,payload){
+        state.author = payload
     }
  }
  const actions = {
@@ -53,6 +67,8 @@ const state = {
                 arrBlog = doc.data()
                 commit('SET_LIKE',doc.data().likes)
                 commit('SET_URL',doc.data().url)
+                commit('SET_AVATAR',doc.data().description)
+                commit('SET_AUTHOR',doc.data().author)
             })
             commit('SET_BLOG',arrBlog)
         })
@@ -66,7 +82,7 @@ const state = {
             time : payload.time,
             imgURL : payload.imgURL,
             likes : payload.likes,
-            isPublished: true,
+            isPublished: payload.isPublished,
             text : payload.text,
             description : payload.description
         }
@@ -79,13 +95,37 @@ const state = {
          .get()
          .then(querySnapshot=>{
              querySnapshot.forEach((doc)=>{                
-                 firebase.firestore().collection('blogs').doc(doc.id).update({likes:payload.likes})
+                 firebase.firestore().collection('blogs').doc(doc.id).update({likes:payload.likes}) //ZAMJENA AVATARA ZA AUTORE
              })
          })
          
+    },
+    replaceAvatar({commit},payload){
+        const imgFile = payload.image;
+        const url = payload.url;
+        const ext = imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+        const author = payload.author;
+        
+        return firebase.storage().ref('avatar/'+author+ext).put(imgFile)
+        .then(fileData =>{
+            console.log(fileData)
+            var urlImage = "";
+            firebase.storage().ref('avatar/'+author+ext).getDownloadURL().then((downloadURL)=>{
+                urlImage = downloadURL
+                commit('SET_AVATAR',urlImage)
+                return firebase.firestore().collection('blogs').where('url','==',url).
+                    get().then(querySnapshot =>{
+                        querySnapshot.forEach((doc)=>{
+                            firebase.firestore().collection('blogs').doc(doc.id).update({description:urlImage})
+                        })
+                    })
+
+            })
+        })
     }
  }
  export default {
+    namespaced:true,
     state,
     getters,
     mutations,

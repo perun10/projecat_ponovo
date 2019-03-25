@@ -6,6 +6,7 @@
         <input class="form-control" v-model="title" placeholder="Give your blog title">
         <label v-if="title">URL : {{this.escapeRegExp(this.title)}}</label>
         <input class="form-control mt-4" v-model="author" placeholder="Give your blog author">
+        <input class="form-control mt-4" v-model="authorImg" placeholder="Give your author portfolio image (*optional)">
         <input
           class="form-control mt-4 mb-4"
           v-model="imgUrl"
@@ -15,12 +16,12 @@
         <div>
           <p class="mt-3">Publish
             <label class="switch">
-              <input type="checkbox" v-model="switchw">
+              <input type="checkbox" v-model="switchw" @change="changeIn">
               <span class="slider round"></span>
             </label>
           </p>
 
-          <datetime v-model="date"></datetime>
+          Date :<datetime v-model="date"></datetime>
         </div>
       </form>
       <div class="row no-gutters justify-content-center">
@@ -59,7 +60,8 @@ export default {
       imgUrl: "",
       date: "",
       isPublsihed: "",
-      switchw:"",
+      switchw:false,
+      authorImg:"" //portfolio slika za authora
     };
   },
   components: {
@@ -70,30 +72,34 @@ export default {
     Button
   },
   methods:{
-      postBlog(){
-        console.log("Title"+this.title)
-        console.log("URL"+ this.escapeRegExp(this.title))
-        console.log("Author"+this.author)
-        console.log("imgURL"+this.imgUrl)
-        console.log("description "+this.editorData.slice(0,128))
-        console.log("Text "+this.editorData)
-         var date1 = moment(this.date).utc().startOf('day').format();
-        console.log("Date " + moment(date1).format('DD/MM/YYYY'))
-        var date2 = (new Date(date1))
-        console.log(date2)
-        this.$store.dispatch('addNewBlog',{ 
+
+    changeIn(event){
+      //console.log(event)
+      console.log(this.switchw)
+      return this.switchw
+    },
+      postBlog(){        
+         var date1 = moment(this.date).utc().startOf('day').format();        
+        var date2 = (new Date(date1))       
+        this.$store.dispatch('blogs/addNewBlog',{ 
             title : this.title,//
             author:this.author,//
             url : this.escapeRegExp(this.title),//
             time : date2,//
             imgURL : this.imgUrl,//
             likes : 0,//
-            isPublished: true,//
+            isPublished: this.switchw,//
             text : this.editorData,//
-            description : this.editorData.slice(0,128)})//
+            description : this.authorImg? this.authorImg : 'http://www.inyogo.com/img/avatar/generic-avatar.png'})//
+            this.$router.push('/blogs')
       },
       escapeRegExp(str) {
-        return str.toLowerCase().replace(/\s/g, "-");
+        var stringReg =  str.toLowerCase().replace(/\s/g, "-");
+        var str2 = stringReg.toLowerCase().replace('?','')
+        var str3 = str2.toLowerCase().replace(',','')
+        var str4 = str3.toLowerCase().replace('.','')
+        return str4
+        
 }
   }
 };
