@@ -1,12 +1,14 @@
 import * as firebase from 'firebase'
 import 'firebase/firestore';
+var blogObject = ''
 const state = {
    blogs:[],
    blog:"",
    likes:"",
    url:"",
    avatar:"",
-   author:''
+   author:'',
+   published:''
  }
  const getters = {    
     getBlogs(state){
@@ -26,6 +28,9 @@ const state = {
     },
     getAuthor(state){
         return state.author
+    },
+    getPublished(state){
+        return state.published
     }
  }
  const mutations = {
@@ -46,6 +51,9 @@ const state = {
     },
     SET_AUTHOR(state,payload){
         state.author = payload
+    },
+    SET_PUBLISHED(state,payload){
+        state.published = payload
     }
  }
  const actions = {
@@ -62,13 +70,15 @@ const state = {
     },
     importBlogPost({commit},payload){
         let arrBlog = {}
-        firebase.firestore().collection('blogs').where('url','==',payload).onSnapshot(snapshot=>{
+        firebase.firestore().collection('blogs').where('url','==',payload).onSnapshot(snapshot=>{            
             snapshot.docs.forEach(doc=>{
+                blogObject = doc   
                 arrBlog = doc.data()
                 commit('SET_LIKE',doc.data().likes)
                 commit('SET_URL',doc.data().url)
                 commit('SET_AVATAR',doc.data().description)
                 commit('SET_AUTHOR',doc.data().author)
+                commit('SET_PUBLISHED',doc.data().isPublished)
             })
             commit('SET_BLOG',arrBlog)
         })
@@ -91,13 +101,13 @@ const state = {
     },
     updateLikes({commit},payload){
         commit('SET_LIKE',payload.likes)
-         firebase.firestore().collection('blogs').where('url','==',payload.title)
-         .get()
-         .then(querySnapshot=>{
-             querySnapshot.forEach((doc)=>{                
-                 firebase.firestore().collection('blogs').doc(doc.id).update({likes:payload.likes}) //ZAMJENA AVATARA ZA AUTORE
-             })
-         })
+        firebase.firestore().collection('blogs').doc(blogObject.id).update({likes:payload.likes}) //ZAMJENA AVATARA ZA AUTORE
+        //  firebase.firestore().collection('blogs').where('url','==',payload.title)
+        //  .get()
+        //  .then(querySnapshot=>{
+        //      querySnapshot.forEach((doc)=>{                
+        //      })
+        //  })
          
     },
     replaceAvatar({commit},payload){
@@ -112,17 +122,21 @@ const state = {
             var urlImage = "";
             firebase.storage().ref('avatar/'+author+ext).getDownloadURL().then((downloadURL)=>{
                 urlImage = downloadURL
-                commit('SET_AVATAR',urlImage)
-                return firebase.firestore().collection('blogs').where('url','==',url).
-                    get().then(querySnapshot =>{
-                        querySnapshot.forEach((doc)=>{
-                            firebase.firestore().collection('blogs').doc(doc.id).update({description:urlImage})
-                        })
-                    })
+                commit('SET_AVATAR',urlImage)       
+                // return firebase.firestore().collection('blogs').where('url','==',url).
+                // get().then(querySnapshot =>{
+                //     querySnapshot.forEach((doc)=>{        
+                            firebase.firestore().collection('blogs').doc(blogObject.id).update({description:urlImage})
+                        
+                    
 
             })
         })
-    }
+    },
+    unPublishBlog({commit},payload){
+        commit('SET_PUBLISHED',payload)     
+        firebase.firestore().collection('blogs').doc(blogObject.id).update({isPublished:payload}) //Deaktivacija ili aktivacija Bloga
+        }
  }
  export default {
     namespaced:true,

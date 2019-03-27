@@ -66,6 +66,7 @@ new Vue({
   created(){
   firebase.auth().onAuthStateChanged((user) => {
     if(user) {
+      console.log(user.email)
       this.$store.dispatch('autoSignIn', user);
     }
   })

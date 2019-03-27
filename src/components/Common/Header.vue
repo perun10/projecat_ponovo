@@ -5,9 +5,7 @@
                 <div class="profile" v-if="user">
                   
                 </div>
-                <span v-if="user">Admin</span>
-               
-
+                <span v-if="user">Admin </span>               
           </div>
             <div class="col-md-11 col-xs-12 text-right">
 

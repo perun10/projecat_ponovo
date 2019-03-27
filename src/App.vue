@@ -207,7 +207,6 @@ export default {
   },
   watch: {
     user(value) {
-      // console.log(value.id)
       if (value.id !== null && value.id !== undefined) {        
         this.thisUser = true
         return this.thisUser

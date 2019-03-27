@@ -9,13 +9,19 @@
             
              <a @click.once="upVote" >  <v-icon name="hearts" :class="[disable?'':'like']" style="width:24px;height:24px;"/> </a> {{getLike}}   </div>
 
-      <div class="col-md-4 col-xs-12"> <a href="#" @click="onPickFile"><img class="author" :src="avatar" alt=""></a> <input
+      <div class="col-md-4 col-xs-12"> <a href="#" @click="onPickFile"><img class="author" :src="avatar" alt="" v-if="avatar"></a> <input
         type="file"
         style="display:none"
         ref="authorAvatar"
         accept="image/*"
         @change="onFilePicked"
-      > {{blog.author}}</div>
+      > {{blog.author}}
+      
+      <div v-if="user&&blog.isPublished">
+        Blog is published, click this to : <a href="#" @click="unPublishBlogPublish">Deactivate</a>
+      </div>
+      <div v-else-if="user">Blog is unpublished, click this to : <a href="#" @click="unPublishBlogPublish">Activate</a></div>
+      </div>
       <div class="col-md-4 col-xs-12 pr-5 pt-3" v-if="blog">Published : {{ format(blog.time) }}</div>
      </div>
      <div class="row no-gutters justify-content-center p-3">
@@ -34,7 +40,7 @@
     <div class="container">
         <div class="comments">
 
-    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="urlWatch" language="en" :api_key="disquisAPI"></vue-disqus>
+    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="'localhost:8080/blogs/'+getUrl" language="en" :api_key="disquisAPI"></vue-disqus>
         </div>
         <!-- <CommentGrid
         :baseURL="fbURL"
@@ -137,6 +143,15 @@ replaceAvatar(){
     }else{
         console.log('slika nije preuzeta')
     }
+},
+unPublishBlogPublish(value){
+    if(this.published===true){
+        value = false
+    }else{
+        value= true
+    }
+    //console.log('This is '+value)
+    this.$store.dispatch('blogs/unPublishBlog',value)
 }
 },
 beforeRouteEnter(to,from,next){
@@ -146,7 +161,7 @@ beforeRouteEnter(to,from,next){
 }
 ,
 beforeDestroy(){
-        this.$refs.disqus.reset(this)
+        // this.$refs.disqus.reset(this)
 
 }
 ,
@@ -167,6 +182,9 @@ computed:{
     },
     author(){
         return this.$store.getters['blogs/getAuthor']
+    },
+    published(){
+        return this.$store.getters['blogs/getPublished']
     }
     
     
