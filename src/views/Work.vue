@@ -293,6 +293,9 @@ export default {
       },
       size(){
         return this.$store.getters.size
+      },
+      isDisabled(){
+        return this.$store.getters.disabled
       }
   },
   watch: {

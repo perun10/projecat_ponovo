@@ -20,7 +20,7 @@
         v-model.trim="$v.text.$model"
         placeholder="Enter text"
       >
-     
+      
       <div class="dropdown">
         <button
           class="btn btn-secondary dropdown-toggle mb-5"
@@ -45,6 +45,9 @@
           >APPLICATIONS</button>
         </div>
       </div>
+      <!-- <vue-dropdown
+      :config="config" @setSelectedOption="setNewSelectedOption($event);"></vue-dropdown> -->
+
       <div class="row no-gutters justify-content-center">
       <img v-if="image" :src="imageUrl" alt="Picture" height="100px">
 </div>
@@ -72,9 +75,10 @@ import {
 import Top from "@/components/Common/Top.vue";
 import Button from "@/components/Common/Button.vue";
 import firebase from "firebase";
+
 export default {
   data() {
-    return {
+    return {      
       title: "",
       text: "",
       url: "",
@@ -100,10 +104,10 @@ export default {
   },
   components: {
     Top,
-    Button
+    Button,
   }
   ,
-  methods: {
+  methods: {    
     fireInsert() {
       if (!this.image) {
         //alert('Izaberi SLIKU')
@@ -163,127 +167,5 @@ export default {
 }
 .error {
   color: red;
-}
-</style>
-    
-<script>
-import { required, minLength, email , maxLength} from 'vuelidate/lib/validators'
-import Top from "@/components/Common/Top.vue";
-import Button from "@/components/Common/Button.vue";
-import firebase from "firebase"
-export default {
-    data(){
-        return{
-            title:"",
-            text:"",
-            url:"",
-            category:"",
-            imageUrl:"",
-            image:null,
-            storageBucket : process.env.VUE_APP_STORAGE_BUCKET,
-            myImageURL:"",
-            isActive:false,
-            isImgActive:false
-        }
-    },
-    validations:{
-      title:{
-          required,
-          minLength:minLength(4)
-        },
-        text:{
-          required,
-          minLength:minLength(20)
-        }
-    },
-components:{
-    Top,
-    Button
-},
-methods:{
-    fireInsert(){
-      if(!this.image){
-        //alert('Izaberi SLIKU')
-        this.isImgActive = true;
-        return
-      }
-     // console.log(this.$v.title.$model)
-      if(this.$v.title.$model === "" || this.$v.text.$model === ""){        
-       // alert('DOPUNITE POLJA')
-        this.isActive = true
-        return
-      }
-    const portfolio = {
-          title:this.$v.title.$model,
-           text:this.$v.text.$model,         
-           category:this.category
-      }
-      this.isImgActive = false
-      this.isActive = false
-      let key = ""
-      let ext = ""
-       firebase.firestore().collection("portfolio").add(portfolio)
-       .then((data) =>{        
-         key = data.id
-         //console.log(key + ": KEY")
-         return key
-       })
-       .then(key =>{
-         //console.log(key + "2 PROMIS")
-         const fileName = this.image.name
-         ext = fileName.slice(fileName.lastIndexOf('.'))
-        // console.log(ext)
-         //console.log(this.image)
-
-         return firebase.storage().ref('portfolio/'+key+ext).put(this.image)
-       })
-       .then(fileData =>{
-         var urlImage = "" ;
-         //console.log(fileData.metadata + "FILE DATA")
-       firebase.storage().ref('portfolio/'+key+ext).getDownloadURL().then((downLoadUrl)=>{
-             
-         this.myImageURL = downLoadUrl
-            
-        return firebase.firestore().collection('portfolio').doc(key).update({url:this.myImageURL})
-       })
-         
-        
-        
-       })
-       this.$router.push("/work")
-    },
-    setCategory(str){
-        console.log(str)
-        this.category = str.toUpperCase();
-        console.log(this.category)
-    },
-    onPickFile(){
-      this.$refs.fileInput.click()
-    },
-    onFilePicked(event){
-      const files = event.target.files
-      let filename = files[0].name
-      if(filename.lastIndexOf('.')<=0){
-        return alert('Please add a valid file')
-      }
-      const fileReader = new FileReader()
-      fileReader.addEventListener('load',()=>{
-        this.imageUrl = fileReader.result
-      })
-      fileReader.readAsDataURL(files[0])
-      this.image = files[0]
-      console.log(this.image);
-    }
-}
-}
-</script>
-
-<style>
-.form-control{
-    margin:0 auto;
-    width: 500px;
-}
-.error{
-  color:red;
 }
 </style>

@@ -82,10 +82,13 @@
    
     <div id="blog" class="container">
       <div v-for="blg in blogs" :key="blg.index">
-        <div class="box-blog mt-5" v-if="blg.isPublished">
-          <div class="row no-gutters">
+        <div class="box-blog mt-5" v-if="user||blg.isPublished" :class="[!blg.isPublished ? 'unPublished':'']">
+          <div class="row no-gutters p-3">
             <div class="col-md-4 col-xs-12">
-              <img class="img-fluid" :src="blg.imgURL" alt>
+             
+
+              <img style="object-fit:cover;height:300px;width:100%;" :src="blg.imgURL">
+              
             </div>
 
             <div class="col-md-8 col-xs-12 p-3">
@@ -93,14 +96,15 @@
                 <router-link :to="/blogs/+blg.url" style="color:#8A8888;text-decoration:none;"> <h3>{{blg.title}}</h3></router-link>
               </div>
 
-              <div class="row no-gutters justify-content center">
-                <div id="description" class="text-left" v-html="blg.text" style="display:inline;"></div>
+              <div class="row no-gutters justify-content center ">
+                <div id="description" class="text-left wrap-text" v-html="blg.text" style="display:inline;"></div>
                 <!-- <div v-for="b in blog.text" :key="b.index">{{b.split('p')[0]}}</div> -->
-                <router-link :to="/blogs/+blg.url">Read more</router-link>
+               
               </div>
 
-              <div class="row no-gutters justify-content-between mt-2">
-                <label class="text-left">{{format(blg.time.toDate())}}</label>
+              <div class="row no-gutters justify-content-between mt-5">
+                <label class="text-left" v-if="blg.isPublished">{{format(blg.time.toDate())}}</label>
+                <label class="text-left" v-else>This blog unpublished</label>
                 <label class="text-right">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -113,6 +117,7 @@
                   {{blg.likes}}
                 </label>
               </div>
+              <!-- HERE COLMN Ends -->
             </div>
           </div>
         </div>
@@ -145,7 +150,8 @@ Vue.use(moment);
 export default {
   data() {
     return {
-      sortBy:'desc'
+      sortBy:'desc',
+      aLink : ' <router-link style="display:inline;" :to="/blogs/+blg.url">Read more</router-link>'
     };
   },
   components: {
@@ -166,6 +172,9 @@ export default {
     }
   },
   methods: {
+    forwardLink(value){
+    
+    },
     format(date) {
       moment(date)
         .utc()
@@ -215,5 +224,15 @@ export default {
 }
 #inactive{
   background-color:gray;
+}
+.published{
+  background-color:green;
+}
+.unPublished > *{
+  color:white;
+  background-color:indianred;
+}
+.wrap-text{
+  min-height: 35%;
 }
 </style>

@@ -11,6 +11,7 @@ import axios from "axios"
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueFirestore from "vue-firestore"
 import Vuelidate from "vuelidate"
+import 'vue-awesome/icons'
 
 import 'bootstrap'
 Vue.use(Vuelidate)

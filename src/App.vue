@@ -137,6 +137,8 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import firebase from "firebase";
 Vue.use(VueAxios, axios);
+// import Icon from 'vue-awesome/components/Icon'
+
 //var $ = require("jquery");
 /**JQUERY IMPORT VERY IMPORTANT !!!!!!! */
 //window.JQuery = $;
