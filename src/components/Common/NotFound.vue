@@ -1,5 +1,7 @@
 <template>
-  <div
+  <div>
+    <Top title="Page not found"/>
+    <div
     style="background:url('https://media.disquscdn.com/errors/img/1.gif')no-repeat center;background-size:cover;height:100vh;position:relative;"
   >
     <!-- <H1 style="color:gold">PAGE NOT FOUND</H1> -->
@@ -7,20 +9,26 @@
       <h1>Uh oh... Something didn't work.</h1>
       <p>
         This page doesn't seem to exist. You might have followed a bad link or mistyped the address, feel free to try again. Alternatively, you can
-        return to the home page, or
-       visit the help page for more options.
+        return to the <router-link to="/">home page</router-link>.
       </p>
     </div>
+  </div>
+  <Bottom/>
   </div>
 </template>
 
 <script>
+import Top from "@/components/Common/Top.vue"
+import Bottom from "@/components/Common/Bottom.vue"
 export default {
-  components: {}
+  components: {
+    Top,
+    Bottom
+  }
 };
 </script>
 
-<style>
+<style scoped>
 body{
     position: relative;
     width: 100%;

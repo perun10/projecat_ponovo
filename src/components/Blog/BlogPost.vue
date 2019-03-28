@@ -5,6 +5,7 @@
      <Top :title="blog.title"/>
      <div id="blogs"  class="container">
           <div class="row no-gutters justify-content-between p-3">
+              <!-- <v-icon name="comment" style="width:24px;height:24px;"/>  -->
       <div class="col-md-4 col-xs-12 pt-2">        
             
              <a @click.once="upVote" >  <v-icon name="hearts" :class="[disable?'':'like']" style="width:24px;height:24px;"/> </a> {{getLike}}   </div>
@@ -25,6 +26,7 @@
       <div class="col-md-4 col-xs-12 pr-5 pt-3" v-if="blog">Published : {{ format(blog.time) }}</div>
      </div>
      <div class="row no-gutters justify-content-center p-3">
+         <router-link :to="/blogs/+getUrl+'/edit'" style="color:#8A8888;text-decoration:none;">EDIT</router-link>
          <div class="col-md-12 col-xs-12">
              <img class="img-fluid" :src="blog.imgURL" alt="">
          </div>         
@@ -40,7 +42,7 @@
     <div class="container">
         <div class="comments">
 
-    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="'localhost:8080/blogs/'+getUrl" language="en" :api_key="disquisAPI"></vue-disqus>
+    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="urlWatch" language="en" :api_key="disquisAPI" v-if="getUrl"></vue-disqus>
         </div>
         <!-- <CommentGrid
         :baseURL="fbURL"
@@ -64,6 +66,7 @@ import Vue from 'vue'
 import CommentGrid from 'vue-comment-grid'
 import moment from "moment"
 import Icon from 'vue-awesome/components/Icon'
+
 import VueDisqus from "vue-disqus"
 Vue.use(VueDisqus)
 
@@ -194,8 +197,10 @@ watch:{
     urlWatch(url){
         url = this.getUrl
         // this.$refs.disqus.reset()
-        
+        if(url){
+            
          return 'localhost:8080/blogs/'+url
+        }
     }
 }
 

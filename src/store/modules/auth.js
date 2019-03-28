@@ -12,16 +12,23 @@ const options = {
 Vue.use(VueSweetalert2, options)
 const state = {
     user: null,
+    email:null
  }
  const getters = {    
     user(state) {
         return state.user
+      },
+      getEmail(state){
+        return state.email
       }
  }
  const mutations = {
     setUser(state, payload) {
         state.user = payload
-      }
+      },
+     SET_EMAIL(state,payload){
+      state.email = payload
+     }
  }
  const actions = {
     createUser({ commit }, payload) {
@@ -72,6 +79,10 @@ const state = {
           commit('setUser', '')
         })
   
+      },
+      takeEmail({commit},payload){
+        commit('SET_EMAIL',payload)
+        console.log(payload+ ' je dodat u store !')
       }
  }
  export default {

@@ -79,27 +79,34 @@
         </svg>
       </a>
     </div>
-   
+
     <div id="blog" class="container">
       <div v-for="blg in blogs" :key="blg.index">
-        <div class="box-blog mt-5" v-if="user||blg.isPublished" :class="[!blg.isPublished ? 'unPublished':'']">
+        <div
+          class="box-blog mt-5"
+          v-if="user||blg.isPublished"
+          :class="[!blg.isPublished ? 'unPublished':'']"
+        >
           <div class="row no-gutters p-3">
             <div class="col-md-4 col-xs-12">
-             
-
               <img style="object-fit:cover;height:300px;width:100%;" :src="blg.imgURL">
-              
             </div>
 
             <div class="col-md-8 col-xs-12 p-3">
               <div class="text-left">
-                <router-link :to="/blogs/+blg.url" style="color:#8A8888;text-decoration:none;"> <h3>{{blg.title}}</h3></router-link>
+                <router-link :to="/blogs/+blg.url">
+                  <h3>{{blg.title}}</h3>
+                </router-link>
               </div>
 
-              <div class="row no-gutters justify-content center ">
-                <div id="description" class="text-left wrap-text" v-html="blg.text" style="display:inline;"></div>
+              <div class="row no-gutters justify-content center">
+                <div
+                  id="description"
+                  class="text-left wrap-text"
+                  v-html="blg.text"
+                  style="display:inline;"
+                ></div>
                 <!-- <div v-for="b in blog.text" :key="b.index">{{b.split('p')[0]}}</div> -->
-               
               </div>
 
               <div class="row no-gutters justify-content-between mt-5">
@@ -112,7 +119,7 @@
                     height="24"
                     viewBox="0 0 24 24"
                   >
-                    <path id="like"  d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>
+                    <path id="like" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>
                   </svg>
                   {{blg.likes}}
                 </label>
@@ -131,9 +138,9 @@
           </svg>
         </router-link>
       </div>
-    </div>    
+    </div>
     <Bottom/>
-   </div>
+  </div>
 </template>
 
 <script>
@@ -150,8 +157,9 @@ Vue.use(moment);
 export default {
   data() {
     return {
-      sortBy:'desc',
-      aLink : ' <router-link style="display:inline;" :to="/blogs/+blg.url">Read more</router-link>'
+      sortBy: "desc",
+      aLink:
+        ' <router-link style="display:inline;" :to="/blogs/+blg.url">Read more</router-link>'
     };
   },
   components: {
@@ -159,22 +167,19 @@ export default {
     Bottom,
     BlogPost
   },
-  created() {  
-    this.$store.dispatch("blogs/importBlogs", this.sortBy);   
-  }
-  ,
+  created() {
+    this.$store.dispatch("blogs/importBlogs", this.sortBy);
+  },
   computed: {
     blogs() {
-      return this.$store.getters['blogs/getBlogs'];
+      return this.$store.getters["blogs/getBlogs"];
     },
     user() {
       return this.$store.getters.user;
     }
   },
   methods: {
-    forwardLink(value){
-    
-    },
+    forwardLink(value) {},
     format(date) {
       moment(date)
         .utc()
@@ -184,11 +189,11 @@ export default {
     },
     sortByDate() {
       // console.log(event);
-      if(this.sortBy.toLowerCase()==='asc'){
-        this.sortBy = 'desc'
+      if (this.sortBy.toLowerCase() === "asc") {
+        this.sortBy = "desc";
         this.$store.dispatch("blogs/importBlogs", this.sortBy);
-      }else{
-        this.sortBy = 'asc'
+      } else {
+        this.sortBy = "asc";
         this.$store.dispatch("blogs/importBlogs", this.sortBy);
       }
       // this.sorting = "asc";
@@ -203,8 +208,8 @@ export default {
 #like:hover {
   fill: red;
 }
-.ultimate{
-  fill:purple;
+.ultimate {
+  fill: purple;
 }
 #blog {
   min-height: 50vh;
@@ -222,17 +227,31 @@ export default {
 #description > * {
   display: none;
 }
-#inactive{
-  background-color:gray;
+#inactive {
+  background-color: gray;
 }
-.published{
-  background-color:green;
+.published {
+  background-color: green;
 }
-.unPublished > *{
-  color:white;
-  background-color:indianred;
+.unPublished > * {
+  color: white;
+  background-color: indianred;
 }
-.wrap-text{
+.unPublished a {
+  color: white !important;
+}
+.unPublished a:hover {
+  color: gray !important;
+}
+.wrap-text {
   min-height: 35%;
+}
+a {
+  color: #8a8888;
+  text-decoration: none;
+}
+a:hover {
+  color: gray;
+  text-decoration: none;
 }
 </style>

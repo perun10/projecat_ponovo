@@ -53,6 +53,9 @@ computed: {
     height:140px ;
     color:white;
     margin-bottom: 60px;
+    /* position:absolute;
+    width: 100%;
+    bottom: 0; */
    
 }
 .txta{

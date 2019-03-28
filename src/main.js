@@ -12,6 +12,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import VueFirestore from "vue-firestore"
 import Vuelidate from "vuelidate"
 import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
 
 import 'bootstrap'
 Vue.use(Vuelidate)
@@ -66,7 +67,8 @@ new Vue({
   created(){
   firebase.auth().onAuthStateChanged((user) => {
     if(user) {
-      console.log(user.email)
+     // console.log(user.email)
+      this.$store.dispatch('takeEmail',user.email)
       this.$store.dispatch('autoSignIn', user);
     }
   })
