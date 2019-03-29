@@ -82,7 +82,7 @@ const state = {
       },
       takeEmail({commit},payload){
         commit('SET_EMAIL',payload)
-        console.log(payload+ ' je dodat u store !')
+        // console.log(payload+ ' je dodat u store !')
       }
  }
  export default {

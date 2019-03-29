@@ -95,6 +95,7 @@
             <div class="col-md-8 col-xs-12 p-3">
               <div class="text-left">
                 <router-link :to="/blogs/+blg.url">
+                <p style="background-color:grey;width:60px;border-radius:47%;color:white;text-align:center;padding:5px;">{{blg.category}}</p>
                   <h3>{{blg.title}}</h3>
                 </router-link>
               </div>
@@ -130,13 +131,14 @@
         </div>
       </div>
       <div class="row no-gutters justify-content-center mt-5 mb-5" v-if="user">
-        <router-link :to="/blogs/+'new'">
+        <!-- <router-link :to="/blogs/+'new'"> -->
+        <a @click="loadMore">
           <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24">
             <path
               d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"
             ></path>
           </svg>
-        </router-link>
+        </a>
       </div>
     </div>
     <Bottom/>
@@ -168,7 +170,7 @@ export default {
     BlogPost
   },
   created() {
-    this.$store.dispatch("blogs/importBlogs", this.sortBy);
+    this.$store.dispatch("blogs/importBlogs",''); // OVDJE NA POCETKU UVIJEK IDE IMPORTA - ALL BLOGS
   },
   computed: {
     blogs() {
@@ -179,6 +181,9 @@ export default {
     }
   },
   methods: {
+    loadMore(){
+      this.$store.dispatch("blogs/loadMore",'tech') // NAPRAVITI KATEGORIJE I UZIMATI OVDJE NJIHOV PAYLOAD 
+    },
     forwardLink(value) {},
     format(date) {
       moment(date)

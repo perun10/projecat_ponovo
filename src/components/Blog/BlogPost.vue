@@ -18,19 +18,30 @@
         @change="onFilePicked"
       > {{blog.author}}
       
-      <div v-if="user&&blog.isPublished">
+      
+      </div>
+      <div class="col-md-4 col-xs-12 pr-5 pt-3" v-if="blog">Published : {{ format(blog.time) }}</div>
+     </div>
+     <div class="row no-gutters justify-content-between p-3">
+        <div class="col-md-4">
+         
+             <router-link :to="/blogs/+getUrl+'/edit'" style="color:#8A8888;text-decoration:none;"><v-icon style="width:70px;height:70px;" name="edit"/></router-link>
+            
+      </div>
+        <div class="col-md-4">
+         <a title="Delete blog" @click="deleteBlog" href="#"><v-icon style="width:70px;height:70px;" name="delete"/></a>
+      </div>
+        <div class="col-md-4">
+          <div v-if="user&&blog.isPublished">
         Blog is published, click this to : <a href="#" @click="unPublishBlogPublish">Deactivate</a>
       </div>
       <div v-else-if="user">Blog is unpublished, click this to : <a href="#" @click="unPublishBlogPublish">Activate</a></div>
       </div>
-      <div class="col-md-4 col-xs-12 pr-5 pt-3" v-if="blog">Published : {{ format(blog.time) }}</div>
+        
      </div>
-     <div class="row no-gutters justify-content-center p-3">
-         <router-link :to="/blogs/+getUrl+'/edit'" style="color:#8A8888;text-decoration:none;">EDIT</router-link>
          <div class="col-md-12 col-xs-12">
              <img class="img-fluid" :src="blog.imgURL" alt="">
          </div>         
-     </div>
      <div class="row no-gutters justify-content-center p-3">
          <div class="col-md-12 col-xs-12 text-left pl-3">
            <div id="btext" v-html="blog.text"></div>
@@ -42,7 +53,7 @@
     <div class="container">
         <div class="comments">
 
-    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="urlWatch" language="en" :api_key="disquisAPI" v-if="getUrl"></vue-disqus>
+    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="'localhost:8080/blogs/'+this.getUrl" language="en" :api_key="disquisAPI" v-if="this.getUrl"></vue-disqus>
         </div>
         <!-- <CommentGrid
         :baseURL="fbURL"
@@ -77,6 +88,20 @@ Icon.register({
         raw:'<path id="like" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"/>'
     }
 })
+Icon.register({
+    delete:{
+        width:100,
+        height:100,
+        raw:'<path d="M25,3C12.87,3,3,12.87,3,25s9.87,22,22,22s22-9.87,22-22S37.13,3,25,3z M33.71,32.29c0.39,0.39,0.39,1.03,0,1.42 C33.51,33.9,33.26,34,33,34s-0.51-0.1-0.71-0.29L25,26.42l-7.29,7.29C17.51,33.9,17.26,34,17,34s-0.51-0.1-0.71-0.29 c-0.39-0.39-0.39-1.03,0-1.42L23.58,25l-7.29-7.29c-0.39-0.39-0.39-1.03,0-1.42c0.39-0.39,1.03-0.39,1.42,0L25,23.58l7.29-7.29 c0.39-0.39,1.03-0.39,1.42,0c0.39,0.39,0.39,1.03,0,1.42L26.42,25L33.71,32.29z"/>'
+    }
+})
+Icon.register({
+    edit:{
+        width:100,
+        height:100,
+        raw:'<g id="surface1"><path style=" " d="M 46.574219 3.425781 C 45.625 2.476563 44.378906 2 43.132813 2 C 41.886719 2 40.640625 2.476563 39.691406 3.425781 C 39.691406 3.425781 39.621094 3.492188 39.53125 3.585938 C 39.523438 3.59375 39.511719 3.597656 39.503906 3.605469 L 4.300781 38.804688 C 4.179688 38.929688 4.089844 39.082031 4.042969 39.253906 L 2.035156 46.742188 C 1.941406 47.085938 2.039063 47.453125 2.292969 47.707031 C 2.484375 47.898438 2.738281 48 3 48 C 3.085938 48 3.171875 47.988281 3.257813 47.964844 L 10.746094 45.957031 C 10.917969 45.910156 11.070313 45.820313 11.195313 45.695313 L 46.394531 10.5 C 46.40625 10.488281 46.410156 10.472656 46.417969 10.460938 C 46.507813 10.371094 46.570313 10.308594 46.570313 10.308594 C 48.476563 8.40625 48.476563 5.324219 46.574219 3.425781 Z M 45.160156 4.839844 C 46.277344 5.957031 46.277344 7.777344 45.160156 8.894531 C 44.828125 9.222656 44.546875 9.507813 44.304688 9.75 L 40.25 5.695313 C 40.710938 5.234375 41.105469 4.839844 41.105469 4.839844 C 41.644531 4.296875 42.367188 4 43.132813 4 C 43.898438 4 44.617188 4.300781 45.160156 4.839844 Z M 5.605469 41.152344 L 8.847656 44.394531 L 4.414063 45.585938 Z "/></g>'
+    }
+})
 
 Vue.use(moment)
 Vue.use(CommentGrid)
@@ -84,6 +109,7 @@ Vue.use(CommentGrid)
 export default {
     data(){
         return{
+          dataURL : '',  
           likes : '',
           title : "",
           disable : true,
@@ -132,9 +158,12 @@ format(date){
   return moment(date1).format('DD MMMM YYYY')  
 },
 upVote(){
+        this.$store.dispatch('takeAuthor',this.email)
+
     let myNum = this.getLike
     myNum++
     this.$store.dispatch('blogs/updateLikes',{title:this.getUrl,likes:myNum})
+    this.$store.dispatch('liked',this.getUrl)
     this.disable = false
 },
 replaceAvatar(){
@@ -146,6 +175,10 @@ replaceAvatar(){
     }else{
         console.log('slika nije preuzeta')
     }
+},
+deleteBlog(){
+    this.$store.dispatch('blogs/deleteBlog')
+    this.$router.push('/blogs')
 },
 unPublishBlogPublish(value){
     if(this.published===true){
@@ -159,13 +192,19 @@ unPublishBlogPublish(value){
 },
 beforeRouteEnter(to,from,next){
     const urlID  = to.params.id   
+    
+    
     store.dispatch('blogs/importBlogPost',urlID)
     next();    
 }
 ,
-beforeDestroy(){
+mounted(){
+   this.dataURL = this.getUrl
         // this.$refs.disqus.reset(this)
-
+    console.log(this.dataURL)
+},
+beforeDestroy(){
+    this.$store.dispatch('blogs/importBlogPost',null)
 }
 ,
 computed:{
@@ -188,6 +227,9 @@ computed:{
     },
     published(){
         return this.$store.getters['blogs/getPublished']
+    },
+    email(){
+        return this.$store.getters.getEmail
     }
     
     
@@ -195,12 +237,8 @@ computed:{
 },
 watch:{
     urlWatch(url){
-        url = this.getUrl
-        // this.$refs.disqus.reset()
-        if(url){
-            
-         return 'localhost:8080/blogs/'+url
-        }
+        url = 'localhost:8080/blogs/'+this.getUrl     
+        return url
     }
 }
 

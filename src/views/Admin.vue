@@ -450,11 +450,17 @@
           >
             <h3>Author</h3>
            <div class="row no-gutters">
-             <div class="col-md-12"><div>
+             <div class="col-md-12" v-if='!this.allEmails.includes(this.userEmail)'>
+               <label class="text-left">Author name: <input type="text" class="form-control" v-model="authorName"></label>
+              
+               <textarea class="form-control" id="" cols="30" rows="10" placeholder="Write something about you..." v-model="authorDescription"></textarea>
+               <Button text="Become author" :onClick="becomeAuthor"/>
+               <div>
 
                </div>
-           
+
              </div>
+             <div class="col-md-12 mt-5" v-else><h3>You are already Author</h3></div>
            </div>
           </div>
         </div>
@@ -477,6 +483,8 @@ export default {
   name: "Admin",
   data() {
     return {
+      authorName:'',
+      authorDescription:'',
       logolink: null,
       logo: "",
       videoLink: null,
@@ -515,6 +523,7 @@ export default {
   },
 
   created() {    
+    this.$store.dispatch('takeAllAuthors')
     this.onLoad();
     firebase
       .database()
@@ -533,6 +542,22 @@ export default {
     // this.$v.longitud = this.longitud
   },
   methods: {
+    isUserAuthor(){
+      if(this.userEmail in this.allEmails){
+        console.log(this.userEmail)
+        console.log(this.allEmails)
+        return false
+      }else{
+        return true
+        console.log("NE POSTOJI MOZETE BITI")
+      }
+    },
+     becomeAuthor(){
+      //  this.$store.dispatch('addingAuthor',
+      //  {name:this.authorName,description:this.authorDescription,email:this.userEmail})
+      //  console.log(this.authorName+"-"+this.authorDescription + ", "+this.userEmail)
+      console.log(this.allEmails)
+  },
     updateItem(id, link) {
       link = this.logolink;
 
@@ -639,24 +664,7 @@ export default {
 
     existing(page) {
       page = this.single;
-      console.log(page);
-      //PROVJERA DA LI POSTOJI KOMPONENTA, VUE.OPTIONS.COMPONENTS provjerava da li ta komponenta postoji u tom VIEW a ne globalno
-      //var componentExists = page in Vue.options.components
-
-      //  for (var i = 0; i < this.$children.length; i++) {
-      //     if (
-      //            this.$children[i].$options.name == 'NotFound'
-      //         || this.$children[i].$options.name == 'Top'
-      //         || this.$children[i].$options.name == 'Carousel'
-      //     ) {
-      //         //do stuff
-      //         console.log( this.$children[i].$options.name=="Carousel")
-
-      //     }
-      // }
-
-      // console.log(componentExists);
-      //return this.exists = componentExists;
+      console.log(page);     
     },
     placeNewMap(){
       if(this.latitude == 0 || this.longitud ==0){
@@ -678,6 +686,13 @@ export default {
   }
   },
   computed: {
+    
+    allEmails(){
+      return this.$store.getters.getEmails
+    },
+    userEmail(){
+      return this.$store.getters.getEmail
+    },
     trackUrl() {
       if (this.logolink == null) {
         return false;
@@ -710,7 +725,8 @@ export default {
       }
       return false
     }
-  }
+  },
+ 
 };
 </script>
 

@@ -196,6 +196,7 @@ export default {
   },  
   mounted(){
     this.$Progress.finish()
+   
   },
   computed: {
     user() {
@@ -203,6 +204,12 @@ export default {
     },
     logo(){
       return this.$store.getters.logo
+    },
+    getEmail(){
+      return this.$store.getters.getEmail
+    },
+    authors(){
+      return this.$store.getters.getAuthor
     }
   },
   watch: {
