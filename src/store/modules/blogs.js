@@ -3,6 +3,7 @@ import 'firebase/firestore';
 var blogObject = ''
 let lastVisible = null
 let allBlogs = ''
+let sizeBlog = ""
 let arr = []
 const state = {
     blogs: [],
@@ -11,7 +12,9 @@ const state = {
     url: "",
     avatar: "",
     author: '',
-    published: ''
+    published: '',
+    size:"",
+    id:''
 }
 const getters = {
     getBlogs(state) {
@@ -34,6 +37,12 @@ const getters = {
     },
     getPublished(state) {
         return state.published
+    },
+    getSize(state){
+        return state.size
+    },
+    getId(state){
+        return state.id
     }
 }
 const mutations = {
@@ -57,45 +66,60 @@ const mutations = {
     },
     SET_PUBLISHED(state, payload) {
         state.published = payload
+    },
+    SET_SIZE(state,payload){
+        state.size = payload
+    },
+    SET_ID(state,payload){
+        state.id = payload
     }
 }
 const actions = {
     importBlogs({ commit }, payload) {
         let arrNow = []
+        arrNow.length = 0
         var query = firebase.firestore().collection('blogs').orderBy('time','desc').limit(3)
         if(payload){
-            console.log(payload + ' JE ')
-            query =  firebase.firestore().collection('blogs').orderBy('time','asc').where('category','==',payload).limit(3)         
+            // console.log(payload + ' JE ')
+            query =  firebase.firestore().collection('blogs').orderBy('time','desc').where('category','==',payload).limit(3)         
         }
             query
                 .get()
                 .then(snapshot => {
                     allBlogs = snapshot
+                   // console.log(allBlogs)
                     // console.log(allBlogs)
                     lastVisible = snapshot.docs[snapshot.docs.length - 1];
-                    console.log(lastVisible)
+                    // console.log(lastVisible)
                     snapshot.docs.forEach(doc => {
                         arrNow.push(doc.data())
                         arr = arrNow
+                        sizeBlog --;
+                        // console.log(sizeBlog)
+                        commit('SET_SIZE',sizeBlog)
                     })
+                    commit('SET_BLOGS', arrNow)
                 })
-                commit('SET_BLOGS', arrNow)
           
             
     },
     loadMore({commit},payload){
         var query = firebase.firestore().collection('blogs').orderBy('time','desc').startAfter(lastVisible).limit(3)
-        if(payload){
-            console.log(payload + ' JE ')
-            query =  firebase.firestore().collection('blogs').orderBy('time','asc').where('category','==',payload).startAfter(lastVisible).limit(3)         
+        if(payload){         
+            query =  firebase.firestore().collection('blogs').orderBy('time','desc').where('category','==',payload).startAfter(lastVisible).limit(3)         
         }
         query
         .get()
         .then(snapshot => {
             lastVisible = snapshot.docs[snapshot.docs.length - 1];
-            // console.log(lastVisible)
+            // console.log(snapshot.docs.length)
             snapshot.docs.forEach(doc => {
                 arr.push(doc.data())
+                sizeBlog --;
+                // console.log(sizeBlog)
+
+                commit('SET_SIZE',sizeBlog)
+                // console.log(sizeBlog)
                 
             })
         })
@@ -109,6 +133,8 @@ const actions = {
                 blogObject = doc
                
                 arrBlog = doc.data()
+                console.log(blogObject.id)
+                commit('SET_ID',blogObject.id)
                 commit('SET_LIKE', doc.data().likes)
                 commit('SET_URL', doc.data().url)
                 commit('SET_AVATAR', doc.data().description)
@@ -135,8 +161,21 @@ const actions = {
         firebase.firestore().collection('blogs').add(newBlog)
     },
     updateLikes({ commit }, payload) {
+        console.log(payload.id + "Updateovani blog")
+        firebase.firestore().collection('blogs').doc(payload.id).update({ likes: payload.likes }) //ZAMJENA AVATARA ZA AUTORE
         commit('SET_LIKE', payload.likes)
-        firebase.firestore().collection('blogs').doc(blogObject.id).update({ likes: payload.likes }) //ZAMJENA AVATARA ZA AUTORE
+    },
+    importBlogSize({commit},payload){
+        var query =  firebase.firestore().collection('blogs')
+        if(payload) {
+            query = firebase.firestore().collection('blogs').where('category','==',payload)
+        }
+        query
+        .get()
+        .then(snapshot=>{
+            sizeBlog = snapshot.docs.length
+            commit('SET_SIZE',snapshot.docs.length)
+        })
     },
     replaceAvatar({ commit }, payload) {
         const imgFile = payload.image;

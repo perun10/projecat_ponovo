@@ -553,9 +553,9 @@ export default {
       }
     },
      becomeAuthor(){
-      //  this.$store.dispatch('addingAuthor',
-      //  {name:this.authorName,description:this.authorDescription,email:this.userEmail})
-      //  console.log(this.authorName+"-"+this.authorDescription + ", "+this.userEmail)
+       this.$store.dispatch('addingAuthor',
+       {name:this.authorName,description:this.authorDescription,email:this.userEmail})
+       console.log(this.authorName+"-"+this.authorDescription + ", "+this.userEmail)
       console.log(this.allEmails)
   },
     updateItem(id, link) {

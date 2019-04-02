@@ -5,12 +5,14 @@
       <form class="p-5">
         <input class="form-control" v-model="title" placeholder="Give your blog title">
         <label v-if="title">URL : {{this.escapeRegExp(this.title)}}</label>
-        <input class="form-control mt-4" v-model="author" placeholder="Give your blog author">
-        <input class="form-control mt-4" v-model="authorImg" placeholder="Give your author portfolio image (*optional)">
+        <h3 v-if="meAuthor">Author name : {{meAuthor.name}}</h3>
+        <input class="form-control mt-4" v-model="author" placeholder="Give your blog author" v-else>
+        <img :src="meAuthor.avatarImg" alt="" v-if="meAuthor">
+        <input class="form-control mt-4" v-model="authorImg" placeholder="Give your author portfolio image (*optional)" v-else>
         <input
           class="form-control mt-4 mb-4"
           v-model="imgUrl"
-          placeholder="Give your blog image link"
+          placeholder="Give your blog banner link"
         >
         <ckeditor :editor="editor" :config="editorConfig" v-model="editorData"></ckeditor>
         <div>
@@ -22,6 +24,7 @@
           </p>
 
           Date :<datetime v-model="date"></datetime>
+          
         </div>
       </form>
       <div class="row no-gutters justify-content-center">
@@ -101,6 +104,11 @@ export default {
         return str4
         
 }
+  },
+  computed:{
+    meAuthor(){
+      return this.$store.getters.singleAuthor
+    }
   }
 };
 </script>

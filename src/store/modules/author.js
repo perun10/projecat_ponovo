@@ -44,12 +44,16 @@ takeAllAuthors({commit}){
     })
 },
 takeAuthor({commit},payload){
+    // console.log("USLI")
+    // console.log("USLI" + payload)
     let author = {}
     // console.log('EMAIL' , payload)
     firebase.firestore().collection('Author').where('email','==',payload).onSnapshot(snapshot=>{
         snapshot.docs.forEach(doc=>{
             objAuthor = doc
-            author = doc.data()           
+            // console.log(objAuthor)
+            author = doc.data()      
+            liked = doc.data().liked     
             // console.log(objAuthor)
             // console.log(doc.data().liked)
             // console.log(doc.data().name)
@@ -69,14 +73,28 @@ addingAuthor({commit},payload){
         about:payload.description,
         liked:likedarr
     }
+    console.log(newAuthor)
     firebase.firestore().collection('Author').add(newAuthor)    
 },
-liked({commit},payload){
+liked({commit,dispatch},payload){
     
-    console.log(objAuthor)
-    liked.push(payload)
     commit('SET_SINGLE_AUTHOR',objAuthor)
+    liked.push(payload.url)
     firebase.firestore().collection('Author').doc(objAuthor.id).update({liked:liked})
+
+   dispatch('blogs/updateLikes',{id: payload.url ,likes:payload.num})
+},
+unlike({commit , dispatch},payload){
+    commit('SET_SINGLE_AUTHOR',objAuthor)
+    console.log(liked)
+    // delete liked[liked.indexOf(payload.url)]
+    liked.splice(liked.indexOf(payload.url),1)//payload.url je u stvar ID
+    console.log(liked)
+    console.log(payload.num)
+    dispatch('blogs/updateLikes',{id: payload.url ,likes:payload.num})
+    firebase.firestore().collection('Author').doc(objAuthor.id).update({liked:liked})
+
+
 }
 }
 export default {

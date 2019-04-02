@@ -2,6 +2,16 @@
   <div>
     <Top title="Blogs"/>
     <div class="container">
+      <div class="row no-gutters justify-content-between">
+        
+      <ul class="categories float-left">
+        <li><a href="#" :class="[ category=='all' ? 'activeCategory':'']" @click="pickCategory('all')">All</a></li>
+        <li><a href="#" :class="[ category=='tech' ? 'activeCategory':'']" @click="pickCategory('tech')">Tech</a></li>
+        <li><a href="#" :class="[ category=='social' ? 'activeCategory':'']" @click="pickCategory('social')">Social</a></li>
+        <li><a href="#" :class="[ category=='travel' ? 'activeCategory':'']" @click="pickCategory('travel')">Travel</a></li>
+        <li><a href="#" :class="[ category=='environment' ? 'activeCategory':'']" @click="pickCategory('environment')">Environment</a></li>
+        <li><a href="#" :class="[ category=='gaming' ? 'activeCategory':'']" @click="pickCategory('gaming')">Gaming</a></li>
+      </ul>
       <a class="float-right" @click="sortByDate">
         <svg
           class="sort"
@@ -78,9 +88,17 @@
           </g>
         </svg>
       </a>
+    
+      </div>
+      <div class="row no-gutters" v-if="author && user">
+       
+      <Button text="Add new blog" :onClick="goToNew"/>
+        
+      </div>
     </div>
-
+ 
     <div id="blog" class="container">
+     
       <div v-for="blg in blogs" :key="blg.index">
         <div
           class="box-blog mt-5"
@@ -95,7 +113,7 @@
             <div class="col-md-8 col-xs-12 p-3">
               <div class="text-left">
                 <router-link :to="/blogs/+blg.url">
-                <p style="background-color:grey;width:60px;border-radius:47%;color:white;text-align:center;padding:5px;">{{blg.category}}</p>
+                <p style="background-color:#2ECC71;width:90px;border-radius:47%;color:white;text-align:center;padding:5px;">{{blg.category}}</p>
                   <h3>{{blg.title}}</h3>
                 </router-link>
               </div>
@@ -130,9 +148,9 @@
           </div>
         </div>
       </div>
-      <div class="row no-gutters justify-content-center mt-5 mb-5" v-if="user">
-        <!-- <router-link :to="/blogs/+'new'"> -->
-        <a @click="loadMore">
+      
+      <div class="row no-gutters justify-content-center mt-5 mb-5" v-if="this.size!=0">
+        <a @click="loadMore" >
           <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24">
             <path
               d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"
@@ -141,14 +159,14 @@
         </a>
       </div>
     </div>
-    <Bottom/>
+    <Bottom class="mt-5"/>
   </div>
 </template>
 
 <script>
 import Top from "@/components/Common/Top.vue";
 import Bottom from "@/components/Common/Bottom.vue";
-// import Button from "@/components/Common/Button.vue";
+import Button from "@/components/Common/Button.vue";
 import { store } from "@/store/index.js";
 
 import BlogPost from "@/components/Blog/BlogPost.vue";
@@ -159,6 +177,7 @@ Vue.use(moment);
 export default {
   data() {
     return {
+      category:'all',
       sortBy: "desc",
       aLink:
         ' <router-link style="display:inline;" :to="/blogs/+blg.url">Read more</router-link>'
@@ -167,22 +186,31 @@ export default {
   components: {
     Top,
     Bottom,
-    BlogPost
+    BlogPost,
+    Button
   },
   created() {
+    this.$store.dispatch("blogs/importBlogSize");
     this.$store.dispatch("blogs/importBlogs",''); // OVDJE NA POCETKU UVIJEK IDE IMPORTA - ALL BLOGS
   },
   computed: {
+    size(){
+      return this.$store.getters["blogs/getSize"]
+    },
     blogs() {
       return this.$store.getters["blogs/getBlogs"];
     },
     user() {
       return this.$store.getters.user;
+    },
+    author(){
+      return this.$store.getters.singleAuthor
     }
   },
   methods: {
-    loadMore(){
-      this.$store.dispatch("blogs/loadMore",'tech') // NAPRAVITI KATEGORIJE I UZIMATI OVDJE NJIHOV PAYLOAD 
+    loadMore(){    
+    // this.$store.dispatch("blogs/importBlogs",this.category == 'all' ? '' : this.category); // OVDJE NA POCETKU UVIJEK IDE IMPORTA - ALL BLOG
+      this.$store.dispatch("blogs/loadMore",this.category == 'all' ? '' : this.category)
     },
     forwardLink(value) {},
     format(date) {
@@ -192,18 +220,24 @@ export default {
         .format();
       return moment(date).format("DD MMMM YYYY");
     },
-    sortByDate() {
-      // console.log(event);
+    sortByDate() {     
       if (this.sortBy.toLowerCase() === "asc") {
-        this.sortBy = "desc";
-        this.$store.dispatch("blogs/importBlogs", this.sortBy);
+       this.sortBy = "desc";
+      //   this.$store.dispatch("blogs/importBlogs", this.sortBy);
       } else {
-        this.sortBy = "asc";
-        this.$store.dispatch("blogs/importBlogs", this.sortBy);
-      }
-      // this.sorting = "asc";
-      // console.log(this.sorting);
+         this.sortBy = "asc";
+        //this.$store.dispatch("blogs/importBlogs", this.sortBy);
+       }      
       // this.$store.dispatch("importBlogs", this.sorting);
+    },
+    pickCategory(categoryValue){      
+      this.$store.dispatch("blogs/importBlogSize",categoryValue == 'all'? '' : categoryValue );
+      this.$store.dispatch("blogs/importBlogs",categoryValue == 'all'? '' : categoryValue)
+     
+      this.category = categoryValue
+    },
+    goToNew(){
+      this.$router.push('/blogs/new')
     }
   }
 };
@@ -258,5 +292,12 @@ a {
 a:hover {
   color: gray;
   text-decoration: none;
+}
+.categories li > a{
+  margin-right:10px;
+}
+.activeCategory{
+  color:#2ECC71 !important;
+  pointer-events: none;
 }
 </style>

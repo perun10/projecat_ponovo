@@ -5,13 +5,14 @@
                 <div class="profile" v-if="user">
                   
                 </div>
-                <span v-if="user">Admin </span>               
+                <span v-if="author">{{author.name}}</span>
+                <p v-else>Admin</p>               
           </div>
             <div class="col-md-11 col-xs-12 text-right">
 
                 <a class="login-register" v-if="!user" href="/login">Sign In</a>
                 <a class="login-register" v-if="!user" href="/signup">Register</a>
-                <a class="login-register" v-if="user" href="/signup" @click.prevent="$store.dispatch('logout')">               
+                <a class="login-register" v-if="user" href="/signup" @click.prevent="$store.dispatch('logout')&&$store.dispatch('takeAuthor',null)">               
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 320.002 320.002" style="enable-background:new 0 0 320.002 320.002;" xml:space="preserve">
 <g id="XMLID_6_">
@@ -80,10 +81,19 @@ export default {
           thisUser:null
         }
     },  
+    mounted(){
+      this.$store.dispatch('takeAuthor',this.email)
+    },
   computed: {
-    user() {
+    user(){
       return this.$store.getters.user;
-    }
+    },
+    email(){
+      return this.$store.getters.getEmail
+    },
+    author(){
+      return this.$store.getters.singleAuthor
+     }
   },
   watch: {
     user(value) {     

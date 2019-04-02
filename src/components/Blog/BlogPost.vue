@@ -5,12 +5,11 @@
      <Top :title="blog.title"/>
      <div id="blogs"  class="container">
           <div class="row no-gutters justify-content-between p-3">
-              <!-- <v-icon name="comment" style="width:24px;height:24px;"/>  -->
+              <!-- <v-icon name="comment" style="width:24px;height:24px;"/>  @click="onPickFile" funkcija zaa promjenu avatara-->
       <div class="col-md-4 col-xs-12 pt-2">        
-            
-             <a @click.once="upVote" >  <v-icon name="hearts" :class="[disable?'':'like']" style="width:24px;height:24px;"/> </a> {{getLike}}   </div>
-
-      <div class="col-md-4 col-xs-12"> <a href="#" @click="onPickFile"><img class="author" :src="avatar" alt="" v-if="avatar"></a> <input
+           
+             <a @click.once="upVote" v-if="blog" >  <v-icon name="hearts" :class="[disable ?'like':'']" style="width:24px;height:24px;" /> </a> {{getLike}}   </div>
+      <div class="col-md-4 col-xs-12"> <a><img class="author" :src="avatar" alt="" v-if="avatar"></a> <input
         type="file"
         style="display:none"
         ref="authorAvatar"
@@ -53,7 +52,7 @@
     <div class="container">
         <div class="comments">
 
-    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="'localhost:8080/blogs/'+this.getUrl" language="en" :api_key="disquisAPI" v-if="this.getUrl"></vue-disqus>
+    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="'localhost:8080/blogs/'+this.getUrl" language="en" :api_key="disquisAPI" v-if="this.getID"></vue-disqus>
         </div>
         <!-- <CommentGrid
         :baseURL="fbURL"
@@ -112,13 +111,13 @@ export default {
           dataURL : '',  
           likes : '',
           title : "",
-          disable : true,
+          disable : false,
           acitve:'none',
           image:"",
           imageUrl:"",
           apiBase: process.env.VUE_APP_FIRE_KEY,
           fbURL: process.env.VUE_APP_DATABASE_URL,
-          disquisAPI : process.env.VUE_APP_DISQUS
+          disquisAPI : process.env.VUE_APP_DISQUS,
         }
     },
 components:{
@@ -127,10 +126,30 @@ components:{
     'v-icon':Icon
     
 },
-methods:{
-dummy(){
-    alert('DummyFunction')
+beforeRouteEnter(to,from,next){
+    const urlID  = to.params.id   
+    
+    
+    store.dispatch('blogs/importBlogPost',urlID)
+    next();    
+}
+,
+mounted(){
+//    this.dataURL = this.getUrl
+        // this.$refs.disqus.reset(this)
+    // console.log(this.dataURL)
+        //    console.log(this.getUrl)
+    // this.disable = this.meAuthor.liked.includes(this.getUrl)
+    // console.log(this.meAuthor.liked.includes(this.getUrl))
+    // console.log(this.disable)
+    // this.disable = this.meAuthor.liked.includes(this.getID)
+      this.meAuthor.liked.includes(this.getID) ? this.disable = true : this.disable = false;
+      console.log('MOJ BLOG : '+ this.getID)
 },
+beforeDestroy(){
+    this.$store.dispatch('blogs/importBlogPost',null)
+},
+methods:{
 onPickFile(){
       this.$refs.authorAvatar.click()
     },
@@ -157,14 +176,24 @@ format(date){
   moment(date1).utc().startOf('day').format();
   return moment(date1).format('DD MMMM YYYY')  
 },
-upVote(){
-        this.$store.dispatch('takeAuthor',this.email)
+upVote(){ 
 
-    let myNum = this.getLike
-    myNum++
-    this.$store.dispatch('blogs/updateLikes',{title:this.getUrl,likes:myNum})
-    this.$store.dispatch('liked',this.getUrl)
-    this.disable = false
+    var myNum = this.getLike
+   
+    if(this.meAuthor.liked.includes(this.getID)){
+        console.log(myNum)
+        myNum--
+        console.log(myNum)
+        this.$store.dispatch('unlike',{url:this.getID,num:myNum})
+        this.disable = false
+        
+    }else{
+        myNum++
+    // this.$store.dispatch('blogs/updateLikes',{title:this.getUrl,likes:myNum})
+        this.$store.dispatch('liked',{url:this.getID,num:myNum})
+                this.disable = true
+
+    }
 },
 replaceAvatar(){
     if(this.image){
@@ -189,22 +218,6 @@ unPublishBlogPublish(value){
     //console.log('This is '+value)
     this.$store.dispatch('blogs/unPublishBlog',value)
 }
-},
-beforeRouteEnter(to,from,next){
-    const urlID  = to.params.id   
-    
-    
-    store.dispatch('blogs/importBlogPost',urlID)
-    next();    
-}
-,
-mounted(){
-   this.dataURL = this.getUrl
-        // this.$refs.disqus.reset(this)
-    console.log(this.dataURL)
-},
-beforeDestroy(){
-    this.$store.dispatch('blogs/importBlogPost',null)
 }
 ,
 computed:{
@@ -214,6 +227,10 @@ computed:{
     blog(){
         return this.$store.getters['blogs/getBlog']
     },
+    getID(){
+        return this.$store.getters['blogs/getId']
+    }
+    ,
     getLike(){
         return this.$store.getters['blogs/getLikes']
     },getUrl(){
@@ -230,6 +247,12 @@ computed:{
     },
     email(){
         return this.$store.getters.getEmail
+    },
+    meAuthor(){
+        return this.$store.getters.singleAuthor
+    },
+    isLiked(){     
+         return this.meAuthor.liked.includes(this.getID) ? true : false    
     }
     
     
