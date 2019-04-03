@@ -8,18 +8,19 @@
               <!-- <v-icon name="comment" style="width:24px;height:24px;"/>  @click="onPickFile" funkcija zaa promjenu avatara-->
       <div class="col-md-4 col-xs-12 pt-2">        
            
-             <a @click.once="upVote" v-if="blog" >  <v-icon name="hearts" :class="[disable ?'like':'']" style="width:24px;height:24px;" /> </a> {{getLike}}   </div>
+             <a @click="likedDisliked" v-if="meAuthor.liked" >  <v-icon name="hearts" :class="[isLiked ?'like':'']" style="width:24px;height:24px;" /> </a> {{getLike}}   </div>
       <div class="col-md-4 col-xs-12"> <a><img class="author" :src="avatar" alt="" v-if="avatar"></a> <input
         type="file"
         style="display:none"
         ref="authorAvatar"
         accept="image/*"
         @change="onFilePicked"
-      > {{blog.author}}
+      ><span v-if="blog.author === meAuthor.name"> You</span>
+      <span v-else> {{blog.author}}</span>
       
       
       </div>
-      <div class="col-md-4 col-xs-12 pr-5 pt-3" v-if="blog">Published : {{ format(blog.time) }}</div>
+      <div class="col-md-4 col-xs-12 pr-5 pt-3" v-if="blog.time">Published : {{ format(blog.time) }}</div>
      </div>
      <div class="row no-gutters justify-content-between p-3">
         <div class="col-md-4">
@@ -51,8 +52,7 @@
     <div style="background-color:grey;height:90px;" class="pt-4 mb-5"><h3 style="color:white;">Comments</h3></div>   
     <div class="container">
         <div class="comments">
-
-    <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :identifier="getUrl" :url="'localhost:8080/blogs/'+this.getUrl" language="en" :api_key="disquisAPI" v-if="this.getID"></vue-disqus>
+            <vue-disqus ref="disqus" shortname="localhost-hl7314xvql" :title="blog.title" :identifier="myPageId" :url="blog.url" language="en" :api_key="disquisAPI"></vue-disqus>
         </div>
         <!-- <CommentGrid
         :baseURL="fbURL"
@@ -76,7 +76,6 @@ import Vue from 'vue'
 import CommentGrid from 'vue-comment-grid'
 import moment from "moment"
 import Icon from 'vue-awesome/components/Icon'
-
 import VueDisqus from "vue-disqus"
 Vue.use(VueDisqus)
 
@@ -118,12 +117,13 @@ export default {
           apiBase: process.env.VUE_APP_FIRE_KEY,
           fbURL: process.env.VUE_APP_DATABASE_URL,
           disquisAPI : process.env.VUE_APP_DISQUS,
+          myPageId: this.getID
         }
     },
 components:{
     Top,
     Bottom,
-    'v-icon':Icon
+    'v-icon':Icon,
     
 },
 beforeRouteEnter(to,from,next){
@@ -143,11 +143,11 @@ mounted(){
     // console.log(this.meAuthor.liked.includes(this.getUrl))
     // console.log(this.disable)
     // this.disable = this.meAuthor.liked.includes(this.getID)
-      this.meAuthor.liked.includes(this.getID) ? this.disable = true : this.disable = false;
-      console.log('MOJ BLOG : '+ this.getID)
+     this.meAuthor.liked.includes(this.getID) ? this.disable = true : this.disable = false;
+      //console.log('MOJ BLOG : '+ this.getID)
 },
 beforeDestroy(){
-    this.$store.dispatch('blogs/importBlogPost',null)
+    //this.$store.dispatch('blogs/importBlogPost',null)
 },
 methods:{
 onPickFile(){
@@ -176,25 +176,6 @@ format(date){
   moment(date1).utc().startOf('day').format();
   return moment(date1).format('DD MMMM YYYY')  
 },
-upVote(){ 
-
-    var myNum = this.getLike
-   
-    if(this.meAuthor.liked.includes(this.getID)){
-        console.log(myNum)
-        myNum--
-        console.log(myNum)
-        this.$store.dispatch('unlike',{url:this.getID,num:myNum})
-        this.disable = false
-        
-    }else{
-        myNum++
-    // this.$store.dispatch('blogs/updateLikes',{title:this.getUrl,likes:myNum})
-        this.$store.dispatch('liked',{url:this.getID,num:myNum})
-                this.disable = true
-
-    }
-},
 replaceAvatar(){
     if(this.image){
         // console.log('Slika postoji'+this.image)
@@ -206,8 +187,9 @@ replaceAvatar(){
     }
 },
 deleteBlog(){
-    this.$store.dispatch('blogs/deleteBlog')
-    this.$router.push('/blogs')
+    //this.$store.dispatch('blogs/deleteBlog')
+   // this.$router.push('/blogs')
+   this.$modal.show('HELLO WORLD')
 },
 unPublishBlogPublish(value){
     if(this.published===true){
@@ -217,6 +199,10 @@ unPublishBlogPublish(value){
     }
     //console.log('This is '+value)
     this.$store.dispatch('blogs/unPublishBlog',value)
+},
+likedDisliked(){
+
+    this.$store.dispatch('likedDisliked',{id:this.getID,count:this.getLike})
 }
 }
 ,

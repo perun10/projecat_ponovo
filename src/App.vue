@@ -132,7 +132,8 @@ import Vue from "vue";
 import 'slick-carousel/slick/slick.css';
 // import "bootstrap/dist/css/bootstrap.css";
 // import'~bootstrap/dist/css/bootstrap.css'
-
+import JQUERY from "jquery"
+global.JQUERY = JQUERY
 import axios from "axios";
 import VueAxios from "vue-axios";
 import firebase from "firebase";
@@ -147,6 +148,11 @@ Vue.use(VueAxios, axios);
 /**$('.navbar-nav>li>a').on('click', function(){
     alert('HI');
 }); */
+JQUERY('.navbar-nav>li>a').on('click', function(){ //OVO JE RADILO
+  JQUERY('.navbar-toggler collapsed').click();
+   //bootstrap 4.x
+});
+
 
 export default {
   data() {

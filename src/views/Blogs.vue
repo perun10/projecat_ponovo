@@ -107,7 +107,7 @@
         >
           <div class="row no-gutters p-3">
             <div class="col-md-4 col-xs-12">
-              <img style="object-fit:cover;height:300px;width:100%;" :src="blg.imgURL">
+              <img style="object-fit:cover;height:300px;width:100%;border-radius:4%;" :src="blg.imgURL">
             </div>
 
             <div class="col-md-8 col-xs-12 p-3">

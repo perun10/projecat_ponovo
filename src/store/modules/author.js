@@ -76,25 +76,22 @@ addingAuthor({commit},payload){
     console.log(newAuthor)
     firebase.firestore().collection('Author').add(newAuthor)    
 },
-liked({commit,dispatch},payload){
+likedDisliked({commit , dispatch},payload){   
+     
+    if(liked.includes(payload.id)){
+        commit('SET_SINGLE_AUTHOR',objAuthor)
+        payload.count--
+        liked.splice(liked.indexOf(payload.id),1)        
+        firebase.firestore().collection('Author').doc(objAuthor.id).update({liked:liked})
+        dispatch('blogs/updateLikes',{id:payload.id,likes:payload.count})
+    }else{
+        commit('SET_SINGLE_AUTHOR',objAuthor)
+        payload.count++        
+        liked.push(payload.id)
+        firebase.firestore().collection('Author').doc(objAuthor.id).update({liked:liked})
+        dispatch('blogs/updateLikes',{id:payload.id,likes:payload.count})
+    }
     
-    commit('SET_SINGLE_AUTHOR',objAuthor)
-    liked.push(payload.url)
-    firebase.firestore().collection('Author').doc(objAuthor.id).update({liked:liked})
-
-   dispatch('blogs/updateLikes',{id: payload.url ,likes:payload.num})
-},
-unlike({commit , dispatch},payload){
-    commit('SET_SINGLE_AUTHOR',objAuthor)
-    console.log(liked)
-    // delete liked[liked.indexOf(payload.url)]
-    liked.splice(liked.indexOf(payload.url),1)//payload.url je u stvar ID
-    console.log(liked)
-    console.log(payload.num)
-    dispatch('blogs/updateLikes',{id: payload.url ,likes:payload.num})
-    firebase.firestore().collection('Author').doc(objAuthor.id).update({liked:liked})
-
-
 }
 }
 export default {

@@ -2,9 +2,9 @@
     <div class="container colorize">
         <div class="row no-gutters">
           <div class="col-md-1 col-xs-12 text-left">
-                <div class="profile" v-if="user">
+              <router-link to="/user"> <div class="profile" v-if="user">
                   
-                </div>
+                </div></router-link>
                 <span v-if="author">{{author.name}}</span>
                 <p v-else>Admin</p>               
           </div>
@@ -81,6 +81,11 @@ export default {
           thisUser:null
         }
     },  
+    methods:{
+      moveToUser(){
+        this.$router.push('/user')
+      }
+    },
     mounted(){
       this.$store.dispatch('takeAuthor',this.email)
     },

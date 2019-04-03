@@ -161,7 +161,6 @@ const actions = {
         firebase.firestore().collection('blogs').add(newBlog)
     },
     updateLikes({ commit }, payload) {
-        console.log(payload.id + "Updateovani blog")
         firebase.firestore().collection('blogs').doc(payload.id).update({ likes: payload.likes }) //ZAMJENA AVATARA ZA AUTORE
         commit('SET_LIKE', payload.likes)
     },
