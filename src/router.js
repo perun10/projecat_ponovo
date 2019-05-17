@@ -7,10 +7,13 @@ import Edit from './components/Work/Edit.vue'
 // import NotFound from "@/components/NotFound.vue";
 // import store from "./store"
 import {store} from "./store/index";
-
+import firebase from "firebase"
 Vue.use(Router);
 
-export default new Router({
+import AuthService from './services/AuthService'
+let mgr = new AuthService();
+
+const router =  new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -27,6 +30,12 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },
+    {
+      path:'/callback',
+      name:'callback',
+      component: () => 
+      import("./views/Callback.vue")
     }
     ,
     {
@@ -46,6 +55,9 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: Edit,
+      meta:{
+        requiresAuth:true
+      }
       // beforeEnter(to, from, next) {
 
       //   if (store.getters.user) {
@@ -75,7 +87,10 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ "./components/Blog/AddBlog.vue")
+        import(/* webpackChunkName: "about" */ "./components/Blog/AddBlog.vue"),
+        meta:{
+          requiresAuth:true
+        }
     }
     ,
     {
@@ -96,7 +111,10 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ "./components/Blog/BlogPostEdit.vue")
+        import(/* webpackChunkName: "about" */ "./components/Blog/BlogPostEdit.vue"),
+        meta:{
+          requiresAuth:true
+        }
       
     },
     {
@@ -106,7 +124,10 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/User.vue")
+        import(/* webpackChunkName: "about" */ "./views/User.vue"),
+        meta:{
+          requiresAuth:true
+        }
       
     }
     
@@ -118,17 +139,20 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: Admin,
-      beforeEnter(to, from, next) {
-
-        if (store.getters.user) {
-          // console.log(store.state.user);
-          // console.log(store.getters.user);
-
-          next();
-        } else {
-          next('/signup');
-        }
+      meta:{
+        requiresAuth:true
       }
+      // beforeEnter(to, from, next) {
+
+      //   if (firebase.auth().currentUser) {
+      //     // console.log(store.state.user);
+      //     // console.log(store.getters.user);
+
+      //     next();
+      //   } else {
+      //     next('/signup');
+      //   }
+      // }
 
     }
     ,
@@ -165,3 +189,28 @@ export default new Router({
     { path: '*', redirect: '/404' },
   ]
 });
+
+export default router
+
+
+router.beforeEach((to,from,next)=>{
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  if(requiresAuth){
+    console.log(to.fullPath)
+    localStorage.setItem('redirect',to.fullPath)
+    store.commit('SET_REDIRECT',to.fullPath)
+    //return
+    mgr.getUser().then((user)=>{
+      if(user){
+        store.commit('setUser',user.profile)
+        next();
+     localStorage.removeItem('redirect')
+
+      }else{
+        next()
+      }
+    })
+  }else{
+    next();
+  }
+})

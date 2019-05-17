@@ -208,6 +208,10 @@ const actions = {
         console.log(blogObject.id)
         firebase.firestore().collection('blogs').doc(blogObject.id).delete().then(()=>{console.log("deleted")}).catch(error=>{console.log('EROR'+error.message)})
         commit('SET_BLOG',null)
+    },
+    checkBlogPages({commit},payload){
+        //console.log(payload)
+        return payload + "store"
     }
 }
 export default {

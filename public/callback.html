@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Waiting...</title>
+</head>
+
+<body>
+  <script src="oidc-client.js"></script>
+  <script>
+    // console.log(window.location.href)
+    const redirect = localStorage.getItem('redirect')
+    var config = {
+    userStore: new Oidc.WebStorageStateStore({store: window.localStorage})
+    }
+    var mgr = new Oidc.UserManager(config);
+    
+ //   alert(store.getters.redirect)
+    mgr.signinRedirectCallback().then(function (user) {
+      debugger;
+      if(redirect){
+       
+        window.location.href = redirect;
+      }else{
+
+        window.location.href = '/';
+      }
+    }).catch(function (err) {
+      console.log(err);
+    });
+   
+  </script>
+</body>
+
+</html>

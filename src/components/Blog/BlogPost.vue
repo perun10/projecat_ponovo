@@ -8,7 +8,7 @@
               <!-- <v-icon name="comment" style="width:24px;height:24px;"/>  @click="onPickFile" funkcija zaa promjenu avatara-->
       <div class="col-md-4 col-xs-12 pt-2">        
            
-             <a @click="likedDisliked" v-if="meAuthor.liked" >  <v-icon name="hearts" :class="[isLiked ?'like':'']" style="width:24px;height:24px;" /> </a> {{getLike}}   </div>
+             <a @click="likedDisliked" v-if="meAuthor.liked">  <v-icon name="hearts" :class="[isLiked ?'like':'']" style="width:24px;height:24px;" /> </a> {{getLike}}   </div>
       <div class="col-md-4 col-xs-12"> <a><img class="author" :src="avatar" alt="" v-if="avatar"></a> <input
         type="file"
         style="display:none"
@@ -29,7 +29,9 @@
             
       </div>
         <div class="col-md-4">
-         <a title="Delete blog" @click="deleteBlog" href="#"><v-icon style="width:70px;height:70px;" name="delete"/></a>
+         <a title="Delete blog" href="#"><v-icon style="width:70px;height:70px;" data-toggle="modal" data-target="#exampleModal" name="delete"/></a>
+        <Popup name="Deleting Blog" primaryButton="Delete" closeButton="Close" :primaryFunction="this.true" :closeFunction='this.false' :description="'Do you really want to delete this blog '+ '&quot;' + blog.title +'&quot;'"  />
+
       </div>
         <div class="col-md-4">
           <div v-if="user&&blog.isPublished">
@@ -77,6 +79,8 @@ import CommentGrid from 'vue-comment-grid'
 import moment from "moment"
 import Icon from 'vue-awesome/components/Icon'
 import VueDisqus from "vue-disqus"
+import Popup from "@/components/Common/Popup"
+
 Vue.use(VueDisqus)
 
 Icon.register({
@@ -117,13 +121,14 @@ export default {
           apiBase: process.env.VUE_APP_FIRE_KEY,
           fbURL: process.env.VUE_APP_DATABASE_URL,
           disquisAPI : process.env.VUE_APP_DISQUS,
-          myPageId: this.getID
+          myPageId: this.getID,
         }
     },
 components:{
     Top,
     Bottom,
     'v-icon':Icon,
+    Popup
     
 },
 beforeRouteEnter(to,from,next){
@@ -187,9 +192,12 @@ replaceAvatar(){
     }
 },
 deleteBlog(){
-    //this.$store.dispatch('blogs/deleteBlog')
-   // this.$router.push('/blogs')
-   this.$modal.show('HELLO WORLD')
+   this.$store.dispatch('blogs/deleteBlog')
+  this.$router.push('/blogs')
+       console.log('BRISANJE')
+        
+   //this.$modal.show('HELLO WORLD')
+
 },
 unPublishBlogPublish(value){
     if(this.published===true){
@@ -203,6 +211,12 @@ unPublishBlogPublish(value){
 likedDisliked(){
 
     this.$store.dispatch('likedDisliked',{id:this.getID,count:this.getLike})
+},
+true(){
+    this.deleteBlog()
+},
+false(){
+    console.log('Nista')
 }
 }
 ,
@@ -240,6 +254,7 @@ computed:{
     isLiked(){     
          return this.meAuthor.liked.includes(this.getID) ? true : false    
     }
+
     
     
 

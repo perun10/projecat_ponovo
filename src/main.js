@@ -13,7 +13,6 @@ import VueFirestore from "vue-firestore"
 import Vuelidate from "vuelidate"
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
-
 import 'bootstrap'
 Vue.use(Vuelidate)
 require('firebase/firestore')
@@ -35,9 +34,10 @@ Vue.use(VueProgressBar, {
 	  inverse: false
 })
 require('dotenv/config')
+import AuthService from './services/AuthService'
+let mgr = new AuthService();
 
-
-axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+//axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 var config = {
   apiKey: process.env.VUE_APP_FIRE_KEY,
   authDomain: process.env.VUE_APP_AUTH_DOMAIN,
@@ -71,15 +71,10 @@ new Vue({
       this.$store.dispatch('takeEmail',user.email)
       this.$store.dispatch('takeAuthor',user.email)
       this.$store.dispatch('autoSignIn', user);
+    
     }
   })
 }
 }).$mount("#app");
-
-
-
-
-
-
 
 

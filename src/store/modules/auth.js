@@ -2,7 +2,8 @@ import firebase from "firebase"
 import Vue from "vue"
 import VueSweetalert2 from 'vue-sweetalert2';
 import router from '@/router.js'
-
+import AuthService from "@/services/AuthService"
+let mgr = new AuthService();
 Vue.use(VueSweetalert2);
 const options = {
   confirmButtonColor: '#41b882',
@@ -12,7 +13,8 @@ const options = {
 Vue.use(VueSweetalert2, options)
 const state = {
     user: null,
-    email:null
+    email:null,
+    redirect:null,
  }
  const getters = {    
     user(state) {
@@ -20,9 +22,15 @@ const state = {
       },
       getEmail(state){
         return state.email
+      },
+      redirect(state){
+        return state.redirect
       }
  }
  const mutations = {
+    SET_REDIRECT(state,payload){
+      state.redirect = payload
+    },
     setUser(state, payload) {
         state.user = payload
       },
@@ -48,27 +56,29 @@ const state = {
             Vue.swal(err.message)
           })
       },
-      signInUser({ commit }, payload) {
-       
-        firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-          .then(
-            user => {
+      signInUser() {
+       mgr.signIn()
+         //console.log(user)
+      
+        // firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        //   .then(
+        //     user => {
            
-              const newUser = {
-                id: user.user.uid,
-              }
-              commit('setUser', newUser)
-              Vue.swal("Logged in succesfully " + payload.email)
-              router.push('/admin')
+        //       const newUser = {
+        //         id: user.user.uid,
+        //       }
+        //       commit('setUser', newUser)
+        //       Vue.swal("Logged in succesfully " + payload.email)
+        //       router.push('/admin')
   
-            }
-          )
-          .catch(
-            error => {              
-              Vue.swal(error.message)
-              router.push('/signup')
-            }
-          )
+        //     }
+        //   )
+        //   .catch(
+        //     error => {              
+        //       Vue.swal(error.message)
+        //       router.push('/signup')
+        //     }
+        //   )
       },
       autoSignIn({ commit }, payload) {
         commit('setUser', { id: payload.uid })

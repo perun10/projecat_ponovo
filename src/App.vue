@@ -2,7 +2,6 @@
   <div id="app">
     <vue-progress-bar></vue-progress-bar>
     <Header/>
-    
     <header class="container constainer-fluid" style="margin-top:30px;padding-bottom:13px;">
       <div class="row no-gutters">
         <section class="col-md-12 col-2 no-border">
@@ -125,11 +124,14 @@ p {
 @import'~bootstrap/dist/css/bootstrap.css';
 </style>
 <script>
+import AuthService from '@/services/AuthService'
+
 import Header from "@/components/Common/Header.vue";
 import Social from "@/components/Common/Social.vue";
 import Footer from "@/components/Common/Footer.vue";
 import Vue from "vue";
 import 'slick-carousel/slick/slick.css';
+
 // import "bootstrap/dist/css/bootstrap.css";
 // import'~bootstrap/dist/css/bootstrap.css'
 import JQUERY from "jquery"
@@ -165,7 +167,8 @@ export default {
       alt: null,
       bgcolor: null,
       tcolor: null,
-      thisUser : null
+      thisUser : null,
+      mgr : new AuthService()
     };
   },
   components: {
@@ -178,6 +181,7 @@ export default {
     this.$Progress.start()
     //  hook the progress bar to start before we move router-view
     this.$router.beforeEach((to, from, next) => {
+
       //  does the page we want to go to have a meta.progress object
       if (to.meta.progress !== undefined) {
         let meta = to.meta.progress
@@ -188,6 +192,7 @@ export default {
       this.$Progress.start()
       //  continue to next page
       next()
+      
     })
     //  hook the progress bar to finish after we've finished moving router-view
     this.$router.afterEach((to, from) => {
@@ -202,7 +207,20 @@ export default {
   },  
   mounted(){
     this.$Progress.finish()
-   
+   this.mgr.getProfile().then((user)=>{
+     if(user){
+     //  console.log('OVDJE IMAMO KORISNIKA')
+      console.log(user)
+       this.$store.commit('setUser',user)
+
+       if(user.exp){
+         this.mgr.renewToken()
+       }
+     }else{
+      // console.log('OVDJE NEMAM')
+       //  none
+     }
+   })
   },
   computed: {
     user() {
@@ -216,6 +234,16 @@ export default {
     },
     authors(){
       return this.$store.getters.getAuthor
+    },
+    getIdentity(){
+      this.mgr.getUser().then((user)=>{
+        if(user){
+          this.$store.commit('setUser',user)
+        }else{
+          this.$store.commit('setUser',null)
+        }
+        
+      })
     }
   },
   watch: {
@@ -224,7 +252,7 @@ export default {
         this.thisUser = true
         return this.thisUser
       }      
-    }    
+    }   
   },
   methods: {
     onLoad() {

@@ -168,8 +168,10 @@ import Top from "@/components/Common/Top.vue";
 import Bottom from "@/components/Common/Bottom.vue";
 import Button from "@/components/Common/Button.vue";
 import { store } from "@/store/index.js";
-
+import axios from "axios"
 import BlogPost from "@/components/Blog/BlogPost.vue";
+import AuthService from '@/services/AuthService'
+
 // import firebase from "firebase"
 import Vue from "vue";
 import moment from "moment";
@@ -180,7 +182,8 @@ export default {
       category:'all',
       sortBy: "desc",
       aLink:
-        ' <router-link style="display:inline;" :to="/blogs/+blg.url">Read more</router-link>'
+        ' <router-link style="display:inline;" :to="/blogs/+blg.url">Read more</router-link>',
+        mgr : new AuthService()
     };
   },
   components: {
@@ -237,8 +240,39 @@ export default {
       this.category = categoryValue
     },
     goToNew(){
-      this.$router.push('/blogs/new')
-    }
+      // var idtoken = 0
+      // this.mgr.getAcessToken().then(token => {
+        
+      //   var config = {
+      //      headers: {'Authorization-Code': 'Bearer ' + token}
+      //    };
+   
+      //      // axios.get('https://api.github.com/users/codeheaven-io', config);
+      //      axios.post('/save', { firstName: 'Marlon' }, config);
+      // })
+      // console.log(idtoken)
+      //this.$router.push('/blogs/new')
+      axios.interceptors.response.use(undefined, function (err) {
+    return new Promise(function (resolve, reject) {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+            serviceRefreshLogin(
+                this.mgr.renewToken(),
+                success => { 
+                        setTokens(success.access_token, success.refresh_token) 
+                        err.config.__isRetryRequest = true
+                        err.config.headers.Authorization = 'Bearer ' + this.mgr.getAcessToken();
+                        axios(err.config).then(resolve, reject);
+                },
+                error => { 
+                    console.log('Refresh login error: ', error);
+                    reject(error); 
+                }
+            );
+        }
+        throw err;
+    });
+});
+  }
   }
 };
 </script>

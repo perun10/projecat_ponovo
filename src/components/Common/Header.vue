@@ -5,14 +5,16 @@
               <router-link to="/user"> <div class="profile" v-if="user">
                   
                 </div></router-link>
-                <span v-if="author">{{author.name}}</span>
-                <p v-else>Admin</p>               
+                <span v-if="user">{{user.given_name}}</span>
+                <!-- <p v-else>Admin</p>                -->
           </div>
             <div class="col-md-11 col-xs-12 text-right">
 
-                <a class="login-register" v-if="!user" href="/login">Sign In</a>
-                <a class="login-register" v-if="!user" href="/signup">Register</a>
-                <a class="login-register" v-if="user" href="/signup" @click.prevent="$store.dispatch('logout')&&$store.dispatch('takeAuthor',null)">               
+                <a class="login-register" id="signin" v-if="!user" href="#" @click="login()">Sign In</a>
+                <!-- <a class="login-register" id="signin" v-if="!user" href="#" @click="logout()">Logout</a> -->
+                <!-- <a class="login-register" id="signin"  href="#" @click="test()">Test</a> -->
+                <!-- <a class="login-register" v-if="!user" href="/signup">Register</a> -->
+                <a class="login-register" v-if="user" href="/signup" @click.prevent="logout()">               
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 320.002 320.002" style="enable-background:new 0 0 320.002 320.002;" xml:space="preserve">
 <g id="XMLID_6_">
@@ -70,20 +72,51 @@
                
             </div>
         </div>
+        <div id="popup">
+  <iframe id="popupFrame" :src="src"></iframe>
+</div>
     </div>
 </template>
 
 <script>
+import AuthService from '@/services/AuthService'
+import main from '@/main'
 export default {
     name : "Header",
     data(){
         return{
-          thisUser:null
+          mgr : new AuthService(),
+          thisUser:null,
+          src : '',
+          name:'',
+       
         }
     },  
     methods:{
+      test(){
+        // let t = window.localStorage.getItem('oidc.user:http://localhost:52954/:vuejsclient')
+        // console.log(t.given_name)
+      },
+      login(){
+        
+       // this.mgr.signIn();
+        this.$store.dispatch('signInUser')
+      },
+      logout(){
+        this.mgr.signOut()
+        //this.$store.commit('setUser',null)
+      }
+      ,
       moveToUser(){
         this.$router.push('/user')
+        
+      },
+      popup(){
+      //  href="http://localhost:8080/"
+         var popup = document.getElementById("signin");
+  var frame = document.getElementById('popupFrame');
+  this.src = "http://localhost:8080/";
+  popup.style.display = "block";
       }
     },
     mounted(){
@@ -130,5 +163,16 @@ export default {
   height: 25px;
   width: 25px;
   fill: #737373;
+}
+#popup {
+  width: 320px;
+  height: 300px;
+  margin: 0 auto;
+  box-shadow: 1px 1px 1px 1px black;
+  display: none;
+}
+#popup iframe {
+  width: 100%;
+  height: 100%
 }
 </style>
