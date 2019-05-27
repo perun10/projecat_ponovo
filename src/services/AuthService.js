@@ -1,20 +1,30 @@
 import Oidc from 'oidc-client';
 import 'babel-polyfill';
 
-var mgr = new Oidc.UserManager({
-    userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
-    authority: 'http://localhost:52954/',
-    client_id: 'vuejsclient',
-    redirect_uri: window.location.origin + '/callback.html',
-    response_type: 'id_token token',
-    scope: 'openid profile address roles identityserver4api country subscriptionlevel offline_access',
-    post_logout_redirect_uri: window.location.origin + '/logout.html',
-    silent_redirect_uri: window.location.origin + '/silent-renew.html',
-    accessTokenExpiringNotificationTime: 10,
-    automaticSilentRenew: true,
-    filterProtocolClaims: true,
-    loadUserInfo: true,
-})
+const settings = {
+  userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
+  authority: 'http://localhost:52954/',
+  client_id: 'vuejsclient',
+  redirect_uri: window.location.origin + '/callback.html',
+  response_type: 'id_token token',
+  scope: 'openid profile address roles identityserver4api country subscriptionlevel offline_access',
+  post_logout_redirect_uri: window.location.origin + '/logout.html',
+  silent_redirect_uri: window.location.origin + '/silent-renew.html',
+  accessTokenExpiringNotificationTime: 10,
+  automaticSilentRenew: true,
+  filterProtocolClaims: true,
+  loadUserInfo: true,
+}
+/** metadata:{
+    issuer: "http://localhost:52954",
+    jwks_uri: "http://localhost:52954/.well-known/openid-configuration/jwks",
+    authorization_endpoint: "http://localhost:52954/connect/authorize",
+    token_endpoint: "http://localhost:52954/connect/token",
+    userinfo_endpoint: "http://localhost:52954/connect/userinfo",
+    end_session_endpoint: "http://localhost:52954/connect/endsession",
+    check_session_iframe: "http://localhost:52954/connect/checksession",
+  } */
+var mgr = new Oidc.UserManager(settings)
 
 Oidc.Log.logger = console;
 Oidc.Log.level = Oidc.Log.INFO;
@@ -114,14 +124,23 @@ export default class AuthService {
 
   // Redirect of the current window to the authorization endpoint.
   signIn() {
-    mgr.signinRedirect({
-      extraQueryParams: { //your params go here
-        foo: 'bar',
-        batz: 'quux',
-      }
+    mgr.signinRedirect({    
     }).catch(function (err) {
       console.log(err)
     })
+   
+  }
+  signInPopup(){
+    return new Promise((resolve, reject) => {
+      mgr.signinPopup().then(function(user) {
+          console.log(user);       
+          return resolve(user.profile);
+      })
+      .catch(function(err) {
+          console.log(err);
+          return reject(err);
+      });
+  }); 
   }
   
   // Redirect of the current window to the end session endpoint
@@ -133,6 +152,17 @@ export default class AuthService {
     })
   }
 
+  signOutPopup() {
+    return new Promise((resolve, reject) => {
+        mgr.signoutPopup().then(function() {
+            console.log('signed out');
+            return resolve();
+        }).catch(function(err) {
+            console.log(err);
+            return reject(err);
+        });
+    });
+}
   // Get the profile of the user logged in
   getProfile () {
     let self = this
@@ -241,3 +271,54 @@ export default class AuthService {
     })
   }
 }
+/*
+  /** AUTH0
+   * 'https://bildstudiotest01.auth0.com'
+   * 'ontI3Rz67pkGa53JzJoECXj1WzCyVHok'
+   * openid profile
+   */
+  
+  
+/** LOCAL SERVER
+ * userStore: new Oidc.WebStorageStateStore(),  
+  authority: 'http://localhost:52954/',
+  client_id: 'vuejsclient',
+  redirect_uri: window.location.origin + '/static/callback.html',
+  response_type: 'id_token token',
+  scope: 'openid profile address roles identityserver4api country subscriptionlevel offline_access',
+  post_logout_redirect_uri: window.location.origin + '/index.html',
+  silent_redirect_uri: window.location.origin + '/static/silent-renew.html',
+  accessTokenExpiringNotificationTime: 10,
+  automaticSilentRenew: true,
+  filterProtocolClaims: true,
+  loadUserInfo: true
+ */
+/** IDENTITY SERVER
+ *  userStore: new Mgr.WebStorageStateStore({ store: localStorage}),
+ authority: 'https://demo.identityserver.io/',
+ client_id: 'implicit',
+ redirect_uri: window.location.origin + '/public/callback.html',
+ response_type: 'id_token token',
+ scope: 'openid profile email api',
+ post_logout_redirect_uri: window.location.origin + '/',
+ silent_redirect_uri: window.location.origin + '/static/silent-renew.html',
+ accessTokenExpiringNotificationTime: 10,
+ automaticSilentRenew: true,
+ filterProtocolClaims: true,
+ loadUserInfo: true
+ --------------------------------------------------------------------------------------
+public static stsAuthority = 'https://demo.identityserver.io/';
+   public static clientId = 'implicit';
+   public static clientRoot = 'http://localhost:8080/';
+   public static clientScope = 'openid profile email api';
+ 
+   public static apiRoot = 'https://demo.identityserver.io/api/';
+----------------------------------------------------------------------------------------
+  public static stsAuthority = 'https://demo.identityserver.io/';
+   public static clientId = 'implicit';
+   public static clientRoot = 'http://localhost:8080';
+   public static clientScope = 'openid profile email api';
+ 
+   public static apiRoot = 'https://demo.identityserver.io/api/';
+
+ */ //

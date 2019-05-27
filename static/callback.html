@@ -11,45 +11,24 @@
   <script>
     // console.log(window.location.href)
     const redirect = localStorage.getItem('redirect')
-    const method  = localStorage.getItem('signInMethod')
-
     var config = {
     userStore: new Oidc.WebStorageStateStore({store: window.localStorage})
     }
     var mgr = new Oidc.UserManager(config);
-    // signinRedirectCallback  signinPopupCallback
+    
  //   alert(store.getters.redirect)
-
- if(method === 'popup'){
-   
-   mgr.signinPopupCallback().then(function (user) {
+    mgr.signinRedirectCallback().then(function (user) {
      // debugger;
-     if(redirect){
+      if(redirect){
        
-       window.location.href = redirect;
+        window.location.href = redirect;
       }else{
-        
+
         window.location.href = '/';
       }
     }).catch(function (err) {
       console.log(err);
     });
-  }else{
-    
-   mgr.signinRedirectCallback().then(function (user) {
-  
-   if(redirect){
-    
-     window.location.href = redirect;
-   }else{
-  
-     window.location.href = '/';
-   }
-  }).catch(function (err) {
-   console.log(err);
-  });
- }
- // debugger;
    
   </script>
 </body>

@@ -11,6 +11,7 @@
             <div class="col-md-11 col-xs-12 text-right">
 
                 <a class="login-register" id="signin" v-if="!user" href="#" @click="login()">Sign In</a>
+                <a class="login-register" id="signin" v-if="!user" href="#" @click="loginPopup()">Sign in popup</a>
                 <!-- <a class="login-register" id="signin" v-if="!user" href="#" @click="logout()">Logout</a> -->
                 <!-- <a class="login-register" id="signin"  href="#" @click="test()">Test</a> -->
                 <!-- <a class="login-register" v-if="!user" href="/signup">Register</a> -->
@@ -99,11 +100,24 @@ export default {
       },
       login(){
         
-       // this.mgr.signIn();
+        // this.mgr.signIn();
+        localStorage.setItem('signInMethod','redirect')
         this.$store.dispatch('signInUser')
       },
+      loginPopup(){
+        
+       // this.mgr.signIn();
+        this.$store.dispatch('signInUserPopup')
+         localStorage.setItem('signInMethod','popup')
+      },
       logout(){
-        this.mgr.signOut()
+    const method  = localStorage.getItem('signInMethod')
+    if(method === 'redirect'){
+      this.$store.dispatch('logout')
+    }else{
+      this.$store.dispatch('logoutPopup')
+    }
+        // this.mgr.signOutPopup()
         //this.$store.commit('setUser',null)
       }
       ,

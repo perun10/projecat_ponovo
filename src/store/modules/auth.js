@@ -39,8 +39,7 @@ const state = {
      }
  }
  const actions = {
-    createUser({ commit }, payload) {
-       
+    createUser({ commit }, payload) {       
         firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
           .then((user) => {
             Vue.swal(" Account created for " + payload.email);
@@ -56,8 +55,15 @@ const state = {
             Vue.swal(err.message)
           })
       },
+      signInUserPopup({commit}) {     
+      mgr.signInPopup().then((user)=>{
+        commit('setUser',user)
+      })
+ 
+      },
       signInUser() {
        mgr.signIn()
+       //sss
          //console.log(user)
       
         // firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
@@ -84,12 +90,20 @@ const state = {
         commit('setUser', { id: payload.uid })
       },
       logout({ commit }) {
-        firebase.auth().signOut().then(() => {
-          router.push('/signup');
+        // firebase.auth().signOut().then(() => {
+        //   router.push('/signup');
+        //   commit('setUser', '')
+        // })
+          mgr.signOut()
           commit('setUser', '')
-        })
-  
+        
       },
+      logoutPopup({commit}){
+        mgr.signOutPopup().then(()=>{
+          commit('setUser','')
+        })
+      }
+      ,
       takeEmail({commit},payload){
         commit('SET_EMAIL',payload)
         // console.log(payload+ ' je dodat u store !')

@@ -45,6 +45,7 @@
                 </li>
               </ul>
             </div>
+          
           </nav>
         </section>
       </div>
@@ -168,7 +169,8 @@ export default {
       bgcolor: null,
       tcolor: null,
       thisUser : null,
-      mgr : new AuthService()
+      mgr : new AuthService(),
+      
     };
   },
   components: {
@@ -224,7 +226,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters.user;
+       return this.$store.getters.user
     },
     logo(){
       return this.$store.getters.logo
@@ -235,23 +237,24 @@ export default {
     authors(){
       return this.$store.getters.getAuthor
     },
-    getIdentity(){
-      this.mgr.getUser().then((user)=>{
-        if(user){
-          this.$store.commit('setUser',user)
-        }else{
-          this.$store.commit('setUser',null)
-        }
-        
-      })
-    }
   },
   watch: {
     user(value) {
-      if (value.id !== null && value.id !== undefined) {        
-        this.thisUser = true
-        return this.thisUser
-      }      
+      // if (value.id !== null && value.id !== undefined) {        
+      //   this.thisUser = true
+      //   return this.thisUser
+      // } 
+      console.log('test')
+     if(!value){
+       this.mgr.getProfile().then((user)=>{
+         if(user){
+           this.$store.commit('setUser',user)
+            return user
+         }else{
+           return value
+         }
+       })
+     }
     }   
   },
   methods: {

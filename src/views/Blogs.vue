@@ -241,37 +241,18 @@ export default {
     },
     goToNew(){
       // var idtoken = 0
-      // this.mgr.getAcessToken().then(token => {
+      this.mgr.getAcessToken().then(token => {
         
-      //   var config = {
-      //      headers: {'Authorization-Code': 'Bearer ' + token}
-      //    };
+        var config = {
+           headers: {'Authorization': 'Bearer ' + token}
+         };
    
-      //      // axios.get('https://api.github.com/users/codeheaven-io', config);
-      //      axios.post('/save', { firstName: 'Marlon' }, config);
-      // })
+           // axios.get('https://api.github.com/users/codeheaven-io', config);
+           axios.post('/newBlog', { User: 'Frank' }, config);
+      })
       // console.log(idtoken)
       //this.$router.push('/blogs/new')
-      axios.interceptors.response.use(undefined, function (err) {
-    return new Promise(function (resolve, reject) {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-            serviceRefreshLogin(
-                this.mgr.renewToken(),
-                success => { 
-                        setTokens(success.access_token, success.refresh_token) 
-                        err.config.__isRetryRequest = true
-                        err.config.headers.Authorization = 'Bearer ' + this.mgr.getAcessToken();
-                        axios(err.config).then(resolve, reject);
-                },
-                error => { 
-                    console.log('Refresh login error: ', error);
-                    reject(error); 
-                }
-            );
-        }
-        throw err;
-    });
-});
+  
   }
   }
 };

@@ -1,7 +1,7 @@
 import * as firebase from 'firebase'
 import 'firebase/firestore';
 var blogObject = ''
-let lastVisible = null
+let lastVisible = ''
 let allBlogs = ''
 let sizeBlog = ""
 let arr = []
@@ -104,7 +104,7 @@ const actions = {
             
     },
     loadMore({commit},payload){
-        var query = firebase.firestore().collection('blogs').orderBy('time','desc').startAfter(lastVisible).limit(3)
+        var query = firebase.firestore().collection('blogs').orderBy('time','desc').startAfter(lastVisible ? lastVisible : '').limit(3)
         if(payload){         
             query =  firebase.firestore().collection('blogs').orderBy('time','desc').where('category','==',payload).startAfter(lastVisible).limit(3)         
         }
