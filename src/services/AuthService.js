@@ -155,10 +155,9 @@ export default class AuthService {
   signOutPopup() {
     return new Promise((resolve, reject) => {
         mgr.signoutPopup().then(function() {
-            console.log('signed out');
+            console.log('signed out by popup');
             return resolve();
         }).catch(function(err) {
-            console.log(err);
             return reject(err);
         });
     });

@@ -15,6 +15,7 @@ const state = {
     user: null,
     email:null,
     redirect:null,
+    local:null
  }
  const getters = {    
     user(state) {
@@ -25,9 +26,15 @@ const state = {
       },
       redirect(state){
         return state.redirect
+      },
+      getLocal(state){
+        return state.local
       }
  }
  const mutations = {
+   SET_LOCAL(state,payload){
+     state.local = payload
+   },
     SET_REDIRECT(state,payload){
       state.redirect = payload
     },

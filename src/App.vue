@@ -244,7 +244,7 @@ export default {
       //   this.thisUser = true
       //   return this.thisUser
       // } 
-      console.log('test')
+      //console.log('test')
      if(!value){
        this.mgr.getProfile().then((user)=>{
          if(user){

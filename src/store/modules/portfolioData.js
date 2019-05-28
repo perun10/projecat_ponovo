@@ -48,7 +48,7 @@ const actions = {
       lastVisible = snapshot.docs[snapshot.docs.length - 1];    
       snapshot.docs.forEach(doc => {
         portArr.push(doc.data())       
-        console.log(temporaryDocSize," - ",doc.data().name)
+       // console.log(temporaryDocSize," - ",doc.data().name)
         commit('SET_SIZE', temporaryDocSize)
         temporaryDocSize--       
       });

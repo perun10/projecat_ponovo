@@ -12,7 +12,7 @@
         <li><a href="#" :class="[ category=='environment' ? 'activeCategory':'']" @click="pickCategory('environment')">Environment</a></li>
         <li><a href="#" :class="[ category=='gaming' ? 'activeCategory':'']" @click="pickCategory('gaming')">Gaming</a></li>
       </ul>
-      <a class="float-right" @click="sortByDate">
+      <!-- <a class="float-right" @click="sortByDate">
         <svg
           class="sort"
           xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -87,7 +87,7 @@
             </g>
           </g>
         </svg>
-      </a>
+      </a> -->
     
       </div>
       <div class="row no-gutters" v-if="author && user">

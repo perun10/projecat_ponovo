@@ -19,6 +19,8 @@ require('firebase/firestore')
 Vue.use(VueFirestore)
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie);
+import i18n from '@/plugins/i18n';
+
 
 Vue.use(VueProgressBar, {
 	  color: 'red',
@@ -61,7 +63,8 @@ new Vue({
   router,
   store,
   firebase,
-  App 
+  App,
+  i18n 
   ,
   render: h => h(App),
   created(){

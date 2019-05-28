@@ -25,11 +25,11 @@
      <div class="row no-gutters justify-content-between p-3">
         <div class="col-md-4">
          
-             <router-link :to="/blogs/+getUrl+'/edit'" style="color:#8A8888;text-decoration:none;"><v-icon style="width:70px;height:70px;" name="edit"/></router-link>
+             <router-link :to="/blogs/+getUrl+'/edit'" style="color:#8A8888;text-decoration:none;"><v-icon style="width:70px;height:70px;" name="edit" v-if="user"/></router-link>
             
       </div>
         <div class="col-md-4">
-         <a title="Delete blog" href="#"><v-icon style="width:70px;height:70px;" data-toggle="modal" data-target="#exampleModal" name="delete"/></a>
+         <a title="Delete blog" href="#"><v-icon style="width:70px;height:70px;" data-toggle="modal" data-target="#exampleModal" name="delete" v-if="user"/></a>
         <Popup name="Deleting Blog" primaryButton="Delete" closeButton="Close" :primaryFunction="this.true" :closeFunction='this.false' :description="'Do you really want to delete this blog '+ '&quot;' + blog.title +'&quot;'"  />
 
       </div>
