@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <Top title="About my business"/>
+    <Top :title="$t('about')"/>
     <main>
       <section>
         <div class="container">

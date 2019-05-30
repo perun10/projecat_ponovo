@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router";
+import router from "@/router";
 
 // import store from "./store";
 import {store} from "./store/index";
@@ -19,9 +19,11 @@ require('firebase/firestore')
 Vue.use(VueFirestore)
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie);
-import i18n from '@/plugins/i18n';
+import {i18n} from '@/plugins/i18n';
 
+import { Trans } from './plugins/Translation'
 
+Vue.prototype.$i18nRoute = Trans.i18nRoute.bind(Trans)
 Vue.use(VueProgressBar, {
 	  color: 'red',
 	  failedColor: '#874b4b',

@@ -1,0 +1,15 @@
+{  "login":"Uloguj se",
+    "message":"Ovo je hello world poruka",
+    "loginPopup":"Uloguj se preko popupa",
+    "welcome_message": "Dobrodosli to Your Vue.js App",
+    "popular_links": "Popularni Linkovi",
+    "ecosystem": "Ekosistem",
+    "pages": {
+      "about": "About Page"
+    },
+    "about" :"O nasem poslu",
+    "work" : "Pogledajte nase projekte",
+    "contact": "Imate pitanje ?",
+    "blogs" : "Blogovi"
+  }
+  

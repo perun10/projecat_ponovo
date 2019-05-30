@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Top title="Blogs"/>
+    <Top :title="$t('blogs')"/>
     <div class="container">
       <div class="row no-gutters justify-content-between">
         

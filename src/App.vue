@@ -27,17 +27,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
               <ul id="nivmobi" class="navbar-nav">
-                <li class="nav-item active" v-for="m in menu" :key="m.index" >
-                  <router-link class="nav-link pl-0" :to="m.link">
+                <li class="nav-item active" v-for="m in menu" :key="m.index">
+                  <router-link class="nav-link pl-0" :to="$i18nRoute({name:m.text.toLowerCase()})">
                     <!-- :style="'.router-link-active' ? {'color':'red'}: {'color':'blue'}" -->
                     {{m.text}}
                     <span class="sr-only">(current)</span>
                   </router-link>
                 </li>
-                <router-link class="nav-link pl-0" to="/blogs">Blog
+                <router-link class="nav-link pl-0" :to="$i18nRoute({name:'blogs'})">
+                  Blog
                   <span class="sr-only">(current)</span>
                 </router-link>
-                <router-link class="nav-link pl-0" to="/admin" v-if="user">Admin
+                <router-link class="nav-link pl-0" to="/admin" v-if="user">
+                  Admin
                   <span class="sr-only">(current)</span>
                 </router-link>
                 <li class="nav-item">
@@ -45,12 +47,11 @@
                 </li>
               </ul>
             </div>
-          
           </nav>
         </section>
       </div>
     </header>
-    <router-view/>
+   <navigation/>
     <Footer/>
   </div>
 </template>
@@ -120,23 +121,23 @@ p {
   text-transform: uppercase;
 }
 #navbarNavDropdown .router-link-exact-active {
-  
-} 
-@import'~bootstrap/dist/css/bootstrap.css';
+}
+@import "~bootstrap/dist/css/bootstrap.css";
 </style>
 <script>
-import AuthService from '@/services/AuthService'
+import AuthService from "@/services/AuthService";
 
 import Header from "@/components/Common/Header.vue";
 import Social from "@/components/Common/Social.vue";
 import Footer from "@/components/Common/Footer.vue";
+import Navigation from "@/components/Common/Navigation.vue";
 import Vue from "vue";
-import 'slick-carousel/slick/slick.css';
+import "slick-carousel/slick/slick.css";
 
 // import "bootstrap/dist/css/bootstrap.css";
 // import'~bootstrap/dist/css/bootstrap.css'
-import JQUERY from "jquery"
-global.JQUERY = JQUERY
+import JQUERY from "jquery";
+global.JQUERY = JQUERY;
 import axios from "axios";
 import VueAxios from "vue-axios";
 import firebase from "firebase";
@@ -151,116 +152,112 @@ Vue.use(VueAxios, axios);
 /**$('.navbar-nav>li>a').on('click', function(){
     alert('HI');
 }); */
-JQUERY('.navbar-nav>li>a').on('click', function(){ //OVO JE RADILO
-  JQUERY('.navbar-toggler collapsed').click();
-   //bootstrap 4.x
+JQUERY(".navbar-nav>li>a").on("click", function() {
+  //OVO JE RADILO
+  JQUERY(".navbar-toggler collapsed").click();
+  //bootstrap 4.x
 });
-
 
 export default {
   data() {
     return {
-     override:{
-       color:'red !important'
-     },
-     
+      override: {
+        color: "red !important"
+      },
+
       menu: null,
       alt: null,
       bgcolor: null,
       tcolor: null,
-      thisUser : null,
-      mgr : new AuthService(),
-      
+      thisUser: null,
+      mgr: new AuthService()
     };
   },
   components: {
     Social,
     Footer,
     Header,
-    
+    'navigation':Navigation
   },
   created() {
-    this.$Progress.start()
+    this.$Progress.start();
     //  hook the progress bar to start before we move router-view
     this.$router.beforeEach((to, from, next) => {
-
       //  does the page we want to go to have a meta.progress object
       if (to.meta.progress !== undefined) {
-        let meta = to.meta.progress
+        let meta = to.meta.progress;
         // parse meta tags
-        this.$Progress.parseMeta(meta)
+        this.$Progress.parseMeta(meta);
       }
       //  start the progress bar
-      this.$Progress.start()
+      this.$Progress.start();
       //  continue to next page
-      next()
-      
-    })
+      next();
+    });
     //  hook the progress bar to finish after we've finished moving router-view
     this.$router.afterEach((to, from) => {
       //  finish the progress bar
-      this.$Progress.finish()
-      
-    })
+      this.$Progress.finish();
+    });
     this.onLoad();
     axios
       .get("https://project-ponovo.firebaseio.com/pages.json")
       .then(response => (this.menu = response.data));
-  },  
-  mounted(){
-    this.$Progress.finish()
-   this.mgr.getProfile().then((user)=>{
-     if(user){
-     //  console.log('OVDJE IMAMO KORISNIKA')
-      console.log(user)
-       this.$store.commit('setUser',user)
+  },
+  mounted() {
+    this.$Progress.finish();
+    this.mgr.getProfile().then(user => {
+      if (user) {
+        //  console.log('OVDJE IMAMO KORISNIKA')
+        console.log(user);
+        this.$store.commit("setUser", user);
 
-       if(user.exp){
-         this.mgr.renewToken()
-       }
-     }else{
-      // console.log('OVDJE NEMAM')
-       //  none
-     }
-   })
+        if (user.exp) {
+          this.mgr.renewToken();
+        }
+      } else {
+        // console.log('OVDJE NEMAM')
+        //  none
+      }
+    });
   },
   computed: {
     user() {
-       return this.$store.getters.user
+      return this.$store.getters.user;
     },
-    logo(){
-      return this.$store.getters.logo
+    logo() {
+      return this.$store.getters.logo;
     },
-    getEmail(){
-      return this.$store.getters.getEmail
+    getEmail() {
+      return this.$store.getters.getEmail;
     },
-    authors(){
-      return this.$store.getters.getAuthor
-    },
+    authors() {
+      return this.$store.getters.getAuthor;
+    }
   },
   watch: {
     user(value) {
-      // if (value.id !== null && value.id !== undefined) {        
+      // if (value.id !== null && value.id !== undefined) {
       //   this.thisUser = true
       //   return this.thisUser
-      // } 
+      // }
       //console.log('test')
-     if(!value){
-       this.mgr.getProfile().then((user)=>{
-         if(user){
-           this.$store.commit('setUser',user)
-            return user
-         }else{
-           return value
-         }
-       })
-     }
-    }   
+      if (!value) {
+        this.mgr.getProfile().then(user => {
+          if (user) {
+            this.$store.commit("setUser", user);
+            return user;
+          } else {
+            return value;
+          }
+        });
+      }
+    }
   },
   methods: {
     onLoad() {
-      this.$store.dispatch("getLogo", this.logo);      
-    },
+      this.$store.dispatch("getLogo", this.logo);
+    }
   }
 };
 </script>

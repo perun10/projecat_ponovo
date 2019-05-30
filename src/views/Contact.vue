@@ -1,6 +1,6 @@
 <template>
 <div id="contact">
-    <Top title="GOT A QUESTION OR INQUIRY?"/>
+    <Top :title="$t('contact')"/>
     <Map/>
     <div class="container">
    <div class="row no-gutters">

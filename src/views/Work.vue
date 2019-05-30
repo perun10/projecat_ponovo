@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Top title="check out what i can do"/>
+    <Top :title="$t('work')"/>
     <div class="container">
       <div class="row no-gutters justify-content-between">
         <div class="col-md-6 text-left">

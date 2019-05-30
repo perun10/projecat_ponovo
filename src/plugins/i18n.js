@@ -1,26 +1,13 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
-import {store} from "@/store/index";
-Vue.use(VueI18n);
+import VueI18n from 'vue-i18n'
+import Vue from 'vue'
+import sr from '@/lang/sr.json'
+import {Trans} from './Translation'
+Vue.use(VueI18n)
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from '@/constants/trans'
 
-// import {stringsEn} from '../lang/en'
-// import {stringsSr} from '../lang/sr'
-const local = localStorage.getItem('lang')
-var str = import('@/lang/'+local+'.js').then((module)=>{
-    return module.strings   
+export const i18n = new VueI18n({
+  locale: 'en', // set locale
+  fallbackLocale: 'en',
+  messages: { sr }// set locale messages
 })
 
-str.then((response)=>{
-    console.log(response)
-    store.commit('SET_LOCAL',response)
-})
-
-
-const messages = {}
-const i18n = new VueI18n({    
-    locale: local ? local : 'sr', // set locale
-    fallbackLocale: 'sr', // set fallback locale
-    messages, // set locale messages
-});
-
-export default i18n;

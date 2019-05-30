@@ -1,0 +1,15 @@
+{  "login":"Sign in",
+    "message":"Hello World",
+    "loginPopup":"Sign in popup",
+    "welcome_message": "Welcome to Your Vue.js App",
+    "popular_links": "Popular Links",
+    "ecosystem": "Ecosystem",
+    "pages": {
+      "about": "About Page"
+    },
+    "about" :"ABOUT MY BUSINESS",
+    "work" : "CHECK OUT WHAT I CAN DO",
+    "contact": "GOT A QUESTION OR INQUIRY?",
+    "blogs" : "BLOGS"
+  }
+  

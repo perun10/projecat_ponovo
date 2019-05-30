@@ -1,7 +1,7 @@
 import firebase from "firebase"
 import Vue from "vue"
 import VueSweetalert2 from 'vue-sweetalert2';
-import router from '@/router.js'
+import router from '@/router/index.js'
 import AuthService from "@/services/AuthService"
 let mgr = new AuthService();
 Vue.use(VueSweetalert2);

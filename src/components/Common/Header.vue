@@ -9,9 +9,21 @@
         <!-- <p v-else>Admin</p>                -->
       </div>
       <div class="col-md-11 col-xs-12 text-right">
-        <a v-for="entry in languages" :key="entry.title" @click="changeLocale(entry.language)" href="#">
-               {{entry.title}}
-            </a>
+        <select
+    class="LanguageSwitcher"
+    name="language"
+    @change="changeLanguage"
+  >
+    <option
+      v-for="lang in supportedLanguages"
+      :key="lang"
+      :selected="isCurrentLanguage(lang)"
+      :class="{ 'is-selected': isCurrentLanguage(lang) }"
+      :value="lang"
+    >
+      {{lang}}
+    </option>
+  </select>
             <h1>{{$t('message')}}</h1>
         <a class="login-register" id="signin" v-if="!user" href="#" @click="login()">{{ $t('login') }}</a>
         <a
@@ -89,7 +101,8 @@
 <script>
 import AuthService from "@/services/AuthService";
 import main from "@/main";
-import i18n from '@/plugins/i18n';
+// import {i18n} from '@/plugins/i18n';
+import { Trans } from '@/plugins/Translation'
 
 export default {
   name: "Header",
@@ -98,19 +111,21 @@ export default {
       mgr: new AuthService(),
       thisUser: null,
       src: "",
-      name: "",
-      languages: [
-                    { flag: 'us', language: 'en', title: 'English' },
-                    { flag: 'sr', language: 'sr', title: 'Serbian' }
-                ]
+      name: "",    
     };
   },
   methods: {
-    changeLocale(locale) {
-                location.reload()
-                i18n.locale = locale;
-                localStorage.setItem('lang',locale)
-            },
+       changeLanguage (e) {
+      const lang = e.target.value
+      const to = this.$router.resolve({ params: { lang } })
+      return Trans.changeLanguage(lang).then(() => {
+        console.log(to.location)
+        this.$router.push(to.location)
+      })
+    },
+    isCurrentLanguage (lang) {
+      return lang === this.currentLanguage
+    },
     login() {
       // this.mgr.signIn();
       localStorage.setItem("signInMethod", "redirect");
@@ -146,6 +161,12 @@ export default {
     this.$store.dispatch("takeAuthor", this.email);
   },
   computed: {
+    supportedLanguages(){
+      return Trans.supportedLanguages
+    },
+    currentLanguage () {
+      return Trans.currentLanguage
+    },
     user() {
       return this.$store.getters.user;
     },
