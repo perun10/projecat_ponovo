@@ -88,7 +88,7 @@ export default [
 			{
 				path: 'admin',
 				name: 'admin',
-				component: load('viwes', 'Admin'),
+				component: load('views', 'Admin'),
 				meta: {
 					requiresAuth: true
 				}

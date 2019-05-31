@@ -10,6 +10,8 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^12.0.0",
     "@ckeditor/ckeditor5-vue": "^1.0.0-beta.1",
+    "@progress/kendo-dateinputs-vue-wrapper": "^2019.2.514",
+    "@progress/kendo-ui": "^2019.2.529",
     "@tinymce/tinymce-vue": "^2.0.0",
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
@@ -17,6 +19,8 @@
     "firebase": "^5.8.2",
     "jquery": "^3.3.1",
     "jquery.backstretch": "^2.1.15",
+    "logrocket": "^1.0.0",
+    "logrocket-vuex": "0.0.3",
     "luxon": "^1.12.0",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",

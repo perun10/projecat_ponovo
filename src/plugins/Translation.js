@@ -72,6 +72,7 @@ const Trans = {
    * @return {Promise<*>|*}
    */
   loadLanguageFile (lang) {
+    console.log(lang)
     return import(/* webpackChunkName: "lang-[request]" */ `@/lang/${lang}.json`)
   },
   /**

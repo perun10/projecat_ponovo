@@ -20,11 +20,10 @@ export default router
 
 router.beforeEach((to,from,next)=>{
  const lang = to.params.lang
- console.log(lang)
-  
+//  console.log(lang) HBZ3 - U5PJ - BHQ2 - BA2A - 7L51 - B89H
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   if(requiresAuth){
-    console.log(to.fullPath)
+    // console.log(to.fullPath)
     localStorage.setItem('redirect',to.fullPath)
     store.commit('SET_REDIRECT',to.fullPath)
     //return
@@ -35,10 +34,16 @@ router.beforeEach((to,from,next)=>{
      localStorage.removeItem('redirect')
 
       }else{
-        next()
+        next('/')
       }
     })
   }else{
     next();
   }
 })
+
+/**. Install thelogrocketmodule via NPM:
+npm i --save logrocket
+2. Import LogRocket and callLogRocket.initlike so:
+import LogRocket from 'logrocket';
+LogRocket.init('apgz3r/testproject'); */

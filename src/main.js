@@ -1,12 +1,9 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "@/router";
-
-// import store from "./store";
 import {store} from "./store/index";
 import VueProgressBar from "vue-progressbar"
 import * as firebase from "firebase";
-Vue.config.productionTip = false;
 import axios from "axios"
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueFirestore from "vue-firestore"
@@ -14,34 +11,48 @@ import Vuelidate from "vuelidate"
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import 'bootstrap'
-Vue.use(Vuelidate)
-require('firebase/firestore')
-Vue.use(VueFirestore)
 import VueCookie from 'vue-cookie'
-Vue.use(VueCookie);
 import {i18n} from '@/plugins/i18n';
-
+import AuthService from './services/AuthService'
 import { Trans } from './plugins/Translation'
+import LogRocket from 'logrocket'
+
+require('firebase/firestore')
+require('dotenv/config')
 
 Vue.prototype.$i18nRoute = Trans.i18nRoute.bind(Trans)
+Vue.config.productionTip = false;
+
+
 Vue.use(VueProgressBar, {
-	  color: 'red',
-	  failedColor: '#874b4b',
-	  thickness: '5px',
+  color: 'red',
+  failedColor: '#874b4b',
+  thickness: '5px',
 	transition: {
-		speed: '0.2s',
+    speed: '0.2s',
     opacity: '0.1s',
     termination:'300'
 	},
-    location: 'top',
-    position:'fixed',
-	  inverse: false
+  location: 'top',
+  position:'fixed',
+  inverse: false
 })
-require('dotenv/config')
-import AuthService from './services/AuthService'
-let mgr = new AuthService();
+
+Vue.use(Vuelidate)
+Vue.use(VueFirestore)
+Vue.use(VueCookie);
+Vue.use(LogRocket)
+Vue.use(VueGoogleMaps,{
+  load:{
+    key: process.env.VUE_APP_GOOGLE_API,
+    libraries: 'places'    
+  }
+})
 
 //axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+
+let mgr = new AuthService();
+
 var config = {
   apiKey: process.env.VUE_APP_FIRE_KEY,
   authDomain: process.env.VUE_APP_AUTH_DOMAIN,
@@ -51,15 +62,14 @@ var config = {
   messagingSenderId: process.env.VUE_APP_MESSAGING_SENDERID
 };
 
-Vue.use(VueGoogleMaps,{
-  load:{
-    key: process.env.VUE_APP_GOOGLE_API,
-    libraries: 'places'    
-  }
-})
+LogRocket.init('apgz3r/testproject')
+LogRocket.identify('1111', {
+  name: 'James Morrison',
+  email: 'jamesmorrison@example.com',
+  subscriptionType: 'pro'
+});
 
 firebase.initializeApp(config);
-
 
 new Vue({
   router,
@@ -72,7 +82,6 @@ new Vue({
   created(){
   firebase.auth().onAuthStateChanged((user) => {
     if(user) {
-    //  console.log(user.email)
       this.$store.dispatch('takeEmail',user.email)
       this.$store.dispatch('takeAuthor',user.email)
       this.$store.dispatch('autoSignIn', user);

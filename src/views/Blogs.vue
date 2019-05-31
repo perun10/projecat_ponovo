@@ -125,11 +125,15 @@
                   v-html="blg.text"
                   style="display:inline;"
                 ></div>
-                <!-- <div v-for="b in blog.text" :key="b.index">{{b.split('p')[0]}}</div> -->
+                <!-- <div v-for="b in blog.text" :key="b.index">{{b.split('p')[0]}}</div>{{format(blg.time.toDate())}} -->
               </div>
+              <br/>
+                <p>Kendo : {{kendoFormat(blg.time)}}</p>
+                <p>Moment : <label class="text-left">{{format(blg.time.toDate())}}</label></p>
+                <p>i18n : <label class="text-left" >{{ $d(blg.time.toDate(), 'long') }}</label></p>
 
               <div class="row no-gutters justify-content-between mt-5">
-                <label class="text-left" v-if="blg.isPublished">{{format(blg.time.toDate())}}</label>
+               <label class="text-left" v-if="blg.isPublished">{{ $d(blg.time.toDate(), 'long') }}</label>
                 <label class="text-left" v-else>This blog unpublished</label>
                 <label class="text-right">
                   <svg
@@ -171,7 +175,9 @@ import { store } from "@/store/index.js";
 import axios from "axios"
 import BlogPost from "@/components/Blog/BlogPost.vue";
 import AuthService from '@/services/AuthService'
-
+import {Trans} from '@/plugins/Translation'
+import '@progress/kendo-ui';
+import { DateinputsInstaller, Calendar, DateInput, DatePicker, DateRangePicker, DateTimePicker, TimePicker, MultiViewCalendar } from '@progress/kendo-dateinputs-vue-wrapper';
 // import firebase from "firebase"
 import Vue from "vue";
 import moment from "moment";
@@ -216,12 +222,23 @@ export default {
       this.$store.dispatch("blogs/loadMore",this.category == 'all' ? '' : this.category)
     },
     forwardLink(value) {},
+     kendoFormat(date){
+       const lang = Trans.currentLanguage
+       kendo.culture('fr')
+      const format = kendo.culture().calendar.patterns.D
+      const dateW = kendo.toString(date.toDate(),format,kendo.culture())
+      console.log(dateW)
+
+      console.log(format)
+
+      const final = kendo.parseDate(dateW , 'DD/MM/YYYY')
+      //  kendo.parseDate(dateW,format,lang)
+    console.log(final)
+      return dateW
+    },
     format(date) {
-      moment(date)
-        .utc()
-        .startOf("day")
-        .format();
-      return moment(date).format("DD MMMM YYYY");
+      const lang = Trans.currentLanguage
+      return moment(date).locale(lang).format('L');
     },
     sortByDate() {     
       if (this.sortBy.toLowerCase() === "asc") {

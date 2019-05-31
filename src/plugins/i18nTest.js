@@ -1,4 +1,5 @@
  import {stringsSr} from '../lang/sr'
+import VueI18n from 'vue-i18n';
 const local = localStorage.getItem('lang')
 
 var str = import('@/lang/'+local+'.js').then((module)=>{
@@ -21,13 +22,9 @@ async function i18nSettings(str){
         }
     })
     console.log(settings)
-    return (settings)
+    const i18n = new VueI18n(settings)
+    return i18n
 }
 
-let conf = {}
-i18nSettings(str).then((results)=>{
-    console.log(results)
-    // conf = results
-    conf = new VueI18n(results)
-})
-console.log(conf)
+i18nSettings(str)
+

@@ -24,15 +24,15 @@
       {{lang}}
     </option>
   </select>
-            <h1>{{$t('message')}}</h1>
-        <a class="login-register" id="signin" v-if="!user" href="#" @click="login()">{{ $t('login') }}</a>
+            <h1 v-t="'message'"></h1>
+        <a class="login-register" id="signin" v-if="!user" href="#" @click="login()"><span v-t="'login'"></span></a>
         <a
           class="login-register"
           id="signin"
           v-if="!user"
           href="#"
           @click="loginPopup()"
-        >{{ $t('loginPopup') }}</a>
+        ><span v-t="'loginPopup'"></span></a> 
         <!-- <a class="login-register" id="signin" v-if="!user" href="#" @click="logout()">Logout</a> -->
         <!-- <a class="login-register" id="signin"  href="#" @click="test()">Test</a> -->
         <!-- <a class="login-register" v-if="!user" href="/signup">Register</a> -->
@@ -121,6 +121,8 @@ export default {
       return Trans.changeLanguage(lang).then(() => {
         console.log(to.location)
         this.$router.push(to.location)
+        localStorage.setItem('lang',lang)
+        location.reload();
       })
     },
     isCurrentLanguage (lang) {
