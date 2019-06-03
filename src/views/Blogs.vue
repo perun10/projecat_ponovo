@@ -181,6 +181,7 @@ import { DateinputsInstaller, Calendar, DateInput, DatePicker, DateRangePicker, 
 // import firebase from "firebase"
 import Vue from "vue";
 import moment from "moment";
+// import logger from '@/plugins/logger'
 Vue.use(moment);
 export default {
   data() {
@@ -200,7 +201,10 @@ export default {
   },
   created() {
     this.$store.dispatch("blogs/importBlogSize");
-    this.$store.dispatch("blogs/importBlogs",''); // OVDJE NA POCETKU UVIJEK IDE IMPORTA - ALL BLOGS
+    this.$store.dispatch("blogs/importBlogs",'');
+    
+    this.$logger.info('Blog strana')
+    // OVDJE NA POCETKU UVIJEK IDE IMPORTA - ALL BLOGS
   },
   computed: {
     size(){
@@ -222,18 +226,18 @@ export default {
       this.$store.dispatch("blogs/loadMore",this.category == 'all' ? '' : this.category)
     },
     forwardLink(value) {},
+
      kendoFormat(date){
        const lang = Trans.currentLanguage
-       kendo.culture('fr')
-      const format = kendo.culture().calendar.patterns.D
+       kendo.culture(lang)
+      const format = kendo.culture().calendar.patterns.d
       const dateW = kendo.toString(date.toDate(),format,kendo.culture())
-      console.log(dateW)
 
-      console.log(format)
+      this.$logger.info(dateW)
+      this.$logger.info(kendo.culture())
 
-      const final = kendo.parseDate(dateW , 'DD/MM/YYYY')
-      //  kendo.parseDate(dateW,format,lang)
-    console.log(final)
+      this.$logger.info(format)
+
       return dateW
     },
     format(date) {

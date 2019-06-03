@@ -16,13 +16,23 @@ import {i18n} from '@/plugins/i18n';
 import AuthService from './services/AuthService'
 import { Trans } from './plugins/Translation'
 import LogRocket from 'logrocket'
+import VueI18n from "vue-i18n";
+import winstonLogger from '@/plugins/logger'
+
+
+const logger = {
+  install( Vue , options){
+    Vue.prototype.$logger  = winstonLogger
+  }
+}
+
+Vue.use(logger)
 
 require('firebase/firestore')
 require('dotenv/config')
 
 Vue.prototype.$i18nRoute = Trans.i18nRoute.bind(Trans)
 Vue.config.productionTip = false;
-
 
 Vue.use(VueProgressBar, {
   color: 'red',
@@ -70,14 +80,12 @@ LogRocket.identify('1111', {
 });
 
 firebase.initializeApp(config);
-
 new Vue({
   router,
   store,
   firebase,
   App,
-  i18n 
-  ,
+  i18n,
   render: h => h(App),
   created(){
   firebase.auth().onAuthStateChanged((user) => {
