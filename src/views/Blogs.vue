@@ -178,6 +178,15 @@ import AuthService from '@/services/AuthService'
 import {Trans} from '@/plugins/Translation'
 import '@progress/kendo-ui';
 import { DateinputsInstaller, Calendar, DateInput, DatePicker, DateRangePicker, DateTimePicker, TimePicker, MultiViewCalendar } from '@progress/kendo-dateinputs-vue-wrapper';
+const local = localStorage.getItem('lang')
+import ('@progress/kendo-ui/js/cultures/kendo.culture.'+local+'.js').then(()=>{
+  kendo.culture(local);
+
+})
+
+
+
+Vue.use(DateinputsInstaller)
 // import firebase from "firebase"
 import Vue from "vue";
 import moment from "moment";
@@ -202,8 +211,10 @@ export default {
   created() {
     this.$store.dispatch("blogs/importBlogSize");
     this.$store.dispatch("blogs/importBlogs",'');
-    
+    this.$logger.error('OVDJE JE  COOL LOGER GRESAKA')
     this.$logger.info('Blog strana')
+    this.$logger.error('PROBA ERR', new Error())
+    this.$logger.warn('MOGUCI PROBLEMI')
     // OVDJE NA POCETKU UVIJEK IDE IMPORTA - ALL BLOGS
   },
   computed: {
@@ -229,14 +240,15 @@ export default {
 
      kendoFormat(date){
        const lang = Trans.currentLanguage
-       kendo.culture(lang)
-      const format = kendo.culture().calendar.patterns.d
-      const dateW = kendo.toString(date.toDate(),format,kendo.culture())
+       
+      //  var date = startDa
+      const format = kendo.culture().calendar.patterns.D
+      const dateW = kendo.toString(date.toDate(),format,lang)
 
-      this.$logger.info(dateW)
-      this.$logger.info(kendo.culture())
+      // this.$logger.info(dateW)
+      // this.$logger.info(kendo.culture())
 
-      this.$logger.info(format)
+      // this.$logger.info(format)
 
       return dateW
     },

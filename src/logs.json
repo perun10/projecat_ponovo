@@ -6,5 +6,11 @@
             "timestamp": "2019-06-03T19:18:24.131Z",
             "id": 1
         }
-    ]
+    ],
+    "info":[{
+        "message": "OVDJE JE OK PORUKA",
+        "level": "info",
+        "timestamp": "2019-06-03T19:18:24.131Z",
+        "id": 1
+    }]
 }
