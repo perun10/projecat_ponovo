@@ -33,10 +33,10 @@ const Trans = {
     return Trans.defaultLanguage
   },
   /**
-   * Returns the users preferred language
+   * Returns the users preferred language window.navigator.language || window.navigator.userLanguage || Trans.defaultLanguage
    */
   getUserLang () {
-    const lang = window.navigator.language || window.navigator.userLanguage || Trans.defaultLanguage
+    const lang = localStorage.getItem('lang')
     return {
       lang: lang,
       langNoISO: lang.split('-')[0]

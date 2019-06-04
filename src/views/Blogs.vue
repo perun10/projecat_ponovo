@@ -129,7 +129,7 @@
               </div>
               <br/>
                 <p>Kendo : {{kendoFormat(blg.time)}}</p>
-                <p>Moment : <label class="text-left">{{format(blg.time.toDate())}}</label></p>
+                <p>Moment : <label class="text-left">{{momentFormat(blg.time.toDate())}}</label></p>
                 <p>i18n : <label class="text-left" >{{ $d(blg.time.toDate(), 'long') }}</label></p>
 
               <div class="row no-gutters justify-content-between mt-5">
@@ -211,7 +211,7 @@ export default {
   created() {
     this.$store.dispatch("blogs/importBlogSize");
     this.$store.dispatch("blogs/importBlogs",'');
-    this.$logger.error('OVDJE JE  COOL LOGER GRESAKA')
+    // // this.$logger.error('OVDJE JE  COOL LOGER GRESAKA')
     this.$logger.info('Blog strana')
     this.$logger.error('PROBA ERR', new Error())
     this.$logger.warn('MOGUCI PROBLEMI')
@@ -238,23 +238,12 @@ export default {
     },
     forwardLink(value) {},
 
-     kendoFormat(date){
-       const lang = Trans.currentLanguage
-       
-      //  var date = startDa
+     kendoFormat(date){     
       const format = kendo.culture().calendar.patterns.D
-      const dateW = kendo.toString(date.toDate(),format,lang)
-
-      // this.$logger.info(dateW)
-      // this.$logger.info(kendo.culture())
-
-      // this.$logger.info(format)
-
-      return dateW
+      return kendo.toString(date.toDate(),format,Trans.currentLanguage)  
     },
-    format(date) {
-      const lang = Trans.currentLanguage
-      return moment(date).locale(lang).format('L');
+    momentFormat(date) {
+      return moment(date).locale(Trans.currentLanguage).format('L');
     },
     sortByDate() {     
       if (this.sortBy.toLowerCase() === "asc") {

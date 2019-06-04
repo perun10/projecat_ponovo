@@ -1,16 +1,11 @@
 {
-    "errors": [
-        {
-            "message": "OVDJE JE GRESKA KENDO CULTURE",
-            "level": "error",
-            "timestamp": "2019-06-03T19:18:24.131Z",
-            "id": 1
-        }
+    "error": [
+      
     ],
-    "info":[{
-        "message": "OVDJE JE OK PORUKA",
-        "level": "info",
-        "timestamp": "2019-06-03T19:18:24.131Z",
-        "id": 1
-    }]
-}
+    "combined": [
+      
+    ],
+    "warn": [
+     
+    ]
+  }

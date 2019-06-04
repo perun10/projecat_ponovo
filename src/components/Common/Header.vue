@@ -15,7 +15,7 @@
     @change="changeLanguage"
   >
     <option
-      v-for="lang in supportedLanguages"
+      v-for="lang in langs"
       :key="lang"
       :selected="isCurrentLanguage(lang)"
       :class="{ 'is-selected': isCurrentLanguage(lang) }"
@@ -111,15 +111,17 @@ export default {
       mgr: new AuthService(),
       thisUser: null,
       src: "",
-      name: "",    
+      name: "", 
+      langs:['en','sr']   
     };
   },
   methods: {
        changeLanguage (e) {
       const lang = e.target.value
+      // this.$logger.info(lang)
       const to = this.$router.resolve({ params: { lang } })
       return Trans.changeLanguage(lang).then(() => {
-        console.log(to.location)
+        // console.log(to.location)
         this.$router.push(to.location)
         localStorage.setItem('lang',lang)
         location.reload();
