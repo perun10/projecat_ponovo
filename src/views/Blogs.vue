@@ -144,9 +144,15 @@
                   >
                     <path id="like" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>
                   </svg>
-                  {{blg.likes}}
+                  {{blg.likes}} 
                 </label>
               </div>
+
+                  <!-- <svgicon :icon="icon" color="#0f2" class="icon"></svgicon> -->
+                  <svgicon icon="test/boysgirls" width="220" height="180" color="gold"></svgicon>
+                  <svgicon icon="paypal" width="220" height="180" color="gold"></svgicon>
+                  <svgicon icon="send" class="test"></svgicon>
+
               <!-- HERE COLMN Ends -->
             </div>
           </div>
@@ -177,14 +183,13 @@ import BlogPost from "@/components/Blog/BlogPost.vue";
 import AuthService from '@/services/AuthService'
 import {Trans} from '@/plugins/Translation'
 import '@progress/kendo-ui';
+import '@/compiled-icons/'
 import { DateinputsInstaller, Calendar, DateInput, DatePicker, DateRangePicker, DateTimePicker, TimePicker, MultiViewCalendar } from '@progress/kendo-dateinputs-vue-wrapper';
 const local = localStorage.getItem('lang')
 import ('@progress/kendo-ui/js/cultures/kendo.culture.'+local+'.js').then(()=>{
   kendo.culture(local);
 
 })
-
-
 
 Vue.use(DateinputsInstaller)
 // import firebase from "firebase"
@@ -197,6 +202,7 @@ export default {
     return {
       category:'all',
       sortBy: "desc",
+      icon: 'pistol',
       aLink:
         ' <router-link style="display:inline;" :to="/blogs/+blg.url">Read more</router-link>',
         mgr : new AuthService()
@@ -211,10 +217,11 @@ export default {
   created() {
     this.$store.dispatch("blogs/importBlogSize");
     this.$store.dispatch("blogs/importBlogs",'');
-    // // this.$logger.error('OVDJE JE  COOL LOGER GRESAKA')
-    this.$logger.info('Blog strana')
-    this.$logger.error('PROBA ERR', new Error())
-    this.$logger.warn('MOGUCI PROBLEMI')
+  
+
+    // this.$logger.info('Blog strana')
+    
+    this.$logger.warn('MOGUCI PROBLEMI 2222 ')
     // OVDJE NA POCETKU UVIJEK IDE IMPORTA - ALL BLOGS
   },
   computed: {
@@ -337,4 +344,21 @@ a:hover {
   color:#2ECC71 !important;
   pointer-events: none;
 }
+
+.icon {
+    fill: #000000;
+}
+.test{
+  width: 30px;
+  height: 30px;
+}
+.test:active{
+  fill: red;
+}
+.test:hover{
+  fill:#2ECC71;
+}
+</style>
+
+<style scoped>
 </style>

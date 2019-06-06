@@ -18,7 +18,9 @@ import { Trans } from './plugins/Translation'
 import LogRocket from 'logrocket'
 import VueI18n from "vue-i18n";
 import winstonLogger from '@/plugins/logger'
+import VueSVGIcon from 'vue-svgicon'
 
+Vue.use(VueSVGIcon)
 
 const logger = {
   install( Vue , options){
@@ -60,6 +62,14 @@ Vue.use(VueGoogleMaps,{
 })
 
 //axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+axios.defaults.baseURL = "http://localhost:3000/"
+console.log(axios.defaults.baseURL)
+
+window.onerror = function(err){
+  let arr = []
+  arr.push(err)
+  axios.post('error',[arr])
+}
 
 let mgr = new AuthService();
 

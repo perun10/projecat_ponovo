@@ -1,74 +1,11 @@
 {
   "error": [
-    {
-      "level": "error",
-      "message": "PROBA ERR",
-      "stack": "Error\n    at VueComponent.created (webpack-internal:///./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/Blogs.vue?vue&type=script&lang=js&:230:37)\n    at invokeWithErrorHandling (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:1845:57)\n    at callHook (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:3078:7)\n    at VueComponent.Vue._init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4887:5)\n    at new VueComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5033:12)\n    at createComponentInstanceForVnode (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4554:10)\n    at init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4385:45)\n    at createComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5857:9)\n    at createElm (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5804:9)\n    at VueComponent.patch [as __patch__] (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:6356:7)",
-      "id": 1
-    },
-    {
-      "level": "error",
-      "message": "PROBA ERR",
-      "stack": "Error\n    at VueComponent.created (webpack-internal:///./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/Blogs.vue?vue&type=script&lang=js&:230:37)\n    at invokeWithErrorHandling (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:1845:57)\n    at callHook (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:3078:7)\n    at VueComponent.Vue._init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4887:5)\n    at new VueComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5033:12)\n    at createComponentInstanceForVnode (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4554:10)\n    at init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4385:45)\n    at createComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5857:9)\n    at createElm (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5804:9)\n    at VueComponent.patch [as __patch__] (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:6356:7)",
-      "id": 2
-    }
+    
   ],
   "combined": [
-    {
-      "message": "Blog strana",
-      "level": "info",
-      "id": 1
-    },
-    {
-      "level": "error",
-      "message": "PROBA ERR",
-      "stack": "Error\n    at VueComponent.created (webpack-internal:///./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/Blogs.vue?vue&type=script&lang=js&:230:37)\n    at invokeWithErrorHandling (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:1845:57)\n    at callHook (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:3078:7)\n    at VueComponent.Vue._init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4887:5)\n    at new VueComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5033:12)\n    at createComponentInstanceForVnode (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4554:10)\n    at init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4385:45)\n    at createComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5857:9)\n    at createElm (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5804:9)\n    at VueComponent.patch [as __patch__] (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:6356:7)",
-      "id": 2
-    },
-    {
-      "message": "MOGUCI PROBLEMI",
-      "level": "warn",
-      "id": 3
-    },
-    {
-      "message": "Blog strana",
-      "level": "info",
-      "id": 4
-    },
-    {
-      "level": "error",
-      "message": "PROBA ERR",
-      "stack": "Error\n    at VueComponent.created (webpack-internal:///./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/Blogs.vue?vue&type=script&lang=js&:230:37)\n    at invokeWithErrorHandling (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:1845:57)\n    at callHook (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:3078:7)\n    at VueComponent.Vue._init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4887:5)\n    at new VueComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5033:12)\n    at createComponentInstanceForVnode (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4554:10)\n    at init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4385:45)\n    at createComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5857:9)\n    at createElm (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5804:9)\n    at VueComponent.patch [as __patch__] (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:6356:7)",
-      "id": 5
-    },
-    {
-      "message": "MOGUCI PROBLEMI",
-      "level": "warn",
-      "id": 6
-    }
+    
   ],
   "warn": [
-    {
-      "message": "MOGUCI PROBLEMI",
-      "level": "warn",
-      "id": 1
-    },
-    {
-      "level": "error",
-      "message": "PROBA ERR",
-      "stack": "Error\n    at VueComponent.created (webpack-internal:///./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/Blogs.vue?vue&type=script&lang=js&:230:37)\n    at invokeWithErrorHandling (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:1845:57)\n    at callHook (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:3078:7)\n    at VueComponent.Vue._init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4887:5)\n    at new VueComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5033:12)\n    at createComponentInstanceForVnode (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4554:10)\n    at init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4385:45)\n    at createComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5857:9)\n    at createElm (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5804:9)\n    at VueComponent.patch [as __patch__] (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:6356:7)",
-      "id": 2
-    },
-    {
-      "level": "error",
-      "message": "PROBA ERR",
-      "stack": "Error\n    at VueComponent.created (webpack-internal:///./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/Blogs.vue?vue&type=script&lang=js&:230:37)\n    at invokeWithErrorHandling (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:1845:57)\n    at callHook (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:3078:7)\n    at VueComponent.Vue._init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4887:5)\n    at new VueComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5033:12)\n    at createComponentInstanceForVnode (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4554:10)\n    at init (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:4385:45)\n    at createComponent (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5857:9)\n    at createElm (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:5804:9)\n    at VueComponent.patch [as __patch__] (webpack-internal:///./node_modules/vue/dist/vue.runtime.esm.js:6356:7)",
-      "id": 3
-    },
-    {
-      "message": "MOGUCI PROBLEMI",
-      "level": "warn",
-      "id": 4
-    }
+   
   ]
 }

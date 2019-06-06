@@ -8,7 +8,7 @@
       <div class="col-md-1"></div>
       <Info />
    </div>
-</div>
+</div> {{test}}
     <Bottom/>    
 </div>
     
@@ -36,6 +36,9 @@ export default {
     Form,
     Info
   }, 
+  created(){
+    this.$logger.error('GRESKA NA STRANICI KONTAKT')
+  }
   
 }
 </script>

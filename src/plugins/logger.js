@@ -1,4 +1,6 @@
+
 const winston = require('winston');
+const logform = require('logform');
 // const fs = require('fs');
 // const path = require('path');
 // const filename = path.join(__dirname, 'created-logfile.log');
@@ -14,12 +16,12 @@ const combinedLogOption = {
 	path: 'combined',
 	level: 'info'
 };
-const warnLogOption = {
-	host: 'localhost',
-	port: '3000',
-	path: 'warn',
-	level: 'warn'
-};
+// const warnLogOption = {
+// 	host: 'localhost',
+// 	port: '3000',
+// 	path: 'warn',
+// 	level: 'warn'
+// };
 
 const levels = {
 	error: 0,
@@ -37,17 +39,31 @@ const errorStackTracerFormat = winston.format((info) => {
 	return info;
 });
 
+const allErrors = logform.format((info)=>{
+	// console.log(info) {"message":"Uncaught TypeError: Cannot read property 'reading' of undefined","level":"warn"}
+	window.onerror = function(response){
+		// info.level = "error";
+		info.message = `${response}` ;		
+		return info
+	}
+	console.log(info)
+	return info
+});
+
 const logger = winston.createLogger({
 	levels,
 	format: winston.format.combine(
     winston.format.splat(), 
-    errorStackTracerFormat(),
-    winston.format.simple()),
+		errorStackTracerFormat(),
+		winston.format.timestamp(),
+		winston.format.simple(),
+		allErrors()
+		),
 	transports: [
       // new winston.transports.File({filename})
 		new winston.transports.Http(errLogOptions),
 		new winston.transports.Http(combinedLogOption),
-		new winston.transports.Http(warnLogOption)
+		// new winston.transports.Http(warnLogOption)
 	]
 });
 
@@ -55,8 +71,10 @@ if (process.env.NODE_ENV !== 'production') {
   logger.add(new winston.transports.Console({
     format: winston.format.combine(
       winston.format.colorize(),
-      winston.format.simple()
+      winston.format.simple(),
     )
   }));
 }
-export default logger;
+
+
+module.exports = logger

@@ -120,7 +120,40 @@ p {
   grid-template-columns: auto auto auto auto;
   text-transform: uppercase;
 }
+
 #navbarNavDropdown .router-link-exact-active {
+}
+
+.svg-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    color: inherit;
+    vertical-align: middle;
+    fill: none;
+    stroke: currentColor;
+}
+
+.svg-fill {
+    fill: currentColor;
+    stroke: none;
+}
+
+.svg-up {
+    /* default */
+    transform: rotate(0deg);
+}
+
+.svg-right {
+    transform: rotate(90deg);
+}
+
+.svg-down {
+    transform: rotate(180deg);
+}
+
+.svg-left {
+    transform: rotate(-90deg);
 }
 @import "~bootstrap/dist/css/bootstrap.css";
 </style>
@@ -181,6 +214,7 @@ export default {
   },
   created() {
     this.$Progress.start();
+    
     //  hook the progress bar to start before we move router-view
     this.$router.beforeEach((to, from, next) => {
       //  does the page we want to go to have a meta.progress object
