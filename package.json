@@ -22,7 +22,7 @@
     "dotenv": "^6.2.0",
     "express": "^4.17.1",
     "firebase": "^5.8.2",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jquery.backstretch": "^2.1.15",
     "loglevel-plugin-remote": "^0.6.8",
     "logrocket": "^1.0.0",
