@@ -17,7 +17,7 @@
     "@progress/kendo-ui": "^2019.2.529",
     "@tinymce/tinymce-vue": "^2.0.0",
     "axios": "^0.18.0",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "bootstrap-vue": "^2.0.0-rc.12",
     "chokidar": "^3.0.1",
     "dotenv": "^6.2.0",
     "express": "^4.17.1",
